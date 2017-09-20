@@ -1,0 +1,21 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <p class="modal-title pull-left">Detail Data Honor</p>
+    <!-- <button class="btn btn-primary cetak_laporan_btn pull-right m-r-1">Cetak Laporan</button> -->
+</div>
+<div class="modal-body p-t-15 row">
+    <?php foreach($honor->result() as $result):?>
+    <dl class="col-md-6">
+        <dt>Level</dt>
+        <dd><?php echo $result->level?></dd>
+    </dl>
+    <dl class="col-md-6">
+        <dt>Honor</dt>
+        <dd>Rp <?php echo $result->gaji?></dd>
+    </dl>
+    <dl class="col-md-12">
+        <dt>Keterangan</dt>
+        <dd><?php echo $result->keterangan?></dd>
+    </dl>
+    <?php endforeach;?>
+</div>

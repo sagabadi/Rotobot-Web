@@ -1,0 +1,136 @@
+<link href="<?php echo base_url(); ?>asset/plugins/bootstrap/bootstrap.min.css" rel="stylesheet">
+<link href="<?php echo base_url(); ?>asset/plugins/animate.css/animate.min.css" rel="stylesheet">
+<link href="<?php echo base_url(); ?>asset/plugins/datepicker/datetimepicker.css" rel="stylesheet">
+<link rel="stylesheet" href="<?php echo base_url(); ?>asset/css/main.css">
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <p class="modal-title">Ubah Data Karyawan</p>
+</div>
+<?php foreach ($karyawan->result() as $result) : ?>
+    <?php echo form_open_multipart('AdminUbahKaryawan/Update/'.$result->id_karyawan); ?>
+    <div class="modal-body p-t-15 row">
+        <div class="form-group col-md-4">
+            <label for="ubah_id_instruktur">Id Karyawan</label>
+            <input id="ubah_id_instruktur" type="text" name="id"  class="form-control" value="<?php echo $result->id_karyawan;?>" disabled>
+        </div>          
+        <div class="form-group col-md-8">
+            <label for="ubah_nama">Nama Karyawan</label>
+            <input id="ubah_nama" type="text" name="nama" class="form-control" required value="<?php echo $result->nama;?>">
+        </div>    
+        <div class="form-group col-md-4">
+            <label for="ubah_username">Username</label>
+            <input id="ubah_username" type="text" name="username" required  class="form-control" value="<?php echo $result->username;?>">
+        </div>         
+        <div class="form-group col-md-8">
+            <label for="ubah_password">Password</label>
+            <input id="ubah_password" type="password" name="password" required  class="form-control" value="loremipsum">
+        </div>             
+        <div class="form-group col-md-4">
+            <label for="ubah_kota_lahir">Tempat Lahir</label>
+            <input id="ubah_kota_lahir" type="text" name="tempat" required  class="form-control" value="<?php echo $result->tempatlahir;?>">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="dari_tanggal">Tanggal Lahir</label>
+
+            <div class="input-group tanggal col-md-8" id="datetimepicker1">
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                <input name="tanggallahir" value="<?php echo date('m/d/Y',strtotime($result->tanggallahir))?>" type="text" class="form-control" id="tambah_tanggal">
+            </div>
+        </div>
+        <div class="form-group col-md-12">
+            <label for="ubah_jk clearfix">Jenis Kelamin</label>
+            <div class="clearfix"></div>
+            <?php if ($result->jeniskelamin == 'Laki-laki') {    
+            echo'<label class="radio-inline">
+            <input type="radio" name="jeniskelamin" id="inlineRadio1" checked="checked" value="Laki-laki"> Pria
+        </label>
+        <label class="radio-inline">
+            <input type="radio" name="jeniskelamin" id="inlineRadio2" value="Perempuan"> Wanita
+        </label>';
+    } else {
+    echo'<label class="radio-inline">
+    <input type="radio" name="jeniskelamin" id="inlineRadio1" value="Laki-laki"> Pria
+</label>
+<label class="radio-inline">
+    <input type="radio" name="jeniskelamin" id="inlineRadio2" checked="checked" value="Perempuan"> Wanita
+</label>';
+}?>
+</div>
+<div class="form-group col-md-6">
+    <input id="uploadFile" placeholder="Choose Image" class="col-md-4 form-control" disabled="disabled" />
+</div> 
+<div class="form-group col-md-4">
+    <div class="fileUpload btn btn-success">
+        <span>Browse</span>
+        <input id="uploadBtn" type="file" name="foto" class="upload" accept=".jpg,.gif,.png,.jpeg" multiple/>
+    </div>
+</div>  
+<div class="col-md-12 clearfix">
+    <hr>
+</div> 
+<div class="form-group col-md-12">
+    <label for="ubah_alamat">Alamat</label>
+    <textarea id="ubah_alamat" name="alamat" required class="form-control"><?php echo $result->alamat;?></textarea>
+</div>       
+<div class="form-group col-md-4">
+    <label for="ubah_no_hp">No HP</label>
+    <input id="ubah_no_hp" type="text" name="hp" required class="form-control" value="<?php echo $result->hp;?>">
+</div>        
+<div class="form-group col-md-8">
+    <label for="ubah_email">Email <i>(Optional)</i></label>
+    <input id="ubah_email" type="text" name="email" class="form-control" value="<?php echo $result->email;?>">
+</div>
+<div class="form-group col-md-4">
+    <label for="tambah_jabatan">Jabatan</label>
+    <select id="tambah_jabatan" name="jabatan" class="form-control selectpicker show-menu-arrow">
+        <option selected>Administrator</option>
+        <option>Manager</option>
+        <option>Admin</option>
+        <option>Finance</option>
+    </select>
+</div>        
+</div>
+<div class="modal-footer">
+    <button type="submit" name="upload" id="ubah_submit" class="btn btn-primary btn-lg btn-bold pull-left">Simpan</button>
+</div>
+<?php echo form_close(); ?>
+<?php endforeach; ?>
+<script src="<?php echo base_url();?>asset/plugins/jquery/jquery.min.js"></script>
+<script src="<?php echo base_url();?>asset/plugins/bootstrap/bootstrap.min.js"></script>
+<script src="<?php echo base_url();?>asset/plugins/datepicker/moment.min.js"></script>
+<script src="<?php echo base_url();?>asset/plugins/datepicker/datetimepicker.min.js"></script>
+
+<!-- Menu Toggle Script -->
+<script>
+    $("#menu-toggle").click(function (e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+
+    // DATATABLE
+    $(document).ready(function () {
+        oTable = $('#tabel_data_siswa').DataTable({
+            "dom": '<"toolbar">frtip',
+            "bFilter": true
+        });
+
+        $('#cari_instruktur').keyup(function () {
+            oTable.search($(this).val()).draw();
+        });
+    });
+
+    document.getElementById("uploadBtn").onchange = function () {
+        document.getElementById("uploadFile").value = this.value;
+    };
+
+    // Datetimepicker
+    $('.tanggal').datetimepicker({
+        pickTime: false,
+        icons: {
+            time: "fa fa-clock-o",
+            date: "fa fa-calendar",
+            up: "fa fa-arrow-up",
+            down: "fa fa-arrow-down"
+        }
+    });
+</script>

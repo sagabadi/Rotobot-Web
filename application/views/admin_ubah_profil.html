@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="shortcut icon" href="asset/images/favicon.png">
+        <title>Rotobot - Sistem Manajemen Course</title>
+        <link href="asset/plugins/datatable/css/jquery.dataTables.min.css" rel="stylesheet">
+        <link href="asset/plugins/bootstrap/bootstrap.min.css" rel="stylesheet">
+        <link href="asset/plugins/animate.css/animate.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="asset/css/main.css">
+    </head>
+    <body>
+        <!-- wrapper -->
+        <div id="wrapper">
+            <!-- Sidebar -->
+            <div id="sidebar-wrapper" class="animated">
+                <ul class="sidebar-nav sidebar-group">
+                    <li class="sidebar-brand">
+                        <a href="#">
+                            Rotobot - Sistem Manajemen Course
+                        </a>
+                    </li>
+                    <li class="sidebar-item sidebar-text"><p>navigasi</p></li>
+                    <li class="sidebar-item">
+                        <a href="<?php echo base_url();?>HomeAdmin" class="sidebar-link">Dashboard</a>
+                    </li> 
+                    <li class="sidebar-item">
+                        <a href="<?php echo base_url();?>ProfilAdmin" class="sidebar-link active">Profil</a>
+                    </li> 
+                    <li class="sidebar-item">
+                        <a class="sidebar-link has-sub collapsed" data-toggle="collapse" data-parent=".sidebar-item" href="#masterData">Master Data</a>
+                        <ul id="masterData" class="collapse sublinks">
+                            <li><a href="<?php echo base_url();?>AdminDataInstruktur">Data Instruktur <span class="blue-text">(<?php echo $this->db->query("Select * from karyawan where jabatan = 'Instruktur Tetap' or jabatan = 'Instruktur Freelance'")->num_rows();?>)</span></a></li>
+                            <li><a href="<?php echo base_url();?>AdminDataKaryawan">Data Karyawan <span class="blue-text">(<?php echo $this->db->query("Select * from karyawan where not jabatan like 'Instruktur%'")->num_rows();?>)</span></a></li>
+                            <li><a href="<?php echo base_url();?>AdminDataSiswa">Data Siswa <span class="blue-text">(<?php echo $this->db->query("Select * from siswa ")->num_rows();?>)</span></a></li>
+                        </ul>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link has-sub collapsed" data-toggle="collapse" data-parent=".sidebar-item" href="#dataTransaksi">Data Transaksi</a>
+                        <ul id="dataTransaksi" class="collapse sublinks">
+                            <li><a href="admin_transaksi_siswa.html">Transaksi Siswa</a></li>
+                            <li><a href="<?php echo base_url();?>AdminTransaksiDataPengeluaran">Transaksi Pengeluaran</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <!-- /#sidebar-wrapper -->
+
+            <!-- Toggle Button -->
+            <a href="#menu-toggle" class="btn btn-default" id="menu-toggle"><i class="fa fa-bars"></i></a>
+            <!-- /Toggle Button -->
+
+            <!-- Page Content -->
+            <div id="page-content-wrapper">
+                <div class="container-fluid">
+                    <!-- Top Bar -->
+                    <div class="row">
+                        <nav id="top-menu-bar" class="navbar navbar-default navbar-fixed-top" role="navigation">
+                            <div class="container-fluid">
+                                <ul class="nav navbar-nav navbar-right" id="top-menu-item">
+                                    <li class="pull-right"><a href="<?php echo base_url();?>login/logout"><i class="fa fa-power-off"></i> Logout</a></li>
+                                    <li class="pull-right"><p class="navbar-text divider">|</p></li>
+                                    <li class="pull-right"><p class="navbar-text">Selamat datang, <a href="#" class="navbar-link"><?php echo $this->session->userdata('nama');?></a></p></li>
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
+                    <!-- /Top Bar -->
+
+                    <!-- Main Content -->
+                    <div id="main-content">
+                        <!-- breadcrumb -->
+                        <div class="row" >
+                            <ol class="breadcrumb">
+                                <li><a href="<?php echo base_url();?>HomeAdmin">Dashboard</a></li>
+                                <li class="active">Profil</li>
+                            </ol>
+                        </div>
+                        <!-- breadcrumb -->
+
+                        <div class="row">
+                            <div class="main-title clearfix">
+                                <h1>Ubah Profil</h1>
+                            </div>
+
+                            <hr>
+
+                            <?php echo form_open_multipart('UbahProfilAdmin/Update'); ?>
+                            <div class="col-md-6 p-l-0">
+                                <div class="form-group col-md-4">
+                                    <label>ID</label>
+                                    <input id="ubah_id_karyawan" type="text" disabled name="" class="form-control" value="<?php echo $this->session->userdata('ids');?>">
+                                </div> 
+                                <div class="clearfix"></div>
+                                <div class="form-group col-md-8 ">
+                                    <label>Nama</label>
+                                    <input id="ubah_nama_karyawan" required type="text" name="nama" class="form-control" value="<?php echo $this->session->userdata('nama');?>">
+                                </div><div class="form-group col-md-8">
+                                    <label>Jabatan</label> 
+                                    <input id="ubah_bagian" type="text" name="" class="form-control" value="Admin" disabled>
+                                </div>                                
+                                <div class="col-md-12 clearfix">
+                                    <hr>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label>Alamat</label>
+                                    <textarea id="ubah_alamat" required name="alamat" class="form-control resize-y"><?php echo $this->session->userdata('alamat');?></textarea>
+                                </div>
+                                <div class="col-md-12 clearfix">
+                                    <hr>
+                                </div>
+                                <div class="form-group col-md-8">
+                                    <label>Email</label>
+                                    <input id="ubah_email" type="text" name="email" class="form-control" value="<?php echo $this->session->userdata('email');?>">
+                                </div>                        
+                                <div class="form-group col-md-8">
+                                    <label for="ubah_sandi">Kata Sandi</label>
+                                    <input id="ubah_sandi" type="password" required name="pass1" class="form-control" value="inipasswordku">
+                                </div>                               
+                                <div class="form-group col-md-8">
+                                    <label for="ubah_sandi2">Ketik Ulang Kata Sandi</label>
+                                    <input id="ubah_sandi2" type="password" required name="pass2" class="form-control" value="inipasswordku">
+                                </div>     
+                                <div class="col-md-12">
+                                    <span class="btn btn-default btn-file col-md-6">
+                                        <input type="file" name="foto" accept=".jpg,.gif,.png" multiple/>
+                                    </span>
+                                </div>
+                                <div class="col-xs-12 clearfix">
+                                    <hr>
+                                </div>  
+
+                                <div class="col-xs-12">
+                                    <button type="submit" name="upload" class="btn btn-primary btn-lg btn-bold pull-left">Simpan</button>
+                                </div>       
+
+                            </div>  
+                            <?php echo form_close(); ?>
+                        </div>
+                    </div>
+                    <!-- /.row -->
+
+                </div>
+                <!-- Main Content -->
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- Scripts -->
+    <script src="asset/plugins/jquery/jquery.min.js"></script>
+    <script src="asset/plugins/bootstrap/bootstrap.min.js"></script>
+    <script src="asset/plugins/datatable/js/jquery.dataTables.min.js"></script>
+    <script src="asset/plugins/bootstrap-fileinput/js/fileinput.min.js"></script>
+
+    <!-- Menu Toggle Script -->
+    <script type="text/javascript">
+        $("#menu-toggle").click(function (e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+
+        $(document).ready(function() {
+        /* bootstrap-fileinput: .upload-img */
+        $(".upload-img").fileinput({
+        theme: 'fa',
+                uploadUrl: '#ajaxURL',
+                fileTypeSettings: 'image',
+                allowedPreviewTypes: ['image'],
+                allowedPreviewMimeTypes: ['image'],
+                allowedFileExtensions: ['jpg', 'png'],
+                browseClass: "input-group-addon btn",
+                browseLabel: "Browse",
+                uploadClass: "btn btn-primary",
+                layoutTemplates: {
+                main1:  '{preview}\n' +
+                        '<div class="col-sm-8 p-x-0 form-group">' +
+                        '   <label for="upload">Pilih file untuk diunggah</label>' +
+                        '   <div class="input-group input-group-sm {class}">\n' +
+                        '       {browse}\n' +
+                        '       {caption}\n' +
+                        '   </div>' +
+                        '</div>' +
+                        '{upload}',
+                        preview:'<div class="col-md-4">' +
+                        '   <div class="file-preview full file-preview-img {class}">\n' +
+                        '       <div class="close fileinput-remove">&times;</div>\n' +
+                        '       <div class="file-preview-thumbnails"></div>\n' +
+                        '       <div class="clearfix"></div>' +
+                        '       <div class="file-preview-status text-center text-success"></div>\n' +
+                        '       <div class="kv-fileinput-error"></div>\n' +
+                        '   </div>' +
+                        '</div>',
+                        actionUpload: '<button type="button" class="kv-file-upload {uploadClass}" title="Unggah gambar">Unggah</button>\n'
+                },
+                previewTemplates: {
+                image: '<div class="file-preview-frame" id="{previewId}" data-fileindex="{fileindex}">\n' +
+                        '   <img src="{data}" class="file-preview-image img-responsive" title="{caption}" alt="{caption}">\n' +
+                        '</div>\n',
+                },
+        });
+    </script>
+
+</body>
+</html>

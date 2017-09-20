@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="asset/images/favicon.png">
+    <title>Rotobot - Sistem Manajemen Course</title>
+
+    <!-- FAVICON -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#00943f">
+    <meta name="theme-color" content="#ffffff">
+    <!-- END FAVICON -->
+
+    <link href="asset/plugins/datatable/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="asset/plugins/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="asset/plugins/animate.css/animate.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="asset/css/main.css">
+</head>
+<body>
+    <!-- wrapper -->
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper" class="animated">
+            <ul class="sidebar-nav sidebar-group">
+                <li class="sidebar-brand">
+                    <a href="#">
+                        Rotobot - Sistem Manajemen Course
+                    </a>
+                </li>
+                <li class="sidebar-item sidebar-text"><p>navigasi</p></li>
+                <li class="sidebar-item">
+                    <a href="<?php echo base_url();?>HomeAdministrator" class="sidebar-link">Dashboard</a>
+                </li> 
+                <li class="sidebar-item">
+                    <a href="<?php echo base_url();?>AdministratorProfil" class="sidebar-link">Profil</a>
+                </li> 
+                <li class="sidebar-item">
+                    <a class="sidebar-link has-sub collapsed active" data-toggle="collapse" data-parent=".sidebar-item" href="#masterData">Master Data</a>
+                    <ul id="masterData" class="collapse sublinks">
+                        <li><a href="<?php echo base_url();?>AdministratorDataInstruktur">Data Instruktur <span class="blue-text">(<?php echo $this->db->query("Select * from karyawan where jabatan like 'Instruktur%'")->num_rows();?>)</span></a></li>
+                        <li><a href="<?php echo base_url();?>AdministratorDataKaryawan">Data Karyawan <span class="blue-text">(<?php echo $this->db->query("Select * from karyawan where not jabatan like 'Instruktur%'")->num_rows();?>)</span></a></li>
+                        <li><a href="<?php echo base_url();?>AdministratorDataSiswa">Data Siswa <span class="blue-text">(<?php echo $this->db->query("Select * from siswa")->num_rows();?>)</span></a></li>
+                        <li><a href="<?php echo base_url();?>AdministratorDataOwner" class="sidebar-link active">Data Owner <span class="blue-text">(<?php echo $this->db->query("Select * from owner")->num_rows();?>)</span></a></li>
+                    </ul>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link has-sub collapsed" data-toggle="collapse" data-parent=".sidebar-item" href="#dataAbsensi">Data Absensi</a>
+                    <ul id="dataAbsensi" class="collapse sublinks">
+                        <li><a href="<?php echo base_url();?>AdministratorDataaKehadiranInstruktur">Data Absensi Instruktur</a></li>
+                        <li><a href="<?php echo base_url();?>AdministratorDataKehadiranKaryawan">Data Absensi Karyawan</a></li>
+                        <li><a href="<?php echo base_url();?>AdministratorDataKehadiranSiswa">Data Absensi Siswa</a></li>
+                    </ul>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link has-sub collapsed" data-toggle="collapse" data-parent=".sidebar-item" href="#dataHonor">Data Honor</a>
+                    <ul id="dataHonor" class="collapse sublinks">
+                        <li><a href="<?php echo base_url();?>AdministratorDataHonor">Data Honor</a></li>
+                        <li><a href="<?php echo base_url();?>AdministratorDataHonorIstruktur">Data Instruktur</a></li>
+                        <li><a href="<?php echo base_url();?>AdministratorDataHonorKaryawan">Data Karyawan</a></li>
+                    </ul>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link has-sub collapsed" data-toggle="collapse" data-parent=".sidebar-item" href="#berkas">Berkas</a>
+                    <ul id="berkas" class="collapse sublinks">
+                        <li><a href="<?php echo base_url();?>AdministratorMateriPembelajaran">Materi Pembelajaran</a></li>
+                        <li><a href="<?php echo base_url();?>AdministratorRencanaPembelajaran">Rencana Pelaksanaan Pembelajaran</a>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <!-- /#sidebar-wrapper -->
+
+            <!-- Toggle Button -->
+            <a href="#menu-toggle" class="btn btn-default" id="menu-toggle"><i class="fa fa-bars"></i></a>
+            <!-- /Toggle Button -->
+
+            <!-- Page Content -->
+            <div id="page-content-wrapper">
+                <div class="container-fluid">
+                    <!-- Top Bar -->
+                    <div class="row">
+                        <nav id="top-menu-bar" class="navbar navbar-default navbar-fixed-top" role="navigation">
+                            <div class="container-fluid">
+                                <ul class="nav navbar-nav navbar-right" id="top-menu-item">
+                                    <li class="pull-right"><a href="<?php echo base_url();?>login/logout"><i class="fa fa-power-off"></i> Logout</a></li>
+                                    <li class="pull-right"><p class="navbar-text divider">|</p></li>
+                                    <li class="pull-right"><p class="navbar-text">Selamat datang, <a href="#" class="navbar-link"><?php echo $this->session->userdata('nama');?></a></p></li>
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
+                    <!-- /Top Bar -->
+
+                    <!-- Main Content -->
+                    <div id="main-content">
+                        <!-- breadcrumb -->
+                        <div class="row" >
+                            <ol class="breadcrumb">
+                                <li><a href="<?php echo base_url();?>HomeAdministrator">Dashboard</a></li>
+                                <li><a href="#">Master Data</a></li>
+                                <li class="active">Data Owner</li>
+                            </ol>
+                        </div>
+                        <!-- breadcrumb -->
+
+                        <div class="row">
+                            <div class="main-title clearfix">
+                                <h1>Data Owner</h1>
+                                <div class="toolbar form-inline pull-right">
+                                    <div class="form-group search">
+                                        <input type="text" class="form-control" id="cari_owner" placeholder='Cari Owner...'/>
+                                        <i class="fa fa-search icon"></i>
+                                    </div>
+                                    <a href="#" type="button" data-toggle="modal" data-target="#modal_tambah" class="btn custom2 table-button btn-grey btn-xs form-control">Tambah Data Owner</a>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 element">
+                                <table id="tabel_data_owner" class="datatable table table-bordered" >
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Nama</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach($owner->result() as $key):?>
+                                            <tr>
+                                                <td><?php echo $key->id_owner?></td>
+                                                <td><?php echo $key->nama?></td>
+                                                <td class="button-col">
+                                                    <ul class="list-inline m-b-0">
+                                                        <li>
+                                                            <a href="<?php echo base_url('AdministratorDataOwnerDetail/show/'.$key->id_owner);?>" data-toggle="modal" data-target="#modal_detail" class="text-muted2"><img src="asset/images/icons/icon-eye.png" class="" data-toggle="tooltip" data-placement="bottom" title="Detail"/></a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="<?php echo base_url('AdministratorEditOwner/show/'.$key->id_owner);?>" data-toggle="modal" data-target="#modal_ubah"><img src="asset/images/icons/icon-pencil.png" data-toggle="tooltip" data-placement="bottom" title="Edit"/></a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="<?php echo base_url('AdministratorHapusOwner/delete/'.$key->id_owner);?>" onclick = "return confirmDialog();"><img src="asset/images/icons/icon-trash.png" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Hapus"/></a>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+
+                                            </tr>
+                                        <?php endforeach;?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Main Content -->
+                </div>
+            </div>
+            <!-- /#page-content-wrapper -->
+        </div>
+        <!-- /#wrapper -->
+
+        <!-- MODAL: tambah owner -->
+        <div class="modal fade modal-custom" tabindex="-1" role="dialog" id="modal_tambah" aria-labelledby="modal_tambah" aria-hidden="true">
+            <div class="modal-dialog modal-custom" role="document">
+                <div class="modal-content">
+                    <form class="form form-custom clearfix" method="POST" action="<?php echo base_url('AdministratorTambahOwner/insert');?>">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <p class="modal-title">Tambah Owner Baru</p>
+                        </div>
+                        <div class="modal-body p-t-15 row">              
+                            <div class="form-group col-md-8">
+                                <label for="tambah_nama">Nama</label>
+                                <input id="tambah_nama" type="text" required name="nama" class="form-control">
+                            </div>    
+                            <div class="form-group col-md-8">
+                                <label for="tambah_username">Username</label>
+                                <input id="tambah_username" type="text" required name="username" class="form-control">
+                            </div>         
+                            <div class="form-group col-md-8">
+                                <label for="tambah_password">Password</label>
+                                <input id="tambah_password" type="password" required name="password" class="form-control">
+                            </div> 
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" id="tambah_submit" class="btn btn-primary btn-lg btn-bold pull-left">Simpan</button>
+                        </div>
+                    </form>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.MODAL -->
+
+        <!-- MODAL: detail karyawan -->
+        <div class="modal fade modal-custom" tabindex="-1" role="dialog" id="modal_detail" aria-labelledby="modal_detail" aria-hidden="true">
+            <div class="modal-dialog modal-custom modal-md" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <p class="modal-title pull-left">Detail Data Karyawan</p>
+                        <!-- <button class="btn btn-primary cetak_laporan_btn pull-right m-r-1">Cetak Laporan</button> -->
+                    </div>
+                    <div class="modal-body p-t-15 row">
+                        <dl class="col-md-6">
+                            <dt>Nama</dt>
+                            <dd>Lourisa Maliani</dd>
+                        </dl> 
+                        <dl class="col-md-6">
+                            <dt>Username</dt>
+                            <dd>laurisatiger</dd>
+                        </dl>  
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.MODAL -->
+
+        <!-- MODAL: ubah karyawan -->
+        <div class="modal fade modal-custom" tabindex="-1" role="dialog" id="modal_ubah" aria-labelledby="modal_ubah" aria-hidden="true">
+            <div class="modal-dialog modal-custom" role="document">
+                <div class="modal-content">
+                    <form class="form form-custom clearfix" method="POST" action="">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <p class="modal-title">Ubah Data Karyawan</p>
+                        </div>
+                        <div class="modal-body p-t-15 row">     
+                            <div class="form-group col-md-8">
+                                <label for="ubah_nama">Nama</label>
+                                <input id="ubah_nama" type="text" name="nama" class="form-control" value="Lorem Ipsum">
+                                <span class="help-block">Disini tulisan error</span> 
+                            </div>    
+                            <div class="form-group col-md-8">
+                                <label for="ubah_username">Username</label>
+                                <input id="ubah_username" type="text" name="username" class="form-control" value="loremipsum">
+                            </div>         
+                            <div class="form-group col-md-8">
+                                <label for="ubah_password">Password</label>
+                                <input id="ubah_password" type="text" name="password" class="form-control" value="loremipsum">
+                            </div>    
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" id="ubah_submit" class="btn btn-primary btn-lg btn-bold pull-left">Simpan</button>
+                        </div>
+                    </form>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.MODAL -->
+
+        <!-- Scripts -->
+        <script src="asset/plugins/jquery/jquery.min.js"></script>
+        <script src="asset/plugins/bootstrap/bootstrap.min.js"></script>
+        <script src="asset/plugins/datatable/js/jquery.dataTables.min.js"></script>
+        <script src="asset/plugins/datepicker/moment.min.js"></script>
+        <script language="javascript">
+            $('body').on('hidden.bs.modal', '.modal', function () {
+                $(this).removeData('bs.modal');
+            });
+        </script>
+        <!-- Menu Toggle Script -->
+        <script>
+            function confirmDialog(){
+                return confirm("Apakah Anda Yakin Ingin Menghapus Data Ini?")
+            }
+            $("#menu-toggle").click(function (e) {
+                e.preventDefault();
+                $("#wrapper").toggleClass("toggled");
+            });
+
+            // DATATABLE
+            $(document).ready(function () {
+                oTable = $('#tabel_data_owner').DataTable({
+                    "dom": '<"toolbar">frtip',
+                    "bFilter": true
+                });
+
+                $('#cari_owner').keyup(function () {
+                    oTable.search($(this).val()).draw();
+                });
+            });
+        </script>
+
+    </body>
+    </html>

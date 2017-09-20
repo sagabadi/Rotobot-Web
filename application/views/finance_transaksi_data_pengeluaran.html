@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="asset/images/favicon.png">
+    <title>Rotobot - Sistem Manajemen Course</title>
+    <link href="asset/plugins/datatable/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="asset/plugins/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="asset/plugins/animate.css/animate.min.css" rel="stylesheet">
+    <link href="asset/plugins/datepicker/datetimepicker.css" rel="stylesheet">
+    <link rel="stylesheet" href="asset/css/main.css">
+</head>
+<body>
+    <!-- wrapper -->
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper" class="animated">
+            <ul class="sidebar-nav sidebar-group">
+                <li class="sidebar-brand">
+                    <a href="#">
+                        Rotobot - Sistem Manajemen Course
+                    </a>
+                </li>
+                <li class="sidebar-item sidebar-text"><p>navigasi</p></li>
+                <li class="sidebar-item">
+                    <a href="<?php echo base_url();?>HomeFinance" class="sidebar-link">Dashboard</a>
+                </li> 
+                <li class="sidebar-item">
+                    <a href="<?php echo base_url();?>ProfilFinance" class="sidebar-link">Profil</a>
+                </li> 
+                <li class="sidebar-item">
+                    <a class="sidebar-link has-sub collapsed active" data-toggle="collapse" data-parent=".sidebar-item" href="#dataTransaksi">Data Transaksi</a>
+                    <ul id="dataTransaksi" class="collapse sublinks">
+                        <li><a href="<?php echo base_url();?>FinanceTransaksiSiswa">Transaksi Siswa</a></li>
+                        <li><a href="<?php echo base_url();?>FinanceTransaksiDataPengeluaran" class="sidebar-link active">Transaksi Pengeluaran</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
+
+        <!-- Toggle Button -->
+        <a href="#menu-toggle" class="btn btn-default" id="menu-toggle"><i class="fa fa-bars"></i></a>
+        <!-- /Toggle Button -->
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <!-- Top Bar -->
+                <div class="row">
+                    <nav id="top-menu-bar" class="navbar navbar-default navbar-fixed-top" role="navigation">
+                        <div class="container-fluid">
+                            <ul class="nav navbar-nav navbar-right" id="top-menu-item">
+                                <li class="pull-right"><a href="<?php echo base_url();?>login/logout"><i class="fa fa-power-off"></i> Logout</a></li>
+                                <li class="pull-right"><p class="navbar-text divider">|</p></li>
+                                <li class="pull-right"><p class="navbar-text">Selamat datang, <a href="#" class="navbar-link"><?php echo $this->session->userdata('nama');?></a></p></li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+                <!-- /Top Bar -->
+
+                <!-- Main Content -->
+                <div id="main-content">
+                    <!-- breadcrumb -->
+                    <div class="row" >
+                        <ol class="breadcrumb">
+                            <li><a href="<?php echo base_url();?>HomeFinance">Dashboard</a></li>
+                            <li><a href="#">Data Transaksi</a></li>
+                            <li class="active">Transaksi Pengeluaran</li>
+                        </ol>
+                    </div>
+                    <!-- breadcrumb -->
+
+                    <div class="row">
+                        <div class="main-title clearfix">
+                            <h1>Transaksi Pengeluaran</h1>
+                            <div class="toolbar form-inline pull-right">
+                                <div class="form-group search">
+                                    <input type="text" class="form-control" id="cari_barang" placeholder='Cari Barang...'/>
+                                    <i class="fa fa-search icon"></i>
+                                </div>
+                                <a href="#" type="button" data-toggle="modal" data-target="#modal_tambah" class="btn custom2 table-button btn-grey btn-xs form-control">Tambah Data Pengeluaran</a>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 element">
+                            <table id="tabel_data_pengeluaran" class="datatable table table-bordered" >
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Nama Barang</th>
+                                        <th>Tanggal Pembelian</th>
+                                        <th>Total</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach($pengeluaran->result() as $result):?>
+                                        <tr>
+                                            <td><?php echo $result->id_pengeluaran?></td>
+                                            <td><?php echo $result->nama?></td>
+                                            <td><?php echo date('d F Y', strtotime($result->tanggal))?></td>
+                                            <td>Rp. <?php echo $result->total?></td>
+                                            <td class="button-col">
+                                                <ul class="list-inline m-b-0">
+                                                    <li>
+                                                        <a href="<?php echo base_url('FinanceTransaksiDataPengeluaranDetail/show/'.$result->id_pengeluaran);?>" data-toggle="modal" data-target="#modal_detail" class="text-muted2"><img src="asset/images/icons/icon-eye.png" class="" data-toggle="tooltip" data-placement="bottom" title="Detail"/></a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="<?php echo base_url('FinanceEditPengeluaran/show/'.$result->id_pengeluaran);?>" data-toggle="modal" data-target="#modal_ubah"><img src="asset/images/icons/icon-pencil.png" data-toggle="tooltip" data-placement="bottom" title="Edit"/></a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="<?php echo base_url('FinanceHapusPengeluaran/delete/'.$result->id_pengeluaran);?>" onclick = "return confirmDialog();"><img src="asset/images/icons/icon-trash.png" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Hapus"/></a>
+                                                    </li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach;?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- Main Content -->
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- MODAL: tambah barang -->
+    <div class="modal fade modal-custom" tabindex="-1" role="dialog" id="modal_tambah" aria-labelledby="modal_tambah" aria-hidden="true">
+        <div class="modal-dialog modal-custom" role="document">
+            <div class="modal-content">
+                <?php echo form_open_multipart('FinanceTambahPengeluaran/insert'); ?>
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <p class="modal-title">Tambah Barang Baru</p>
+                </div>
+                <div class="modal-body p-t-15 row">
+                    <div class="form-group col-md-12">
+                        <label for="tambah_nama">Nama Barang</label>
+                        <input id="tambah_nama" required type="text" name="nama" class="form-control">
+                    </div>      
+                    <div class="form-group col-md-6">
+                        <label for="tambah_merk">Merk</label>
+                        <input id="tambah_merk" type="text" required name="merk" class="form-control">
+                    </div>         
+                    <div class="form-group col-md-6">
+                        <label for="tambah_type">Type</label>
+                        <input id="tambah_type" type="text" required name="type" class="form-control">
+                    </div>   
+                    <div class="form-group col-md-4">
+                        <label class="control-label" for="total_bayar2">Harga</label>
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon2">Rp</span>
+                            <input type="number" name="harga" required id="harga" class="form-control" aria-describedby="basic-addon2">
+                        </div>
+                    </div>          
+                    <div class="form-group col-md-3">
+                        <label for="tambah_qty">Qty</label>
+                        <input id="tambah_qty" type="number" required name="jumlah" class="form-control">
+                    </div>     
+                    <div class="col-md-12 clearfix">
+                        <hr>
+                    </div> 
+                    <div class="form-group col-md-6">
+                        <label for="tambah_tanggal">Tanggal Pengeluaran</label>
+
+                        <div class="input-group tanggal col-md-8" id="datetimepicker1">
+                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                            <input name="tanggal" type="text" class="form-control" id="tambah_tanggal">
+                        </div>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label for="tambah_keterangan">Keterangan</label>
+                        <textarea id="tambah_keterangan" required name="keterangan" class="form-control"></textarea>
+                    </div>   
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" id="tambah_submit" class="btn btn-primary btn-lg btn-bold pull-left">Simpan</button>
+                </div>
+                <?php echo form_close(); ?>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.MODAL -->
+
+    <!-- MODAL: detail barang -->
+    <div class="modal fade modal-custom" tabindex="-1" role="dialog" id="modal_detail" aria-labelledby="modal_detail" aria-hidden="true">
+        <div class="modal-dialog modal-custom modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <p class="modal-title pull-left">Detail Data Barang</p>
+                </div>
+                <div class="modal-body p-t-15 row">
+                    <dl class="col-md-12">
+                        <dt>Nama Barang</dt>
+                        <dd>Lourisa Maliani</dd>
+                    </dl>
+                    <dl class="col-md-6">
+                        <dt>Merk</dt>
+                        <dd>Lorem Ipsum</dd>
+                    </dl>
+                    <dl class="col-md-6">
+                        <dt>Type</dt>
+                        <dd>Lorem</dd>
+                    </dl>
+                    <dl class="col-md-6">
+                        <dt>Harga</dt>
+                        <dd>Rp 20.000</dd>
+                    </dl>
+                    <dl class="col-md-6">
+                        <dt>Qty</dt>
+                        <dd>2</dd>
+                    </dl>      
+                    <dl class="col-md-6">
+                        <dt>Total</dt>
+                        <dd>Rp 40.000</dd>
+                    </dl>      
+                    <div class="col-md-12 clearfix">
+                        <hr>
+                    </div>      
+                    <dl class="col-md-6">
+                        <dt>Tanggal Pengeluaran</dt>
+                        <dd>02-07-2017</dd>
+                    </dl>
+                    <dl class="col-md-12">
+                        <dt>Keterangan</dt>
+                        <dd>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</dd>
+                        </dl>
+
+                    </div>
+                    <div class="modal-footer">
+                        <a href="cetak_data_siswa.html" class="btn btn-primary btn-lg btn-bold  pull-right m-r-1">Cetak</a>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.MODAL -->
+
+        <!-- MODAL: ubah barang -->
+        <div class="modal fade modal-custom" tabindex="-1" role="dialog" id="modal_ubah" aria-labelledby="modal_ubah" aria-hidden="true">
+            <div class="modal-dialog modal-custom" role="document">
+                <div class="modal-content">
+                    <form class="form form-custom clearfix">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <p class="modal-title">Ubah Data Barang</p>
+                        </div>
+                        <div class="modal-body p-t-15 row">
+                            <div class="form-group col-md-12 has-error">
+                                <label for="ubah_nama">Nama Barang</label>
+                                <input id="ubah_nama" type="text" name="" class="form-control" value="Baterai">
+                                <span class="help-block">Disini tulisan error</span> 
+                            </div>      
+                            <div class="form-group col-md-6">
+                                <label for="ubah_merk">Merk</label>
+                                <input id="ubah_merk" type="text" name="" class="form-control" value="ABC">
+                            </div>         
+                            <div class="form-group col-md-6">
+                                <label for="ubah_type">Type</label>
+                                <input id="ubah_type" type="text" name="" class="form-control" value="Zinc-Carbon">
+                            </div>   
+                            <div class="form-group col-md-4">
+                                <label class="control-label" for="total_bayar2">Harga</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon" id="basic-addon2">Rp</span>
+                                    <input type="number" name="harga" id="harga" class="form-control" value="10000" aria-describedby="basic-addon2">
+                                </div>
+                            </div>          
+                            <div class="form-group col-md-3">
+                                <label for="ubah_qty">Qty</label>
+                                <input id="ubah_qty" type="number" name="" class="form-control" value="5">
+                            </div>     
+                            <div class="form-group col-md-5">
+                                <label for="ubah_total">Total</label>
+                                <input id="ubah_total" type="text" name="" class="form-control" disabled="" placeholder="Rp 50.000">
+                            </div>  
+                            <div class="col-md-12 clearfix">
+                                <hr>
+                            </div> 
+                            <div class="form-group col-md-6">
+                                <label for="ubah_tanggal">Tanggal Pengeluaran</label>
+
+                                <div class="input-group tanggal col-md-8" id="datetimepicker1">
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                    <input name="ubah_tanggal" type="text" class="form-control" value="02-08-2017" id="ubah_tanggal">
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label for="ubah_keterangan">Keterangan</label>
+                                <textarea id="ubah_keterangan" name="" class="form-control" value="Lorem Ipsum"></textarea>
+                            </div>  
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="ubah_submit" class="btn btn-primary btn-lg btn-bold pull-left">Simpan</button>
+                        </div>
+                    </form>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.MODAL -->
+
+        <!-- Scripts -->
+        <script src="asset/plugins/jquery/jquery.min.js"></script>
+        <script src="asset/plugins/bootstrap/bootstrap.min.js"></script>
+        <script src="asset/plugins/datatable/js/jquery.dataTables.min.js"></script>
+        <script src="asset/plugins/datepicker/moment.min.js"></script>
+        <script src="asset/plugins/datepicker/datetimepicker.min.js"></script>
+
+        <!-- Menu Toggle Script -->
+        <script type="text/javascript">
+            function confirmDialog(){
+                return confirm("Apakah Anda Yakin Ingin Menghapus Data Ini?")
+            }
+            $("#menu-toggle").click(function (e) {
+                e.preventDefault();
+                $("#wrapper").toggleClass("toggled");
+            });
+
+            // DATATABLE
+            $(document).ready(function () {
+                oTable = $('#tabel_data_pengeluaran').DataTable({
+                    "dom": '<"toolbar">frtip',
+                    "bFilter": true
+                });
+
+                $('#cari_barang').keyup(function () {
+                    oTable.search($(this).val()).draw();
+                });
+
+            });
+
+            // Datetimepicker
+            $('.tanggal').datetimepicker({
+                pickTime: false,
+                icons: {
+                    time: "fa fa-clock-o",
+                    date: "fa fa-calendar",
+                    up: "fa fa-arrow-up",
+                    down: "fa fa-arrow-down"
+                }
+            });
+        </script>
+
+    </body>
+    </html>

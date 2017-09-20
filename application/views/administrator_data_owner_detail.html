@@ -1,0 +1,17 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <p class="modal-title pull-left">Detail Data Karyawan</p>
+    <!-- <button class="btn btn-primary cetak_laporan_btn pull-right m-r-1">Cetak Laporan</button> -->
+</div>
+<div class="modal-body p-t-15 row">
+    <?php foreach($owner->result() as $key):?>
+    <dl class="col-md-6">
+        <dt>Nama</dt>
+        <dd><?php echo $key->nama?></dd>
+    </dl> 
+    <dl class="col-md-6">
+        <dt>Username</dt>
+        <dd><?php echo $key->username?></dd>
+    </dl>  
+    <?php endforeach;?>
+</div>

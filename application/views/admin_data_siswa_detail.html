@@ -1,0 +1,232 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <p class="modal-title pull-left">Detail Data Siswa</p>
+</div>
+<div class="modal-body p-t-15 row">
+    <?php foreach($siswa->result() as $result):?>
+    <dl class="col-md-6">
+        <dt>Id Siswa</dt>
+        <dd class="text-bold"><?php echo $result->id_siswa?></dd>
+    </dl>
+    <dl class="col-md-6">
+        <div class="col-xs-12 col-md-6 text-center">
+            <!-- QR CODE -->
+        </div>    
+    </dl>
+    <dl class="col-md-6">
+        <dt>Nama Siswa</dt>
+        <dd><?php echo $result->nama?></dd>
+    </dl>
+    <dl class="col-md-6">
+        <dt>TTL</dt>
+        <dd><?php echo $result->tempatlahir?>, <?php echo date('d F Y', strtotime($result->tanggallahir))?></dd>
+    </dl>
+    <?php
+    $birth = $result->tanggallahir;
+    $bday = new DateTime($birth);
+    $today = new DateTime();
+    $diff = $today->diff($bday);
+    ?>
+    <dl class="col-md-6">
+        <dt>Umur</dt>
+        <dd><?php echo $diff->y;?> tahun</dd>
+    </dl>
+    <dl class="col-md-6">
+        <dt>Jenis Kelamin</dt>
+        <dd><?php echo $result->jeniskelamin?></dd>
+    </dl>
+    <dl class="col-md-6">
+        <div class="col-xs-12 col-md-6 text-center">
+            <?php
+            if ($result->foto == ''){
+            echo '<img src="'.base_url().'asset/images/icons/icon-profile-placeholder.png" style="width: 10rem;">';
+            } else {
+            echo '<img  src="'.base_url('asset/images/Siswa/'.$result->foto).'" style="width: 13rem;">';
+            }
+            ?>
+        </div>    
+    </dl>
+    <div class="col-md-12 clearfix">
+        <hr>
+    </div>  
+    <dl class="col-md-6">
+        <dt>Username</dt>
+        <dd><?php echo $result->username?></dd>
+    </dl>  
+    <dl class="col-md-6">
+        <dt>No HP</dt>
+        <dd><?php echo $result->hp?></dd>
+    </dl>       
+    <dl class="col-md-6">
+        <dt>Email</dt>
+        <dd><?php echo $result->email?></dd>
+    </dl>       
+    <dl class="col-md-12">
+        <dt>Alamat</dt>
+        <dd><?php echo $result->alamat?></dd>
+    </dl><div class="col-md-12 clearfix">
+        <hr>
+    </div>
+    <?php foreach($detail->result() as $key):?>
+    <dl class="col-md-12">
+        <dt class="gray-text">Dihubungi untuk Pretest</dt>
+    </dl>
+    <dl class="col-md-6">
+        <dt>Sudah dihubungi</dt>
+        <dd><?php echo $key->hubungipretest?></dd>
+    </dl>
+    <dl class="col-md-6">
+        <dt>Membalas / Tidak</dt>
+        <dd><?php echo $key->balaspretest?></dd>
+    </dl>
+    <?php $day = date('D', strtotime($key->tanggalpretest));?>
+    <?php $tanggal = $key->tanggalpretest;
+    $daylist = array(
+    'Sun' =>'Minggu',
+    'Mon' =>'Senin',
+    'Tue' =>'Selasa',
+    'Wed' =>'Rabu',
+    'Thu' =>'Kamis',
+    'Fri' =>'Jumat',
+    'Sat' =>'Sabtu'
+    )
+    ?>
+    <dl class="col-md-12">
+        <dt>Jadwal Pretest</dt>
+        <dd><?php echo $daylist[$day]?>, <?php echo date('d F Y', strtotime($key->tanggalpretest))?></dd>
+    </dl>
+    <div class="col-md-12 clearfix">
+        <hr>
+    </div>
+    <dl class="col-md-12">
+        <dt class="gray-text">Pelaksanaan Pretest</dt>
+    </dl>
+    <dl class="col-md-12">
+        <dt>Materi</dt>
+        <dd><?php echo $key->materi?></dd>
+    </dl>
+    <dl class="col-md-6">
+        <dt>Datang / Tidak</dt>
+        <dd><?php echo $key->datangpretest?></dd>
+    </dl>
+    <dl class="col-md-6">
+        <dt>Alasan</dt>
+        <dd><?php echo $key->alasan1?></dd>
+    </dl>
+    <dl class="col-md-6">
+        <dt>Nilai Pretest</dt>
+        <dd><?php echo $key->nilaipretest?></dd>
+    </dl>
+    <dl class="col-md-6">
+        <dt>Rekomendasi Kelas</dt>
+        <dd><?php echo $key->rekomendasikelas?></dd>
+    </dl>
+    <div class="col-md-12 clearfix">
+        <hr>
+    </div>
+    <div class="col-md-12">
+        <label class="gray-text">Penjadwalan Kelas</label>
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-bordered" id="editableTable">
+                        <thead>
+                            <tr>
+                                <th>Hari</th>
+                                <th>Waktu</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach($jadwal->result() as $jad):?>
+                            <tr data-id="1">
+                                <td data-field="name"><?php echo $jad->hari?></td>
+                                <td data-field="birthday"><?php echo date('H:i',strtotime($jad->jam))?></td>
+                            </tr>
+                            <?php endforeach;?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 clearfix">
+        <hr>
+    </div>
+    <dl class="col-md-12">
+        <dt class="gray-text">Pembayaran Tahap 1 (50%)</dt>
+    </dl>
+    <dl class="col-md-6">
+        <dt>Lunas / Tidak</dt>
+        <dd><?php echo $key->lunas1?></dd>
+    </dl>
+    <dl class="col-md-6">
+        <dt>Pemberian Formulir</dt>
+        <dd><?php echo $key->formulir?></dd>
+    </dl>
+    <dl class="col-md-6">
+        <dt>Pemberian Kartu Siswa</dt>
+        <dd><?php echo $key->kartusiswa?></dd>
+    </dl>
+    <dl class="col-md-6">
+        <dt>Pemberian Buku Activity Report</dt>
+        <dd><?php echo $key->buku?></dd>
+    </dl>
+    <dl class="col-md-6">
+        <dt>Pembuatan Presensi</dt>
+        <dd><?php echo $key->presensi?></dd>
+    </dl>
+    <div class="col-md-12 clearfix">
+        <hr>
+    </div>
+    <dl class="col-md-12">
+        <dt class="gray-text">Pembayaran Tahap 2 (30%)</dt>
+    </dl>
+    <dl class="col-md-6">
+        <dt>Lunas / Tidak</dt>
+        <dd><?php echo $key->lunas2?></dd>
+    </dl>
+    <dl class="col-md-6">
+        <dt>Alasan</dt>
+        <dd><?php echo $key->alasan2?></dd>
+    </dl>
+    <div class="col-md-12 clearfix">
+        <hr>
+    </div>
+    <dl class="col-md-12">
+        <dt class="gray-text">Pembayaran Tahap 3 (20%)</dt>
+    </dl>
+    <dl class="col-md-6">
+        <dt>Lunas / Tidak</dt>
+        <dd><?php echo $key->lunas3?></dd>
+    </dl>
+    <dl class="col-md-6">
+        <dt>Alasan</dt>
+        <dd><?php echo $key->alasan3?></dd>
+    </dl>
+    <dl class="col-md-6">
+        <dt>Pemberian Kaos</dt>
+        <dd><?php echo $key->kaos?></dd>
+    </dl>
+    <dl class="col-md-6">
+        <dt>Pemberian Tas</dt>
+        <dd><?php echo $key->tas?></dd>
+    </dl>
+    <dl class="col-md-6">
+        <dt>Pemberian Robot Kit</dt>
+        <dd><?php echo $key->kit?></dd>
+    </dl>
+    <div class="col-md-12 clearfix">
+        <hr>
+    </div>
+    <dl class="col-md-6">
+        <dt>Pemberian Sertifikat</dt>
+        <dd><?php echo $key->sertifikat?></dd>
+    </dl>
+</div>
+<?php endforeach;?>
+<?php endforeach;?>
+<?php foreach($siswa->result() as $key):?>
+<div class="modal-footer">
+    <a href="<?php echo base_url('CetakDataSiswa/cetak/'.$key->id_siswa);?>" class="btn btn-primary btn-lg btn-bold  pull-right m-r-1">Cetak</a>
+</div>
+<?php endforeach;?>

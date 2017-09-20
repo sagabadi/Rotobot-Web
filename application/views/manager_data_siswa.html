@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="asset/images/favicon.png">
+    <title>Rotobot - Sistem Manajemen Course</title>
+    <link href="asset/plugins/datatable/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="asset/plugins/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="asset/plugins/animate.css/animate.min.css" rel="stylesheet">
+    <link href="asset/plugins/datepicker/datetimepicker.css" rel="stylesheet">
+    <link rel="stylesheet" href="asset/css/main.css">
+</head>
+<body>
+    <!-- wrapper -->
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper" class="animated">
+            <ul class="sidebar-nav sidebar-group">
+                <li class="sidebar-brand">
+                    <a href="#">
+                        Rotobot - Sistem Manajemen Course
+                    </a>
+                </li>
+                <li class="sidebar-item sidebar-text"><p>navigasi</p></li>
+                <li class="sidebar-item">
+                    <a href="<?php echo base_url();?>HomeManager" class="sidebar-link">Dashboard</a>
+                </li> 
+                <li class="sidebar-item">
+                    <a href="<?php echo base_url();?>ProfilManager" class="sidebar-link">Profil</a>
+                </li> 
+                <li class="sidebar-item">
+                    <a class="sidebar-link has-sub collapsed active" data-toggle="collapse" data-parent=".sidebar-item" href="#masterData">Master Data</a>
+                    <ul id="masterData" class="collapse sublinks">
+                        <li><a href="<?php echo base_url();?>ManagerDataInstruktur">Data Instruktur <span class="blue-text">(<?php echo $this->db->query("Select * from karyawan where jabatan like 'Instruktur%'")->num_rows();?>)</span></a></li>
+                        <li><a href="<?php echo base_url();?>ManagerDataKaryawan">Data Karyawan <span class="blue-text">(<?php echo $this->db->query("Select * from karyawan where not jabatan like 'Instruktur%'")->num_rows();?>)</span></a></li>
+                        <li><a href="<?php echo base_url();?>ManagerDataSiswa" class="sidebar-link active">Data Siswa <span class="blue-text">(<?php echo $this->db->query("Select * from siswa")->num_rows();?>)</span></a></li>
+                    </ul>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link has-sub collapsed" data-toggle="collapse" data-parent=".sidebar-item" href="#dataAbsensi">Data Absensi</a>
+                    <ul id="dataAbsensi" class="collapse sublinks">
+                        <li><a href="<?php echo base_url();?>ManagerDataAbsensiInstruktur">Data Absensi Instruktur</a></li>
+                        <li><a href="<?php echo base_url();?>ManagerDataAbsensiKaryawan">Data Absensi Karyawan</a></li>
+                        <li><a href="<?php echo base_url();?>ManagerDataAbsensiSiswa">Data Absensi Siswa</a></li>
+                    </ul>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link has-sub collapsed" data-toggle="collapse" data-parent=".sidebar-item" href="#dataHonor">Data Honor</a>
+                    <ul id="dataHonor" class="collapse sublinks">
+                        <li><a href="<?php echo base_url();?>ManagerDataHonor">Data Honor</a></li>
+                        <li><a href="<?php echo base_url();?>ManagerDataHonorInstruktur">Data Instruktur</a></li>
+                        <li><a href="<?php echo base_url();?>ManagerDataHonorKaryawan">Data Karyawan</a></li>
+                    </ul>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link has-sub collapsed" data-toggle="collapse" data-parent=".sidebar-item" href="#berkas">Berkas</a>
+                    <ul id="berkas" class="collapse sublinks">
+                        <li><a href="<?php echo base_url();?>ManagerMateriPembelajaran">Materi Pembelajaran</a></li>
+                        <li><a href="<?php echo base_url();?>ManagerRencanaPembelajaran">Rencana Pelaksanaan Pembelajaran</a>
+                        </ul>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link has-sub collapsed" data-toggle="collapse" data-parent=".sidebar-item" href="#dataTransaksi">Data Transaksi</a>
+                        <ul id="dataTransaksi" class="collapse sublinks">
+                            <li><a href="<?php echo base_url();?>ManagerTransaksiPengeluaran" class="sidebar-link">Transaksi Pengeluaran</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <!-- /#sidebar-wrapper -->
+
+            <!-- Toggle Button -->
+            <a href="#menu-toggle" class="btn btn-default" id="menu-toggle"><i class="fa fa-bars"></i></a>
+            <!-- /Toggle Button -->
+
+            <!-- Page Content -->
+            <div id="page-content-wrapper">
+                <div class="container-fluid">
+                    <!-- Top Bar -->
+                    <div class="row">
+                        <nav id="top-menu-bar" class="navbar navbar-default navbar-fixed-top" role="navigation">
+                            <div class="container-fluid">
+                                <ul class="nav navbar-nav navbar-right" id="top-menu-item">
+                                    <li class="pull-right"><a href="<?php echo base_url();?>login/logout"><i class="fa fa-power-off"></i> Logout</a></li>
+                                    <li class="pull-right"><p class="navbar-text divider">|</p></li>
+                                    <li class="pull-right"><p class="navbar-text">Selamat datang, <a href="#" class="navbar-link"><?php echo $this->session->userdata('nama');?></a></p></li>
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
+                    <!-- /Top Bar -->
+
+                    <!-- Main Content -->
+                    <div id="main-content">
+                        <!-- breadcrumb -->
+                        <div class="row" >
+                            <ol class="breadcrumb">
+                                <li><a href="<?php echo base_url();?>HomeManager">Dashboard</a></li>
+                                <li><a href="#">Master Data</a></li>
+                                <li class="active">Data Siswa</li>
+                            </ol>
+                        </div>
+                        <!-- breadcrumb -->
+
+                        <div class="row">
+                            <div class="main-title clearfix">
+                                <h1>Data Siswa</h1>
+                                <div class="toolbar form-inline pull-right">
+                                    <div class="form-group search">
+                                        <input type="text" class="form-control" id="cari_siswa" placeholder='Cari Siswa...'/>
+                                        <i class="fa fa-search icon"></i>
+                                    </div>
+                                    <a href="#" type="button" data-toggle="modal" data-target="#modal_tambah" class="btn custom2 table-button btn-grey btn-xs form-control">Tambah Data Siswa</a>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 element">
+                                <table id="tabel_data_siswa" class="datatable table table-bordered" >
+                                    <thead>
+                                        <tr>
+                                            <th>Nama Lengkap</th>
+                                            <th>Asal Sekolah</th>
+                                            <th>Kelas</th>
+                                            <th>Jenis Kelamin</th>
+                                            <th>No Hp</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach ($siswa->result() as $result) : ?>
+                                            <tr>
+                                                <td><?php echo $result->nama?></td>
+                                                <td><?php echo $result->sekolah?></td>
+                                                <td><?php echo $result->kelas?></td>
+                                                <td><?php echo $result->jeniskelamin?></td>
+                                                <td><?php echo $result->hp?></td>                                            
+                                                <td class="button-col">
+                                                    <ul class="list-inline m-b-0">
+                                                        <li>
+                                                            <a href="<?php echo base_url('ManagerDataSiswaDetail/show/'.$result->id_siswa);?>" data-toggle="modal" data-target="#modal_detail" class="text-muted2"><img src="asset/images/icons/icon-eye.png" class="" data-toggle="tooltip" data-placement="bottom" title="Detail"/></a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="<?php echo base_url('ManagerEditSiswa/show/'.$result->id_siswa);?>" data-toggle="modal" data-target="#modal_ubah"><img src="asset/images/icons/icon-pencil.png" data-toggle="tooltip" data-placement="bottom" title="Edit"/></a>
+                                                        </li>
+                                                        <li>
+                                                        <a href="<?php echo base_url('ManagerHapusSiswa/delete/'.$result->id_siswa);?>" onclick = "return confirmDialog();"><img src="asset/images/icons/icon-trash.png" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Hapus"/></a>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+
+                                            </tr>
+                                        <?php endforeach; ?>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Main Content -->
+                </div>
+            </div>
+            <!-- /#page-content-wrapper -->
+        </div>
+        <!-- /#wrapper -->
+
+        <!-- MODAL: tambah siswa -->
+        <div class="modal fade modal-custom" tabindex="-1" role="dialog" id="modal_tambah" aria-labelledby="modal_tambah" aria-hidden="true">
+            <div class="modal-dialog modal-custom" role="document">
+                <div class="modal-content">
+                    <?php echo form_open_multipart('ManagerTambahSiswa/insert'); ?>
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <p class="modal-title">Tambah Siswa Baru</p>
+                    </div>
+                    <div class="modal-body p-t-15 row">
+                        <div class="form-group col-md-4">                            
+                            <label for="tambah_id_siswa">Id Siswa</label>
+                            <?php 
+                            $query = $this->db->query("Select * from siswa")->num_rows();
+                            if ($query == 0){
+                            $id1 = 101;
+                        } else {
+                        $id = $this->db->query("Select max(id_siswa)+1 as max from siswa")->row();
+                        $id1 = $id->max;
+                    }
+                    ?>
+                    <input id="tambah_id_siswa" type="text" name="id"  class="form-control" disabled value="<?php echo $id1?>">
+                </div> 
+                <div class="form-group col-md-8">
+                    <label for="tambah_nama">Nama Siswa</label>
+                    <input id="tambah_nama" type="text" required name="nama" class="form-control">
+                </div>      
+                <div class="form-group col-md-5">
+                    <label for="tambah_username">Username</label>
+                    <input id="tambah_username" type="text" required name="username" class="form-control">
+                </div>         
+                <div class="form-group col-md-5">
+                    <label for="tambah_password">Password</label>
+                    <input id="tambah_password" type="password" required name="password" class="form-control">
+                </div>             
+                <div class="form-group col-md-5">
+                    <label for="tambah_kota_lahir">Tempat Lahir</label>
+                    <input id="tambah_kota_lahir" type="text" required name="tempat" class="form-control">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="tambah_tanggal">Tanggal Lahir</label>
+
+                    <div class="input-group tanggal col-md-8" id="datetimepicker1">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        <input name="tanggallahir" type="text" class="form-control" id="tambah_tanggal">
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <label for="tambah_jk clearfix">Jenis Kelamin</label>
+                    <div class="clearfix"></div>    
+                    <label class="radio-inline">
+                        <input type="radio" name="jeniskelamin" id="inlineRadio1" value="Laki-laki"> Laki-laki
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="jeniskelamin" id="inlineRadio2" value="Perempuan"> Perempuan
+                    </label>
+                </div>      
+                <div class="form-group col-md-6">
+                    <input id="uploadFile" placeholder="Choose Image" class="col-md-4 form-control" disabled="disabled" />
+                </div> 
+                <div class="form-group col-md-4">
+                    <div class="fileUpload btn btn-success">
+                        <span>Browse</span>
+                        <input id="uploadBtn" name="foto" type="file" class="upload" accept=".jpg,.gif,.png,.jpeg" multiple/>
+                    </div>
+                </div> 
+                <div class="form-group col-md-8">
+                    <label for="tambah_alamat">Asal Sekolah</label>
+                    <input id="tambah_asal_sekolah" type="text" required name="sekolah" class="form-control">
+                </div>  
+                <div class="form-group col-md-4">
+                    <label for="tambah_alamat">Kelas</label>
+                    <input id="tambah_kelas" type="number" required name="kelas" class="form-control">
+                </div>  
+                <div class="col-md-12 clearfix">
+                    <hr>
+                </div> 
+                <div class="form-group col-md-12">
+                    <label for="tambah_alamat">Alamat</label>
+                    <textarea id="tambah_alamat" name="alamat" required class="form-control"></textarea>
+                </div>       
+                <div class="form-group col-md-6">
+                    <label for="tambah_no_hp">No HP</label>
+                    <input id="tambah_no_hp" type="text" required name="hp" class="form-control">
+                </div>        
+                <div class="form-group col-md-6">
+                    <label for="tambah_email">Email <i>(Optional)</i></label>
+                    <input id="tambah_email" type="text" name="email" class="form-control">
+                </div>  
+            </div>
+            <div class="modal-footer">
+                <button type="submit" name="upload" id="tambah_submit" class="btn btn-primary btn-lg btn-bold pull-left">Simpan</button>
+            </div>
+            <?php echo form_close(); ?>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.MODAL -->
+
+<!-- MODAL: detail siswa -->
+<div class="modal fade modal-custom" tabindex="-1" role="dialog" id="modal_detail" aria-labelledby="modal_detail" aria-hidden="true">
+    <div class="modal-dialog modal-custom modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <p class="modal-title pull-left">Detail Data Siswa</p>
+                <!-- <button class="btn btn-primary cetak_laporan_btn pull-right m-r-1">Cetak Laporan</button> -->
+            </div>
+            <div class="modal-body p-t-15 row">
+                <dl class="col-md-6">
+                    <dt>No Identitas</dt>
+                    <dd class="text-bold">123120123182</dd>
+                </dl>
+                <dl class="col-md-6">
+                    <dt>Nama Siswa</dt>
+                    <dd>Lourisa Maliani</dd>
+                </dl>
+                <dl class="col-md-6">
+                    <dt>TTL</dt>
+                    <dd>Kota Baru, 12 Juli 1990</dd>
+                </dl>
+                <dl class="col-md-6">
+                    <dt>Umur</dt>
+                    <dd>20 tahun</dd>
+                </dl>
+                <dl class="col-md-6">
+                    <dt>Jenis Kelamin</dt>
+                    <dd>Laki-laki</dd>
+                </dl>
+                <dl class="col-md-6">
+                    <div class="col-xs-12 col-md-6 text-center">
+                        <img src="images/icons/icon-profile-placeholder.png" style="width: 10rem;">
+                    </div>    
+                </dl>
+                <div class="col-md-12 clearfix">
+                    <hr>
+                </div>  
+                <dl class="col-md-6">
+                    <dt>Username</dt>
+                    <dd>laurisatiger</dd>
+                </dl>  
+                <dl class="col-md-6">
+                    <dt>No HP</dt>
+                    <dd>087746452527</dd>
+                </dl>       
+                <dl class="col-md-6">
+                    <dt>Email</dt>
+                    <dd>example@gmail.com</dd>
+                </dl>       
+                <dl class="col-md-12">
+                    <dt>Alamat</dt>
+                    <dd>Jl Merdeka Raya No 46, Kelurahan Karang Taruna, Kecamatan Bulakamba Tengah, DKI Jakarta</dd>
+                </dl>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.MODAL -->
+
+<!-- MODAL: ubah siswa -->
+<div class="modal fade modal-custom" tabindex="-1" role="dialog" id="modal_ubah" aria-labelledby="modal_ubah" aria-hidden="true">
+    <div class="modal-dialog modal-custom" role="document">
+        <div class="modal-content">
+            <form class="form form-custom clearfix">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <p class="modal-title">Ubah Data Siswa</p>
+                </div>
+                <div class="modal-body p-t-15 row">
+                    <div class="form-group col-md-4">
+                        <label for="ubah_id_siswa">Id Siswa</label>
+                        <input id="ubah_id_siswa" type="text" name="" class="form-control" value="S001" disabled>
+                    </div> 
+                    <div class="form-group col-md-8 has-error">
+                        <label for="ubah_no_identitas">No Identitas</label>
+                        <input id="ubah_no_identitas" type="text" name="" class="form-control" value="213123134134">
+                        <span class="help-block">Disini tulisan error</span> 
+                    </div>                    
+                    <div class="form-group col-md-8">
+                        <label for="ubah_nama">Nama Siswa</label>
+                        <input id="ubah_nama" type="text" name="" class="form-control" value="Lorem Ipsum">
+                    </div>    
+                    <div class="form-group col-md-5">
+                        <label for="ubah_username">Username</label>
+                        <input id="ubah_username" type="text" name="" class="form-control" value="loremipsum">
+                    </div>         
+                    <div class="form-group col-md-5">
+                        <label for="ubah_password">Password</label>
+                        <input id="ubah_password" type="text" name="" class="form-control" value="loremipsum">
+                    </div>             
+                    <div class="form-group col-md-6">
+                        <label for="ubah_kota_lahir">Tempat Lahir</label>
+                        <input id="ubah_kota_lahir" type="text" name="" class="form-control" value="cilacap">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="ubah_tgl_lahir">Tanggal Lahir</label>
+                        <div class='input-group'>
+                            <input type='text' class="form-control picker-date" id='ubah_tgl_lahir' value="18/7/1997"/>
+                            <span class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label for="ubah_jk clearfix">Jenis Kelamin</label>
+                        <div class="clearfix"></div>    
+                        <label class="radio-inline">
+                            <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"> Pria
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> Wanita
+                        </label>
+                    </div>      
+                    <div class="col-md-6">
+                        <input type="file" class="jfilestyle" data-input="false" accept=".jpg,.gif,.png">
+                    </div>
+                    <div class="col-md-12 clearfix">
+                        <hr>
+                    </div> 
+                    <div class="form-group col-md-12">
+                        <label for="ubah_alamat">Alamat</label>
+                        <textarea id="ubah_alamat" name="" class="form-control"></textarea>
+                    </div>       
+                    <div class="form-group col-md-6">
+                        <label for="ubah_no_hp">No HP</label>
+                        <input id="ubah_no_hp" type="text" name="" class="form-control" value="087736999222">
+                    </div>        
+                    <div class="form-group col-md-6">
+                        <label for="ubah_email">Email <i>(Optional)</i></label>
+                        <input id="ubah_email" type="text" name="" class="form-control" value="example@gmail.com">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="ubah_jabatan">Jabatan</label>
+                        <input id="ubah_jabatan" type="text" name="" class="form-control" value="Siswa" disabled>
+                    </div>     
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="ubah_submit" class="btn btn-primary btn-lg btn-bold pull-left">Simpan</button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.MODAL -->
+
+<!-- Scripts -->
+<script src="asset/plugins/jquery/jquery.min.js"></script>
+<script src="asset/plugins/bootstrap/bootstrap.min.js"></script>
+<script src="asset/plugins/datatable/js/jquery.dataTables.min.js"></script>
+<script src="asset/plugins/datepicker/moment.min.js"></script>
+<script src="asset/plugins/datepicker/datetimepicker.min.js"></script>
+<script language="javascript">
+    $('body').on('hidden.bs.modal', '.modal', function () {
+        $(this).removeData('bs.modal');
+    });
+</script>
+<!-- Menu Toggle Script -->
+<script>
+    $("#menu-toggle").click(function (e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+
+            // DATATABLE
+            $(document).ready(function () {
+                oTable = $('#tabel_data_siswa').DataTable({
+                    "dom": '<"toolbar">frtip',
+                    "bFilter": true
+                });
+
+                $('#cari_karyawan').keyup(function () {
+                    oTable.search($(this).val()).draw();
+                });
+            });
+
+            document.getElementById("uploadBtn").onchange = function () {
+                document.getElementById("uploadFile").value = this.value;
+            };
+
+            // Datetimepicker
+            $('.tanggal').datetimepicker({
+                pickTime: false,
+                icons: {
+                    time: "fa fa-clock-o",
+                    date: "fa fa-calendar",
+                    up: "fa fa-arrow-up",
+                    down: "fa fa-arrow-down"
+                }
+            });
+
+            $(document).ready(function () {
+                $(".open_modal").click(function (e) {
+                    var m = $(this).attr("id");
+                    $.ajax({
+                        url: "manager_data_karyawan_detail.html",
+                        type: "GET",
+                        data: {id_karyawan: m, },
+                        success: function (ajaxData) {
+                            $("#modal_detail").html(ajaxData);
+                            $("#modal_detail").modal('show', {backdrop: 'true'});
+                        }
+                    });
+                });
+            });
+            function confirmDialog(){
+                return confirm("Apakah Anda Yakin Ingin Menghapus Data Ini?")
+            }
+        </script>
+
+    </body>
+    </html>

@@ -1,0 +1,452 @@
+<link href="<?php echo base_url(); ?>asset/plugins/bootstrap/bootstrap.min.css" rel="stylesheet">
+<link href="<?php echo base_url(); ?>asset/plugins/animate.css/animate.min.css" rel="stylesheet">
+<link href="<?php echo base_url(); ?>asset/plugins/datepicker/datetimepicker.css" rel="stylesheet">
+<link rel="stylesheet" href="<?php echo base_url(); ?>asset/css/main.css">
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <p class="modal-title">Ubah Data Siswa</p>
+</div>
+<?php foreach($siswa->result() as $result):?>
+    <?php echo form_open_multipart('AdminUbahSiswa/Update/'.$result->id_siswa); ?>
+    <?php foreach($detail->result() as $det):?>
+        <div class="modal-body p-t-15 row">
+            <div class="form-group col-md-4">
+                <label for="ubah_id_siswa">Id Siswa</label>
+                <input id="ubah_id_siswa" type="text" name="" class="form-control" value="<?php echo $result->id_siswa?>" disabled>
+            </div> 
+            <div class="form-group col-md-8">
+                <label for="ubah_nama">Nama Siswa</label>
+                <input id="ubah_nama" type="text" name="nama" required value="<?php echo $result->nama?>" class="form-control">
+            </div>      
+            <div class="form-group col-md-5">
+                <label for="ubah_username">Username</label>
+                <input id="ubah_username" type="text" name="username" required value="<?php echo $result->username?>" class="form-control">
+            </div>         
+            <div class="form-group col-md-5">
+                <label for="ubah_password">Password</label>
+                <input id="ubah_password" type="password" name="password" required value="loremipsum" class="form-control">
+            </div>             
+            <div class="form-group col-md-5">
+                <label for="ubah_kota_lahir">Tempat Lahir</label>
+                <input id="ubah_kota_lahir" type="text" name="tempat" required value="<?php echo $result->tempatlahir?>" class="form-control">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="ubah_tanggal">Tanggal Lahir</label>
+
+                <div class="input-group tanggal col-md-8" id="datetimepicker1">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    <input name="tanggallahir" type="text" class="form-control" id="ubah_tanggal" value="<?php echo date('m/d/Y', strtotime($result->tanggallahir))?>">
+                </div>
+            </div>
+            <div class="form-group col-md-12">
+                <label for="ubah_jk clearfix">Jenis Kelamin</label>
+                <div class="clearfix"></div>
+                <?php if ($result->jeniskelamin == 'Laki-laki') {    
+                echo'<label class="radio-inline">
+                <input type="radio" name="jeniskelamin" id="inlineRadio1" checked="checked" value="Laki-laki"> Pria
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="jeniskelamin" id="inlineRadio2" value="Perempuan"> Wanita
+            </label>';
+        } else {
+        echo'<label class="radio-inline">
+        <input type="radio" name="jeniskelamin" id="inlineRadio1" value="Laki-laki"> Pria
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="jeniskelamin" id="inlineRadio2" checked="checked" value="Perempuan"> Wanita
+    </label>';
+}?>
+</div>     
+<div class="form-group col-md-6">
+    <input id="uploadFile" placeholder="Choose Image" class="col-md-4 form-control" disabled="disabled" />
+</div> 
+<div class="form-group col-md-4">
+    <div class="fileUpload btn btn-success">
+        <span>Browse</span>
+        <input id="uploadBtn" type="file" name="foto" class="upload" accept=".jpg,.gif,.png,.jpeg" multiple/>
+    </div>
+</div>
+<div class="col-md-12 clearfix">
+    <hr>
+</div> 
+<div class="form-group col-md-8">
+    <label for="ubah_alamat">Asal Sekolah</label>
+    <input id="ubah_asal_sekolah" type="text" name="sekolah" required value="<?php echo $result->sekolah?>" class="form-control">
+</div>  
+<div class="form-group col-md-4">
+    <label for="ubah_alamat">Kelas</label>
+    <input type="number" name="kelas" id="tambah_honor" required class="form-control" value="<?php echo $result->kelas?>" aria-describedby="basic-addon2">
+</div>  
+<div class="col-md-12 clearfix">
+    <hr>
+</div> 
+<div class="form-group col-md-12">
+    <label for="ubah_alamat">Alamat</label>
+    <textarea id="ubah_alamat" name="alamat" required class="form-control"><?php echo $result->alamat?></textarea>
+</div>       
+<div class="form-group col-md-6">
+    <label for="ubah_no_hp">No HP</label>
+    <input id="ubah_no_hp" type="text" name="hp" required value="<?php echo $result->hp?>" class="form-control">
+</div>        
+<div class="form-group col-md-6">
+    <label for="ubah_email">Email <i>(Optional)</i></label>
+    <input id="ubah_email" type="text" name="email" value="<?php echo $result->email?>" class="form-control">
+</div> 
+<div class="col-md-12 clearfix">
+    <hr>
+</div> 
+<div class="col-md-12">
+    <label class="gray-text">Dihubungi untuk Pretest</label>
+</div>
+
+<div class="form-group col-md-6">
+    <label for="ubah_alamat">Sudah dihubungi</label>
+    <div class="clearfix"></div>    
+    <?php if ($det->hubungipretest == 'Membalas'){
+    echo'<label class="radio-inline">
+    <input type="radio" name="pretest" id="inlineRadio1" value="Membalas" checked="checked"> Sudah
+</label>
+<label class="radio-inline">
+    <input type="radio" name="pretest" id="inlineRadio2" value="Belum"> Belum
+</label>';
+} else {
+echo'<label class="radio-inline">
+<input type="radio" name="pretest" id="inlineRadio1" value="Membalas"> Sudah
+</label>
+<label class="radio-inline">
+    <input type="radio" name="pretest" id="inlineRadio2" checked="checked" value="Belum"> Belum
+</label>';
+}
+?>
+</div>       
+<div class="form-group col-md-6">
+    <label for="ubah_alamat">Membalas / Tidak</label>
+    <div class="clearfix"></div>    
+    <label class="radio-inline">
+        <input type="radio" name="balas" id="inlineRadio1" value="Ya"> Ya
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="balas" id="inlineRadio2" checked="checked" value="Tidak"> Tidak
+    </label>
+</div>  
+<div class="form-group col-md-6">
+    <label for="ubah_tanggalpretest">Jadwal Pretest</label>
+
+    <div class="input-group tanggal col-md-8" id="datetimepicker1">
+        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+        <input name="tanggalpretest" type="text" class="form-control" id="ubah_tanggal" value="<?php echo date('m/d/Y')?>">
+    </div>
+</div>
+<div class="col-md-12 clearfix">
+    <hr>
+</div> 
+<div class="col-md-12">
+    <label class="gray-text">Pelaksanaan Pretest</label>
+</div>
+<div class="form-group col-md-12">
+    <label for="ubah_materi">Materi</label>
+    <input id="ubah_materi" type="text" name="materi" value="<?php echo $det->materi?>" class="form-control">
+</div>      
+<div class="form-group col-md-6">
+    <label for="ubah_dtg">Datang / Tidak</label>
+    <div class="clearfix"></div>
+    <?php if ($det->datangpretest == 'Tidak'){
+    echo'<label class="radio-inline">
+    <input type="radio" name="datang" id="inlineRadio1" value="Ya"> Ya
+</label>
+<label class="radio-inline">
+    <input type="radio" name="datang" id="inlineRadio2" checked="checked" value="Tidak"> Tidak
+</label>';
+} else {
+echo'<label class="radio-inline">
+<input type="radio" name="datang" id="inlineRadio1" value="Ya" checked="checked"> Ya
+</label>
+<label class="radio-inline">
+    <input type="radio" name="datang" id="inlineRadio2"  value="Tidak"> Tidak
+</label>';
+}
+?>
+</div>  
+<div class="form-group col-md-6">
+    <label for="ubah_alasan">Alasan</label>
+    <input id="ubah_alasan" type="text" name="alasan1" value="<?php echo $det->alasan1?>" class="form-control">
+</div>  
+<div class="form-group col-md-6">
+    <label for="ubah_nilai">Nilai Pretest</label>
+    <input id="ubah_nilai" type="number" name="nilai" value="<?php echo $det->nilaipretest?>" class="form-control">
+</div>  
+<div class="form-group col-md-6">
+    <label for="ubah_rekomendasi">Rekomendasi Kelas</label>
+    <select id="tambah_rekomendasi" name="rekomendasi" class="form-control selectpicker show-menu-arrow">
+        <option selected><?php echo $det->rekomendasikelas?></option>
+        <?php foreach($level->result() as $key):?>
+            <option><?php echo $key->kelas?></option>
+        <?php endforeach;?>
+    </select>
+</div> 
+<div class="col-md-12 clearfix">
+    <hr>
+</div> 
+<div class="col-md-12">
+    <label class="gray-text">Penjadwalan Kelas</label>
+</div>
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-12">
+            <br>
+            <a href="<?php echo base_url('AdminTambahJadwal/show/'.$result->id_siswa);?>" class="btn btn-default pull-right add-row"><i class="fa fa-plus"></i>&nbsp;&nbsp; Tambah Jadwal</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-bordered" id="editableTable">
+                <thead>
+                    <tr>
+                        <th>Hari</th>
+                        <th>Waktu</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach($jadwal->result() as $jad):?>
+                        <tr data-id="1">
+                            <td data-field="name"><?php echo $jad->hari?></td>
+                            <td data-field="birthday"><?php echo date('H:i',strtotime($jad->jam))?></td>
+                        </tr>
+                    <?php endforeach;?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="col-md-12 clearfix">
+    <hr>
+</div> 
+<div class="col-md-12">
+    <label class="gray-text">Pembayaran Tahap 1 (50%)</label>
+</div>
+<div class="form-group col-md-6">
+    <label for="ubah_lunas">Lunas / Tidak</label>
+    <div class="clearfix"></div>    
+    <?php if($det->lunas1 == 'Tidak'){
+    echo'<label class="radio-inline">
+    <input type="radio" name="lunas1" id="inlineRadio1" value="Ya"> Ya
+</label>
+<label class="radio-inline">
+    <input type="radio" name="lunas1" id="inlineRadio2" checked="checked" value="Tidak"> Tidak
+</label>';
+} else {
+echo'<label class="radio-inline">
+<input type="radio" name="lunas1" id="inlineRadio1" checked="checked" value="Ya"> Ya
+</label>
+<label class="radio-inline">
+    <input type="radio" name="lunas1" id="inlineRadio2"  value="Tidak"> Tidak
+</label>';
+}
+?>
+</div>  
+<div class="form-group col-md-12">
+    <div class="checkbox">
+        <label>
+            <?php if ($det->formulir == 'Ya') {
+            echo'<input type="checkbox" class="flat" checked="checked" name="formulir" value="Ya"> Pemberian Formulir';
+        } else {
+        echo'<input type="checkbox" class="flat" name="formulir" value="Ya"> Pemberian Formulir';
+    }
+    ?>
+</label>
+</div>
+<div class="checkbox">
+    <label>
+        <?php if ($det->kartusiswa == 'Ya') {
+        echo'<input type="checkbox" class="flat" checked="checked" name="kartu"  value="Ya"> Pemberian Kartu Siswa';
+    } else {
+    echo'<input type="checkbox" class="flat" name="kartu" value="Ya"> Pemberian Kartu Siswa';
+}
+?>
+</label>
+</div>
+<div class="checkbox">
+    <label>
+        <?php if ($det->buku == 'Ya'){
+        echo'<input type="checkbox" class="flat" checked="checked" name="buku" value="Ya"> Pemberian Buku Activity Report';
+    } else {
+    echo'<input type="checkbox" class="flat" name="buku" value="Ya"> Pemberian Buku Activity Report';                
+}
+?>
+</label>
+</div>
+<div class="checkbox">
+    <label>
+        <?php if ($det->presensi == 'Ya'){
+        echo'<input type="checkbox" class="flat" checked="checked" name="presensi" value="Ya"> Pemberian Presensi';
+    } else {
+    echo'<input type="checkbox" class="flat" name="presensi" value="Ya"> Pemberian Presensi';
+}
+?>
+</label>
+</div>
+</div>
+<div class="col-md-12 clearfix">
+    <hr>
+</div> 
+<div class="col-md-12">
+    <label class="gray-text">Pembayaran Tahap 2 (30%)</label>
+</div>
+<div class="form-group col-md-6">
+    <label for="ubah_lunas">Lunas / Tidak</label>
+    <div class="clearfix"></div>    
+    <?php if ($det->lunas2 == 'Tidak') {
+    echo'<label class="radio-inline">
+    <input type="radio" name="lunas2" id="inlineRadio1" value="Ya"> Ya
+</label>
+<label class="radio-inline">
+    <input type="radio" name="lunas2" id="inlineRadio2" checked="checked" value="Tidak"> Tidak
+</label>';
+} else {
+echo'<label class="radio-inline">
+<input type="radio" name="lunas2" id="inlineRadio1" checked="checked" value="Ya"> Ya
+</label>
+<label class="radio-inline">
+    <input type="radio" name="lunas2" id="inlineRadio2" value="Tidak"> Tidak
+</label>';
+}
+?>
+</div>  
+<div class="form-group col-md-6">
+    <label for="ubah_alasan">Alasan</label>
+    <input id="ubah_alasan" type="text" name="alasan2" value="<?php echo $det->alasan2?>" class="form-control">
+</div>
+<div class="col-md-12 clearfix">
+    <hr>
+</div> 
+<div class="col-md-12">
+    <label class="gray-text">Pembayaran Tahap 3 (20%)</label>
+</div>
+<div class="form-group col-md-6">
+    <label for="ubah_lunas">Lunas / Tidak</label>
+    <div class="clearfix"></div>    
+    <?php if ($det->lunas3== 'Tidak'){
+    echo'<label class="radio-inline">
+    <input type="radio" name="lunas3" id="inlineRadio1" value="Ya"> Ya
+</label>
+<label class="radio-inline">
+    <input type="radio" name="lunas3" id="inlineRadio2" checked="checked" value="Tidak"> Tidak
+</label>';
+} else {
+echo'<label class="radio-inline">
+<input type="radio" name="lunas3" id="inlineRadio1" checked="checked" value="Ya"> Ya
+</label>
+<label class="radio-inline">
+    <input type="radio" name="lunas3" id="inlineRadio2"  value="Tidak"> Tidak
+</label>';
+}
+?>
+</div>  
+<div class="form-group col-md-6">
+    <label for="ubah_alasan">Alasan</label>
+    <input id="ubah_alasan" type="text" name="alasan3" value="<?php echo $det->alasan3?>" class="form-control">
+</div>
+<div class="form-group col-md-12">
+    <div class="checkbox">
+        <label>
+            <?php if ($det->kaos == 'Ya') {
+            echo'<input type="checkbox" class="flat" checked="checked" name="kaos" value="Ya"> Pemberian Kaos';
+        } else {
+        echo'<input type="checkbox" class="flat" name="kaos" value="Ya"> Pemberian Kaos';
+    }
+    ?>
+</label>
+</div>
+<div class="checkbox">
+    <label>
+        <?php if ($det->tas == 'Ya') { 
+        echo'<input type="checkbox" class="flat" checked="checked" name="tas" value="Ya"> Pemberian Tas';
+    } else {
+    echo'<input type="checkbox" class="flat"  name="tas" value="Ya"> Pemberian Tas';
+}
+?>
+</label>
+</div>
+<div class="checkbox">
+    <label>
+        <?php if ($det->kit == 'Ya') {
+        echo'<input type="checkbox" class="flat" checked="checked" name="kit" value="Ya"> Pemberian Robot Kit';
+    } else {
+    echo'<input type="checkbox" class="flat" name="kit" value="Ya"> Pemberian Robot Kit';
+}
+?>
+</label>
+</div>
+</div>
+<div class="col-md-12 clearfix">
+    <hr>
+</div>
+<div class="form-group col-md-6">
+    <label for="ubah_alasan">Pemberian Sertifikat</label>
+    <div class="clearfix"></div>    
+    <?php if ($det->sertifikat == 'Belum') {
+    echo'<label class="radio-inline">
+    <input type="radio" name="sertifikat" id="inlineRadio1" value="Sudah"> Sudah
+</label>
+<label class="radio-inline">
+    <input type="radio" name="sertifikat" id="inlineRadio2" checked="checked" value="Belum"> Belum
+</label>';
+} else {
+echo'<label class="radio-inline">
+<input type="radio" name="sertifikat" id="inlineRadio1" checked="checked" value="Sudah"> Sudah
+</label>
+<label class="radio-inline">
+    <input type="radio" name="sertifikat" id="inlineRadio2"  value="Belum"> Belum
+</label>';
+}
+?>
+</div>
+</div>
+<?php endforeach;?>
+<div class="modal-footer">
+    <button type="submit" name="upload" id="ubah_submit" class="btn btn-primary btn-lg btn-bold pull-left">Simpan</button>
+</div>
+<?php echo form_close(); ?>
+<?php endforeach;?>
+
+<script src="<?php echo base_url();?>asset/plugins/jquery/jquery.min.js"></script>
+<script src="<?php echo base_url();?>asset/plugins/bootstrap/bootstrap.min.js"></script>
+<script src="<?php echo base_url();?>asset/plugins/datepicker/moment.min.js"></script>
+<script src="<?php echo base_url();?>asset/plugins/datepicker/datetimepicker.min.js"></script>
+
+<!-- Menu Toggle Script -->
+<script>
+    $("#menu-toggle").click(function (e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+
+    // DATATABLE
+    $(document).ready(function () {
+        oTable = $('#tabel_data_siswa').DataTable({
+            "dom": '<"toolbar">frtip',
+            "bFilter": true
+        });
+
+        $('#cari_instruktur').keyup(function () {
+            oTable.search($(this).val()).draw();
+        });
+    });
+
+    document.getElementById("uploadBtn").onchange = function () {
+        document.getElementById("uploadFile").value = this.value;
+    };
+
+    // Datetimepicker
+    $('.tanggal').datetimepicker({
+        pickTime: false,
+        icons: {
+            time: "fa fa-clock-o",
+            date: "fa fa-calendar",
+            up: "fa fa-arrow-up",
+            down: "fa fa-arrow-down"
+        }
+    });
+</script>

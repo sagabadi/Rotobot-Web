@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="asset/images/favicon.png">
+    <title>Rotobot - Sistem Manajemen Course</title>
+    <link href="asset/plugins/datatable/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="asset/plugins/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="asset/plugins/animate.css/animate.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="asset/css/main.css">
+
+</head>
+<body onload="startTime()">
+    <!-- wrapper -->
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper" class="animated">
+            <ul class="sidebar-nav sidebar-group">
+                <li class="sidebar-brand">
+                    <a href="#">
+                        Rotobot - Sistem Manajemen Course
+                    </a>
+                </li>
+                <li class="sidebar-item sidebar-text"><p>navigasi</p></li>
+                <li class="sidebar-item">
+                  <a href="<?php echo base_url();?>HomeInstruktur" class="sidebar-link">Dashboard</a>
+              </li> 
+              <li class="sidebar-item">
+                  <a href="<?php echo base_url();?>ProfilInstruktur" class="sidebar-link">Profil</a>
+              </li> 
+              <li class="sidebar-item">
+                  <a href="<?php echo base_url();?>InstrukturAbsen" class="sidebar-link active">Absen Siswa</a>
+              </li> 
+              <li class="sidebar-item">
+                <a class="sidebar-link has-sub collapsed" data-toggle="collapse" data-parent=".sidebar-item" href="#dataNilai">Data Nilai</a>
+                <ul id="dataNilai" class="collapse sublinks">
+                    <li><a href="<?php echo base_url();?>InstrukturNilai">Nilai Siswa</a></li>
+                </ul>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link has-sub collapsed" data-toggle="collapse" data-parent=".sidebar-item" href="#berkas">Berkas</a>
+                <ul id="berkas" class="collapse sublinks">
+                    <li><a href="<?php echo base_url();?>InstrukturMateri">Materi Pembelajaran</a></li>
+                    <li><a href="<?php echo base_url();?>InstrukturRpp">Rencana Pelaksaan Pembelajaran</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Toggle Button -->
+    <a href="#menu-toggle" class="btn btn-default" id="menu-toggle"><i class="fa fa-bars"></i></a>
+    <!-- /Toggle Button -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+          <!-- Top Bar -->
+          <div class="row">
+              <nav id="top-menu-bar" class="navbar navbar-default navbar-fixed-top" role="navigation">
+                <div class="container-fluid">
+                  <ul class="nav navbar-nav navbar-right" id="top-menu-item">
+                    <li class="pull-right"><a href="<?php echo base_url();?>login/logout"><i class="fa fa-power-off"></i> Logout</a></li>
+                    <li class="pull-right"><p class="navbar-text divider">|</p></li>
+                    <li class="pull-right"><p class="navbar-text">Selamat datang, <a href="#" class="navbar-link"><?php echo $this->session->userdata('nama');?></a></p></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <!-- /Top Bar -->
+
+    <!-- Main Content -->
+    <div id="main-content">
+        <!-- breadcrumb -->
+        <div class="row" >
+            <ol class="breadcrumb">
+              <li><a href="<?php echo base_url();?>HomeInstruktur">Dashboard</a></li>
+              <li class="active">Absen Siswa</li>
+          </ol>
+      </div>
+      <!-- breadcrumb -->
+
+      <div class="row">
+        <form role="form">
+            <div class="main-title clearfix">
+                <h1>Absen Siswa</h1>
+                <p><strong class="bold">Masukkan ID salah satu siswa</strong> untuk mengetahui anda berada pada kelas level apa</p>
+            </div>
+
+            <hr/>
+            <div class="row element">
+                <div class="form-group col-md-5 ">
+                    <a href="#" type="button" data-toggle="modal" data-target="#modal_scan" class="btn custom2 table-button btn-success btn-xs form-control">Scan Code Siswa</a>
+                </div>
+            </div>
+
+            <hr/>
+            <?php date_default_timezone_set("Asia/Jakarta");?>
+            <?php $day = date('D');?>
+            <?php $m = date('F');?>
+            <?php 
+            $daylist = array(
+            'Sun' =>'Minggu',
+            'Mon' =>'Senin',
+            'Tue' =>'Selasa',
+            'Wed' =>'Rabu',
+            'Thu' =>'Kamis',
+            'Fri' =>'Jumat',
+            'Sat' =>'Sabtu'
+            )
+            ?>
+            <?php 
+            $bulanlist = array(
+            'January' =>'Januari',
+            'February' =>'Februari',
+            'March' =>'Maret',
+            'April' =>'April',
+            'May' =>'Mei',
+            'June' =>'Juni',
+            'July' =>'Juli',
+            'August' =>'Agustus',
+            'September' =>'September',
+            'October' =>'Oktober',
+            'November' =>'November',
+            'December' =>'Desember',
+            )
+            ?>
+            <div class="col-md-12 element">
+                <p><strong>Tanggal</strong></p>
+                <p><?php echo $daylist[$day]?>, <?php echo date('d');?> <?php echo $bulanlist[$m];?> <?php echo date('Y');?> | </p>
+            </div>
+
+
+
+            <div class="clearfix"></div>
+
+            <div class="col-md-12 element">
+
+            </div>
+        </form>
+    </div>
+    <!-- /.row -->
+
+</div>
+<!-- Main Content -->
+</div>
+</div>
+<!-- /#page-content-wrapper -->
+</div>
+<!-- /#wrapper -->
+
+
+
+
+<!-- tabs bottom -->
+<!-- MODAL: scan bardoce -->
+<div class="modal fade modal-custom" tabindex="-1" role="dialog" id="modal_scan" aria-labelledby="modal_scan" aria-hidden="true">
+    <div class="modal-dialog modal-custom" role="document">
+        <div class="modal-content">
+            <form class="form form-custom clearfix">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <p class="modal-title">Scan Barcode Siswa</p>
+                </div>
+                <div class="modal-body p-t-15 row">
+                <?php include('scan.php');?> 
+          </div>
+          <!-- /tabs -->
+      </div>
+  </div>
+</div>
+</div>
+</div>
+<div class="modal-footer">
+
+</div>
+</form>
+</div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+</div><!-- /.MODAL -->
+
+<!-- MODAL: nilai -->
+<div class="modal fade modal-custom" tabindex="-1" role="dialog" id="modal_nilai" aria-labelledby="modal_tambah" aria-hidden="true">
+    <div class="modal-dialog modal-custom" role="document">
+        <div class="modal-content">
+            <form class="form form-custom clearfix">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <p class="modal-title">Tambah Nilai Siswa</p>
+                </div>
+                <div class="modal-body p-t-15 row">            
+                    <div class="form-group col-md-4">
+                        <label for="tambah_nilai">Nilai</label>
+                        <input id="tambah_nilai" type="number" name="" class="form-control">
+                    </div>    
+                    <div class="form-group col-md-8">
+                        <label for="tambah_keterangan">Keterangan</label>
+                        <input id="tambah_keterangan" type="text" name="" class="form-control">
+                    </div>  
+                    <div class="form-group col-md-4">
+                        <label for="tambah_level">Pindah Level ke</label>
+                        <select id="tambah_level" class="form-control selectpicker show-menu-arrow">
+                            <option selected>Logic 1</option>
+                            <option>Logic 2</option>
+                            <option>Logic 3</option>
+                        </select>
+                    </div>   
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="tambah_submit" class="btn btn-primary btn-lg btn-bold pull-left">Simpan</button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.MODAL -->
+
+<!-- Scripts -->
+<script src="asset/plugins/jquery/jquery.min.js"></script>
+<script src="asset/plugins/bootstrap/bootstrap.min.js"></script>
+<script src="asset/plugins/datatable/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="asset/new/qr-scan/vue.min.js"></script>
+<script type="text/javascript" src="asset/new/qr-scan/instascan.min.js"></script>
+<script type="text/javascript" src="asset/new/qr-scan/app.js"></script>
+<!-- Menu Toggle Script -->
+<script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+
+    /* Datatable Absensi*/
+    var tabel_absensi = $('#tabel_absensi').DataTable({
+        'info': true,
+        'language': {
+            'info': 'Menampilkan _START_-_END_ dari _TOTAL_ data absensi'
+        },
+    })
+
+    function startTime()
+    {
+        var today=new Date();
+        var h=today.getHours();
+        var m=today.getMinutes();
+        var s=today.getSeconds();
+        // add a zero in front of numbers<10<br>
+        m=checkTime(m);
+        s=checkTime(s);
+        document.getElementById('txt').innerHTML=h+":"+m+":"+s;
+        t=setTimeout(function(){startTime()},500);
+    }
+
+    function checkTime(i)
+    {
+        if (i<10)
+        {
+            i="0" + i;
+        }
+        return i;
+    }
+
+</script>
+
+</body>
+</html>

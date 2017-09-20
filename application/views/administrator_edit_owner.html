@@ -1,0 +1,70 @@
+<link href="<?php echo base_url(); ?>asset/plugins/bootstrap/bootstrap.min.css" rel="stylesheet">
+<link href="<?php echo base_url(); ?>asset/plugins/animate.css/animate.min.css" rel="stylesheet">
+<link href="<?php echo base_url(); ?>asset/plugins/datepicker/datetimepicker.css" rel="stylesheet">
+<link rel="stylesheet" href="<?php echo base_url(); ?>asset/css/main.css">
+
+<?php foreach ($owner->result() as $result) : ?>
+<form class="form form-custom clearfix" method="POST" action="">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <p class="modal-title">Ubah Data Owner</p>
+    </div>
+    <div class="modal-body p-t-15 row">     
+        <div class="form-group col-md-8">
+            <label for="ubah_nama">Nama</label>
+            <input id="ubah_nama" type="text" name="nama" required class="form-control" value="<?php echo $result->nama?>">
+        </div>    
+        <div class="form-group col-md-8">
+            <label for="ubah_username">Username</label>
+            <input id="ubah_username" type="text" name="username" class="form-control" value="<?php echo $result->username?>">
+        </div>         
+        <div class="form-group col-md-8">
+            <label for="ubah_password">Password</label>
+            <input id="ubah_password" type="password" name="password" class="form-control" value="loremipsum">
+        </div>    
+    </div>
+    <div class="modal-footer">
+        <button type="submit" id="ubah_submit" class="btn btn-primary btn-lg btn-bold pull-left">Simpan</button>
+    </div>
+</form>
+<?php endforeach; ?>
+
+<script src="<?php echo base_url();?>asset/plugins/jquery/jquery.min.js"></script>
+<script src="<?php echo base_url();?>asset/plugins/bootstrap/bootstrap.min.js"></script>
+<script src="<?php echo base_url();?>asset/plugins/datepicker/moment.min.js"></script>
+<script src="<?php echo base_url();?>asset/plugins/datepicker/datetimepicker.min.js"></script>
+
+<!-- Menu Toggle Script -->
+<script>
+    $("#menu-toggle").click(function (e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+
+    // DATATABLE
+    $(document).ready(function () {
+        oTable = $('#tabel_data_siswa').DataTable({
+            "dom": '<"toolbar">frtip',
+            "bFilter": true
+        });
+
+        $('#cari_instruktur').keyup(function () {
+            oTable.search($(this).val()).draw();
+        });
+    });
+
+    document.getElementById("uploadBtn").onchange = function () {
+        document.getElementById("uploadFile").value = this.value;
+    };
+
+    // Datetimepicker
+    $('.tanggal').datetimepicker({
+        pickTime: false,
+        icons: {
+            time: "fa fa-clock-o",
+            date: "fa fa-calendar",
+            up: "fa fa-arrow-up",
+            down: "fa fa-arrow-down"
+        }
+    });
+</script>

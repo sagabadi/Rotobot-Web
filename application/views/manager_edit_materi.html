@@ -1,0 +1,76 @@
+<link href="<?php echo base_url(); ?>asset/plugins/bootstrap/bootstrap.min.css" rel="stylesheet">
+<link href="<?php echo base_url(); ?>asset/plugins/animate.css/animate.min.css" rel="stylesheet">
+<link href="<?php echo base_url(); ?>asset/plugins/datepicker/datetimepicker.css" rel="stylesheet">
+<link rel="stylesheet" href="<?php echo base_url(); ?>asset/css/main.css">
+
+<?php foreach ($materi->result() as $result) : ?>
+<?php echo form_open_multipart('ManagerUbahMateri/Update/'.$result->id_materi); ?>
+<div class="modal-body p-t-15 row">
+    <div class="form-group col-md-6">
+        <label for="ubah_rekomendasi">Level</label>
+        <select id="tambah_rekomendasi" name="level" class="form-control"> 
+            <option selected><?php echo $result->level?></option>
+            <?php foreach($level->result() as $key):?>
+            <option><?php echo $key->kelas?></option>
+            <?php endforeach;?>
+        </select>
+    </div> 
+    <div class="form-group col-md-4">
+        <label>Pertemuan Ke</label>
+        <input id="tambah_pertemuan" required value="<?php echo $result->pertemuanke?>" type="number" name="pertemuan" class="form-control">
+    </div>
+    <div class="form-group col-md-6">
+        <input id="uploadFile" placeholder="Choose File" class="col-md-4 form-control" disabled="disabled" />
+    </div> 
+    <div class="form-group col-md-4">
+        <div class="fileUpload btn btn-success">
+            <span>Browse</span>
+            <input id="uploadBtn" name="file" type="file" class="upload" multiple/>
+        </div>
+    </div>       
+</div>
+<div class="modal-footer">
+    <button type="submit" name="upload" id="tambah_submit" class="btn btn-primary btn-lg btn-bold pull-left">Simpan</button>
+</div>
+<?php echo form_close(); ?>
+<?php endforeach; ?>
+
+<script src="<?php echo base_url();?>asset/plugins/jquery/jquery.min.js"></script>
+<script src="<?php echo base_url();?>asset/plugins/bootstrap/bootstrap.min.js"></script>
+<script src="<?php echo base_url();?>asset/plugins/datepicker/moment.min.js"></script>
+<script src="<?php echo base_url();?>asset/plugins/datepicker/datetimepicker.min.js"></script>
+
+<!-- Menu Toggle Script -->
+<script>
+    $("#menu-toggle").click(function (e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+
+    // DATATABLE
+    $(document).ready(function () {
+        oTable = $('#tabel_data_siswa').DataTable({
+            "dom": '<"toolbar">frtip',
+            "bFilter": true
+        });
+
+        $('#cari_instruktur').keyup(function () {
+            oTable.search($(this).val()).draw();
+        });
+    });
+
+    document.getElementById("uploadBtn").onchange = function () {
+        document.getElementById("uploadFile").value = this.value;
+    };
+
+    // Datetimepicker
+    $('.tanggal').datetimepicker({
+        pickTime: false,
+        icons: {
+            time: "fa fa-clock-o",
+            date: "fa fa-calendar",
+            up: "fa fa-arrow-up",
+            down: "fa fa-arrow-down"
+        }
+    });
+</script>

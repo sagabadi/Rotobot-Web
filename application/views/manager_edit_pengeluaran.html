@@ -1,0 +1,96 @@
+<link href="<?php echo base_url(); ?>asset/plugins/bootstrap/bootstrap.min.css" rel="stylesheet">
+<link href="<?php echo base_url(); ?>asset/plugins/animate.css/animate.min.css" rel="stylesheet">
+<link href="<?php echo base_url(); ?>asset/plugins/datepicker/datetimepicker.css" rel="stylesheet">
+<link rel="stylesheet" href="<?php echo base_url(); ?>asset/css/main.css">
+
+<?php foreach ($barang->result() as $result) : ?>
+<form class="form form-custom clearfix" method="post" action="<?php echo base_url('ManagerUbahPengeluaran/Update/'.$result->id_pengeluaran);?>">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <p class="modal-title">Ubah Data Barang</p>
+    </div>
+    <div class="modal-body p-t-15 row">
+        <div class="form-group col-md-12 ">
+            <label for="tambah_nama">Nama Barang</label>
+            <input id="tambah_nama" type="text" required name="nama" value="<?php echo $result->nama?>" class="form-control">
+        </div>      
+        <div class="form-group col-md-6">
+            <label for="tambah_merk">Merk</label>
+            <input id="tambah_merk" type="text" required name="merk" value="<?php echo $result->merk?>" class="form-control">
+        </div>         
+        <div class="form-group col-md-6">
+            <label for="tambah_type">Type</label>
+            <input id="tambah_type" type="text" required name="type" value="<?php echo $result->type?>" class="form-control">
+        </div>   
+        <div class="form-group col-md-4">
+            <label class="control-label" for="total_bayar2">Harga</label>
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon2">Rp</span>
+                <input type="number" name="harga" required value="<?php echo $result->harga?>" id="harga" class="form-control" aria-describedby="basic-addon2">
+            </div>
+        </div>          
+        <div class="form-group col-md-3">
+            <label for="tambah_qty">Qty</label>
+            <input id="tambah_qty" type="number" required name="jumlah" value="<?php echo $result->jumlah?>" class="form-control">
+        </div>     
+        <div class="col-md-12 clearfix">
+            <hr>
+        </div> 
+        <div class="form-group col-md-6">
+            <label for="tambah_tanggal">Tanggal Pengeluaran</label>
+
+            <div class="input-group tanggal col-md-8" id="datetimepicker1">
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                <input name="tanggal" type="text" value="<?php echo date('m/d/Y', strtotime($result->tanggal))?>" class="form-control" id="tambah_tanggal">
+            </div>
+        </div>
+        <div class="form-group col-md-12">
+            <label for="tambah_keterangan">Keterangan</label>
+            <textarea id="tambah_keterangan" required name="keterangan" class="form-control"><?php echo $result->keterangan?></textarea>
+        </div>  
+    </div>
+    <div class="modal-footer">
+        <button type="submit" id="ubah_submit" class="btn btn-primary btn-lg btn-bold pull-left">Simpan</button>
+    </div>
+</form>
+<?php endforeach; ?>
+
+<script src="<?php echo base_url();?>asset/plugins/jquery/jquery.min.js"></script>
+<script src="<?php echo base_url();?>asset/plugins/bootstrap/bootstrap.min.js"></script>
+<script src="<?php echo base_url();?>asset/plugins/datepicker/moment.min.js"></script>
+<script src="<?php echo base_url();?>asset/plugins/datepicker/datetimepicker.min.js"></script>
+
+<!-- Menu Toggle Script -->
+<script>
+    $("#menu-toggle").click(function (e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+
+    // DATATABLE
+    $(document).ready(function () {
+        oTable = $('#tabel_data_siswa').DataTable({
+            "dom": '<"toolbar">frtip',
+            "bFilter": true
+        });
+
+        $('#cari_instruktur').keyup(function () {
+            oTable.search($(this).val()).draw();
+        });
+    });
+
+    document.getElementById("uploadBtn").onchange = function () {
+        document.getElementById("uploadFile").value = this.value;
+    };
+
+    // Datetimepicker
+    $('.tanggal').datetimepicker({
+        pickTime: false,
+        icons: {
+            time: "fa fa-clock-o",
+            date: "fa fa-calendar",
+            up: "fa fa-arrow-up",
+            down: "fa fa-arrow-down"
+        }
+    });
+</script>

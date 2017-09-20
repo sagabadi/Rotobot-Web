@@ -1,0 +1,36 @@
+<link href="<?php echo base_url(); ?>asset/plugins/bootstrap/bootstrap.min.css" rel="stylesheet">
+<link href="<?php echo base_url(); ?>asset/plugins/animate.css/animate.min.css" rel="stylesheet">
+<link href="<?php echo base_url(); ?>asset/plugins/datepicker/datetimepicker.css" rel="stylesheet">
+<link rel="stylesheet" href="<?php echo base_url(); ?>asset/css/main.css">
+<form class="form form-custom clearfix" method="post" action="<?php echo base_url('insertNilai/insert/'.$id);?>">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <p class="modal-title">Tambah Nilai Siswa</p>
+    </div>
+    <div class="modal-body p-t-15 row">            
+        <div class="form-group col-md-4">
+            <label for="tambah_nilai">Nilai</label>
+            <input id="tambah_nilai" type="number" name="nilai" class="form-control">
+        </div>    
+        <div class="form-group col-md-8">
+            <label for="tambah_keterangan">Keterangan</label>
+            <input id="tambah_keterangan" type="text" name="keterangan" class="form-control">
+        </div>  
+        <div class="form-group col-md-4">
+            <label for="tambah_level">Pindah Level ke</label>
+            <select id="tambah_level" name="level" class="form-control selectpicker show-menu-arrow">
+                <option selected></option>
+                <?php foreach($list->result() as $ko):?>
+                <option><?php echo $ko->kelas?></option>
+                <?php endforeach;?>                
+            </select>
+        </div>   
+    </div>
+    <div class="modal-footer">
+        <button type="submit" id="tambah_submit" class="btn btn-primary btn-lg btn-bold pull-left">Simpan</button>
+    </div>
+</form>
+
+<script src="<?php echo base_url();?>asset/plugins/jquery/jquery.min.js"></script>
+<script src="<?php echo base_url();?>asset/plugins/bootstrap/bootstrap.min.js"></script>
+<script src="<?php echo base_url();?>asset/plugins/datatable/js/jquery.dataTables.min.js"></script>

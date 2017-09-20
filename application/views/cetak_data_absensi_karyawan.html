@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="shortcut icon" href="<?php echo base_url();?>asset/images/favicon.png">
+        <title>Rotobot - Sistem Manajemen Course</title>
+        <style>
+            @media print {
+                .footer {page-break-after: always;}
+            }
+            body {
+                font-family: 'Times New Roman', Georgia, Serif;
+                width: 650px; 
+                margin: 0 auto;
+            }
+            h1, h2, h3, h4, h5, h6, p {
+                margin: 0 4px;
+            }
+            td {
+                padding: 2px 5px;
+            }
+            .check {
+                margin: 15px 3px;
+            }
+            table {
+                margin: 0 0 15px 0;
+                border-collapse: collapse;
+                border-style: solid;
+                border-color: black;
+            }
+            .dark-bg {
+                background: #efefef;
+            }
+            .filled {
+                display: inline-block;
+                background: #c0c0c0;
+                padding: 0 3px;
+                margin: 1px 0 0 4px;
+                min-height: 18px;
+                min-width: 30px;
+                width:auto;
+            }
+            .clearfix {
+                clear: both;
+                overflow: auto;
+            }
+            hr {
+                margin: 1px 5px;
+            }
+        </style>
+    </head>
+    <body >
+        <!-- PAGE 1 -->
+        <!-- HEADER -->
+        <table width="100%" border="3" style="text-align: center;">
+            <tr>
+                <td width="100px">
+                    <img src="<?php echo base_url();?>asset/images/rotobot.jpg" alt="Rotobot">
+                </td>
+
+                <td>
+                    <h4>
+                        Data Absensi Karyawan<br>
+                        Bulan Januari - Desember <?php echo date('Y')?>
+                    </h4>
+                    <h3 >
+                        Rotobot Robotic School                        
+                    </h3>
+                </td>
+
+                <td width="100px">
+
+                </td>
+            </tr>
+            <tr height="40px" class="dark-bg">
+                <td colspan="3">
+                    <h3>
+                        Jalan Kopral Sayom No.23, Klaten Utara – Klaten 57415. Jawa Tengah Indonesia                     
+                    </h3>
+                </td>            
+            </tr>
+        </table>
+        <!--/ HEADER -->
+
+        <!-- Table Karyawan -->
+        <table width="100%" border="3" align="center">
+            <thead>
+                <tr>
+                    <th>Nama Karyawan</th>
+                    <th>Jabatan</th>
+                    <th>Tanggal Masuk</th>
+                    <th>Jam Masuk</th>
+                    <th>Jam Pulang</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach($karyawan->result() as $result):?>
+                <tr>
+                    <td><?php echo $result->nama?></td>
+                    <td><?php echo $result->jabatan?></td>
+                    <td><?php echo date('d M Y', strtotime($result->tanggalmasuk))?></td>
+                    <td><?php echo date('H:i', strtotime($result->jammasuk))?></td>
+                    <td><?php echo date('H:i', strtotime($result->jampulang))?></td>
+                </tr>   
+                <?php endforeach;?>
+            </tbody>
+        </table>
+    </body>
+</html>
+<script>
+    window.load = print_d();
+    function print_d() {
+        window.print();
+    }
+</script>

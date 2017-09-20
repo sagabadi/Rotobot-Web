@@ -1,0 +1,45 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <p class="modal-title pull-left">Detail Data Barang</p>
+</div>
+<div class="modal-body p-t-15 row">
+    <?php foreach($barang->result() as $result):?>
+        <dl class="col-md-12">
+            <dt>Nama Barang</dt>
+            <dd><?php echo $result->nama?></dd>
+        </dl>
+        <dl class="col-md-6">
+            <dt>Merk</dt>
+            <dd><?php echo $result->merk?></dd>
+        </dl>
+        <dl class="col-md-6">
+            <dt>Type</dt>
+            <dd><?php echo $result->type?></dd>
+        </dl>
+        <dl class="col-md-6">
+            <dt>Harga</dt>
+            <dd>Rp <?php echo $result->harga?></dd>
+        </dl>
+        <dl class="col-md-6">
+            <dt>Qty</dt>
+            <dd><?php echo $result->jumlah?></dd>
+        </dl>      
+        <dl class="col-md-6">
+            <dt>Total</dt>
+            <dd>Rp <?php echo $result->total?></dd>
+        </dl>      
+        <div class="col-md-12 clearfix">
+            <hr>
+        </div>      
+        <dl class="col-md-6">
+            <dt>Tanggal Pengeluaran</dt>
+            <dd><?php echo date('d-m-Y',strtotime($result->tanggal))?></dd>
+        </dl>
+        <dl class="col-md-12">
+            <dt>Keterangan</dt>
+            <dd><?php echo $result->keterangan?></dd>
+        </dl>
+        <div class="modal-footer">
+        <a href="<?php echo base_url('CetakDataPengeluaran/cetak/'.$result->id_pengeluaran);?>" class="btn btn-primary btn-lg btn-bold  pull-right m-r-1">Cetak</a>
+        </div>
+    <?php endforeach;?>

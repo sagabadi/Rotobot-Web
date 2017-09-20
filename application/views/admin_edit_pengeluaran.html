@@ -1,0 +1,107 @@
+<link href="<?php echo base_url();?>asset/plugins/datatable/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="<?php echo base_url();?>assetplugins/bootstrap/bootstrap.min.css" rel="stylesheet">
+<link href="<?php echo base_url();?>asset/plugins/animate.css/animate.min.css" rel="stylesheet">
+<link href="<?php echo base_url();?>asset/plugins/datepicker/datetimepicker.css" rel="stylesheet">
+<link rel="stylesheet" href="asset/css/main.css">
+
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <p class="modal-title">Ubah Data Barang</p>
+</div>
+<?php foreach ($barang->result() as $result) : ?>
+    <?php echo form_open_multipart('AdminUbahPengeluaran/Update/'.$result->id_pengeluaran); ?>
+    <div class="modal-body p-t-15 row">
+        <div class="form-group col-md-12 ">
+            <label for="tambah_nama">Nama Barang</label>
+            <input id="tambah_nama" type="text" required name="nama" value="<?php echo $result->nama?>" class="form-control">
+        </div>      
+        <div class="form-group col-md-6">
+            <label for="tambah_merk">Merk</label>
+            <input id="tambah_merk" type="text" required name="merk" value="<?php echo $result->merk?>" class="form-control">
+        </div>         
+        <div class="form-group col-md-6">
+            <label for="tambah_type">Type</label>
+            <input id="tambah_type" type="text" required name="type" value="<?php echo $result->type?>" class="form-control">
+        </div>   
+        <div class="form-group col-md-4">
+            <label class="control-label" for="total_bayar2">Harga</label>
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon2">Rp</span>
+                <input type="number" required name="harga" value="<?php echo $result->harga?>" id="harga" class="form-control" aria-describedby="basic-addon2">
+            </div>
+        </div>          
+        <div class="form-group col-md-3">
+            <label for="tambah_qty">Qty</label>
+            <input id="tambah_qty" type="number" required name="jumlah" value="<?php echo $result->jumlah?>" class="form-control">
+        </div>     
+        <div class="col-md-12 clearfix">
+            <hr>
+        </div> 
+        <div class="form-group col-md-6">
+            <label for="tambah_tanggal">Tanggal Pengeluaran</label>
+
+            <div class="input-group tanggal col-md-8" id="datetimepicker1">
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                <input name="tanggal" type="text" value="<?php echo date('m/d/Y', strtotime($result->tanggal))?>" class="form-control" id="ubah_tanggal">
+            </div>
+        </div>
+        <div class="form-group col-md-12">
+            <label for="tambah_keterangan">Keterangan</label>
+            <textarea id="tambah_keterangan" name="keterangan" required class="form-control"><?php echo $result->keterangan?></textarea>
+        </div>  
+    </div>
+    <div class="modal-footer">
+        <button type="submit" id="ubah_submit" class="btn btn-primary btn-lg btn-bold pull-left">Simpan</button>
+    </div>
+    <?php echo form_close(); ?>
+<?php endforeach; ?>
+
+<script src="<?php echo base_url();?>asset/plugins/jquery/jquery.min.js"></script>
+<script src="<?php echo base_url();?>asset/plugins/bootstrap/bootstrap.min.js"></script>
+<script src="<?php echo base_url();?>asset/plugins/datatable/js/jquery.dataTables.min.js"></script>
+<script src="<?php echo base_url();?>asset/plugins/datepicker/moment.min.js"></script>
+<script src="<?php echo base_url();?>asset/plugins/datepicker/datetimepicker.min.js"></script>
+<script language="javascript">
+    $('body').on('hidden.bs.modal', '.modal', function () {
+        $(this).removeData('bs.modal');
+    });
+</script>
+<!-- Menu Toggle Script -->
+<script type="text/javascript">
+    $("#menu-toggle").click(function (e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+
+            // DATATABLE
+            $(document).ready(function () {
+                oTable = $('#tabel_data_siswa').DataTable({
+                    "dom": '<"toolbar">frtip',
+                    "bFilter": true
+                });
+
+                $('#cari_siswa').keyup(function () {
+                    oTable.search($(this).val()).draw();
+                });
+
+            });
+
+            document.getElementById("uploadBtn").onchange = function () {
+                document.getElementById("uploadFile").value = this.value;
+            };
+
+            // Datetimepicker
+            $('.tanggal').datetimepicker({
+                pickTime: false,
+                icons: {
+                    time: "fa fa-clock-o",
+                    date: "fa fa-calendar",
+                    up: "fa fa-arrow-up",
+                    down: "fa fa-arrow-down"
+                }
+            });
+            function confirmDialog(){
+                return confirm("Apakah Anda Yakin Ingin Menghapus Data Ini?")
+            }
+        </script>

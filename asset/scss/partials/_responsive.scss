@@ -1,0 +1,46 @@
+@media(min-width: $tablet-breakpoint) {
+	#wrapper {
+		padding-left: $sidebar-width;
+
+		#sidebar-wrapper {
+			width: $sidebar-width;
+	   		left: $sidebar-width;
+		}
+
+	    #page-content-wrapper {
+	        padding: 20px;
+		    position: relative;
+			height: 100%;
+	        #top-menu-bar {
+		    	padding-right: 50px;
+	    		margin-left: $sidebar-width;
+		    }
+	    }
+
+	    #menu-toggle {
+    		left: $sidebar-width;
+		}
+
+		&.toggled {
+			padding-left: 0;
+			#sidebar-wrapper {
+				width: 0;
+				left: 0;
+			}
+			#page-content-wrapper {
+		        position: relative;
+		        margin-right: 0;
+		        /*display: block;*/
+		        overflow: hidden;
+		        #top-menu-bar {
+			    	padding-right: 50px;
+		    		margin-left: 0;
+			    }
+		    }
+
+		    #menu-toggle {
+    			left: 0;
+			}
+		}
+	}
+}

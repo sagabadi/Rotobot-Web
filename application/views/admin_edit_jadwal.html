@@ -1,0 +1,70 @@
+<link href="<?php echo base_url(); ?>asset/plugins/bootstrap/bootstrap.min.css" rel="stylesheet">
+<link href="<?php echo base_url(); ?>asset/plugins/animate.css/animate.min.css" rel="stylesheet">
+<link href="<?php echo base_url(); ?>asset/plugins/datepicker/datetimepicker.css" rel="stylesheet">
+<link rel="stylesheet" href="<?php echo base_url(); ?>asset/css/main.css">
+
+<?php foreach ($jadwal->result() as $result) : ?>
+<?php echo form_open_multipart('AdminUbahJadwal/Update/'.$result->id_jadwal); ?>
+<div class="modal-body p-t-15 row">
+    <div class="form-group col-md-4">
+        <label for="tambah_jabatan">Hari</label>
+        <select id="tambah_jabatan" name="hari" class="form-control selectpicker show-menu-arrow">
+            <option selected>Senin</option>
+            <option>Selasa</option>
+            <option>Rabu</option>
+            <option>Kamis</option>
+            <option>Jumat</option>
+            <option>Sabtu</option>
+            <option>Minggu</option>
+        </select>
+    </div>       
+    <div class="form-group col-md-6">
+        <label for="tambah_merk">Jam</label>
+        <input id="tambah_merk" type="time" name="jam" class="form-control">
+    </div>                                     
+</div>
+<div class="modal-footer">
+    <button type="submit" id="tambah_submit" class="btn btn-primary btn-lg btn-bold pull-left">Simpan</button>
+</div>
+<?php echo form_close(); ?>
+<?php endforeach; ?>
+
+<script src="<?php echo base_url();?>asset/plugins/jquery/jquery.min.js"></script>
+<script src="<?php echo base_url();?>asset/plugins/bootstrap/bootstrap.min.js"></script>
+<script src="<?php echo base_url();?>asset/plugins/datepicker/moment.min.js"></script>
+<script src="<?php echo base_url();?>asset/plugins/datepicker/datetimepicker.min.js"></script>
+
+<!-- Menu Toggle Script -->
+<script>
+    $("#menu-toggle").click(function (e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+
+    // DATATABLE
+    $(document).ready(function () {
+        oTable = $('#tabel_data_siswa').DataTable({
+            "dom": '<"toolbar">frtip',
+            "bFilter": true
+        });
+
+        $('#cari_instruktur').keyup(function () {
+            oTable.search($(this).val()).draw();
+        });
+    });
+
+    document.getElementById("uploadBtn").onchange = function () {
+        document.getElementById("uploadFile").value = this.value;
+    };
+
+    // Datetimepicker
+    $('.tanggal').datetimepicker({
+        pickTime: false,
+        icons: {
+            time: "fa fa-clock-o",
+            date: "fa fa-calendar",
+            up: "fa fa-arrow-up",
+            down: "fa fa-arrow-down"
+        }
+    });
+</script>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="shortcut icon" href="<?php echo base_url();?>asset/images/favicon.png">
+        <title>Rotobot - Sistem Manajemen Course</title>
+
+        <!-- FAVICON -->
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+        <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+        <link rel="manifest" href="/manifest.json">
+        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#00943f">
+        <meta name="theme-color" content="#ffffff">
+        <!-- END FAVICON -->
+
+        <link href="<?php echo base_url();?>asset/plugins/datatable/css/jquery.dataTables.min.css" rel="stylesheet">
+        <link href="<?php echo base_url();?>asset/plugins/bootstrap/bootstrap.min.css" rel="stylesheet">
+        <link href="<?php echo base_url();?>asset/plugins/animate.css/animate.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="<?php echo base_url();?>asset/css/main.css">
+    </head>
+    <body>
+        <!-- wrapper -->
+        <div id="wrapper">
+            <!-- Sidebar -->
+            <div id="sidebar-wrapper" class="animated">
+                <ul class="sidebar-nav sidebar-group">
+                    <li class="sidebar-brand">
+                        <a href="#">
+                            Rotobot - Sistem Manajemen Course
+                        </a>
+                    </li>
+                    <li class="sidebar-item sidebar-text"><p>navigasi</p></li>
+                    <li class="sidebar-item">
+                        <a href="<?php echo base_url();?>HomeInstruktur" class="sidebar-link">Dashboard</a>
+                    </li> 
+                    <li class="sidebar-item">
+                        <a href="<?php echo base_url();?>ProfilInstruktur" class="sidebar-link">Profil</a>
+                    </li> 
+                    <li class="sidebar-item">
+                        <a href="<?php echo base_url();?>InstrukturAbsen" class="sidebar-link">Absen Siswa</a>
+                    </li> 
+                    <li class="sidebar-item">
+                        <a class="sidebar-link has-sub collapsed" data-toggle="collapse" data-parent=".sidebar-item" href="#dataNilai">Data Nilai</a>
+                        <ul id="dataNilai" class="collapse sublinks">
+                            <li><a href="<?php echo base_url();?>InstrukturNilai">Nilai Siswa</a></li>
+                        </ul>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link has-sub collapsed active" data-toggle="collapse" data-parent=".sidebar-item" href="#berkas">Berkas</a>
+                        <ul id="berkas" class="collapse sublinks">
+                            <li><a href="<?php echo base_url();?>InstrukturMateri">Materi Pembelajaran</a></li>
+                            <li><a href="<?php echo base_url();?>InstrukturRpp" class="sidebar-link active">Rencana Pelaksaan Pembelajaran</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <!-- /#sidebar-wrapper -->
+
+            <!-- Toggle Button -->
+            <a href="#menu-toggle" class="btn btn-default" id="menu-toggle"><i class="fa fa-bars"></i></a>
+            <!-- /Toggle Button -->
+
+            <!-- Page Content -->
+            <div id="page-content-wrapper">
+                <div class="container-fluid">
+                    <!-- Top Bar -->
+                    <div class="row">
+                        <nav id="top-menu-bar" class="navbar navbar-default navbar-fixed-top" role="navigation">
+                            <div class="container-fluid">
+                                <ul class="nav navbar-nav navbar-right" id="top-menu-item">
+                                    <li class="pull-right"><a href="<?php echo base_url();?>login/logout"><i class="fa fa-power-off"></i> Logout</a></li>
+                                    <li class="pull-right"><p class="navbar-text divider">|</p></li>
+                                    <li class="pull-right"><p class="navbar-text">Selamat datang, <a href="#" class="navbar-link"><?php echo $this->session->userdata('nama')?></a></p></li>
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
+                    <!-- /Top Bar -->
+
+                    <!-- Main Content -->
+
+                    <div id="main-content">
+                        <?php foreach($materi->result() as $result):?>
+                        <div class="row">
+                            <iframe src="<?php echo base_url('asset/materi/'.$result->file);?>" width="100%" height="500px" frameborder="0" allowtransparency="true"></iframe> 
+                        </div>
+                        <?php endforeach;?>
+                    </div>
+                    <!-- Main Content -->
+                </div>
+            </div>
+            <!-- /#page-content-wrapper -->
+        </div>
+        <!-- /#wrapper -->
+
+        <!-- Scripts -->
+        <script src="<?php echo base_url();?>asset/plugins/jquery/jquery.min.js"></script>
+        <script src="<?php echo base_url();?>asset/plugins/bootstrap/bootstrap.min.js"></script>
+        <script src="<?php echo base_url();?>asset/plugins/datatable/js/jquery.dataTables.min.js"></script>
+
+        <!-- Menu Toggle Script -->
+        <script>
+            $("#menu-toggle").click(function (e) {
+                e.preventDefault();
+                $("#wrapper").toggleClass("toggled");
+            });
+        </script>
+
+    </body>
+</html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="shortcut icon" href="asset/images/favicon.png">
+        <title>Rotobot - Sistem Manajemen Course</title>
+
+        <!-- FAVICON -->
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+        <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+        <link rel="manifest" href="/manifest.json">
+        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#00943f">
+        <meta name="theme-color" content="#ffffff">
+        <!-- END FAVICON -->
+
+        <link href="asset/plugins/datatable/css/jquery.dataTables.min.css" rel="stylesheet">
+        <link href="asset/plugins/bootstrap/bootstrap.min.css" rel="stylesheet">
+        <link href="asset/plugins/animate.css/animate.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="asset/css/main.css">
+    </head>
+    <body onload="startTime()">
+        <!-- wrapper -->
+        <div id="wrapper">
+            <!-- Sidebar -->
+            <div id="sidebar-wrapper" class="animated">
+                <ul class="sidebar-nav sidebar-group">
+                    <li class="sidebar-brand">
+                        <a href="#">
+                            Rotobot - Sistem Manajemen Course
+                        </a>
+                    </li>
+                    <li class="sidebar-item sidebar-text"><p>navigasi</p></li>
+                    <li class="sidebar-item">
+                        <a href="<?php echo base_url();?>HomeAdmin" class="sidebar-link active">Dashboard</a>
+                    </li> 
+                    <li class="sidebar-item">
+                        <a href="<?php echo base_url();?>ProfilAdmin" class="sidebar-link">Profil</a>
+                    </li> 
+                    <li class="sidebar-item">
+                        <a class="sidebar-link has-sub collapsed" data-toggle="collapse" data-parent=".sidebar-item" href="#masterData">Master Data</a>
+                        <ul id="masterData" class="collapse sublinks">
+                            <li><a href="<?php echo base_url();?>AdminDataInstruktur">Data Instruktur <span class="blue-text">(<?php echo $this->db->query("Select * from karyawan where jabatan = 'Instruktur Tetap' or jabatan = 'Instruktur Freelance'")->num_rows();?>)</span></a></li>
+                            <li><a href="<?php echo base_url();?>AdminDataKaryawan">Data Karyawan <span class="blue-text">(<?php echo $this->db->query("Select * from karyawan where not jabatan like 'Instruktur%'")->num_rows();?>)</span></a></li>
+                            <li><a href="<?php echo base_url();?>AdminDataSiswa">Data Siswa <span class="blue-text">(<?php echo $this->db->query("Select * from siswa ")->num_rows();?>)</span></a></li>
+                        </ul>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link has-sub collapsed" data-toggle="collapse" data-parent=".sidebar-item" href="#dataTransaksi">Data Transaksi</a>
+                        <ul id="dataTransaksi" class="collapse sublinks">
+                            <li><a href="<?php echo base_url();?>AdminTransaksiSiswa">Transaksi Siswa</a></li>
+                            <li><a href="<?php echo base_url();?>AdminTransaksiDataPengeluaran">Transaksi Pengeluaran</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <!-- /#sidebar-wrapper -->
+
+            <!-- Toggle Button -->
+            <a href="#menu-toggle" class="btn btn-default" id="menu-toggle"><i class="fa fa-bars"></i></a>
+            <!-- /Toggle Button -->
+
+            <!-- Page Content -->
+            <div id="page-content-wrapper">
+                <div class="container-fluid">
+                    <!-- Top Bar -->
+                    <div class="row">
+                        <nav id="top-menu-bar" class="navbar navbar-default navbar-fixed-top" role="navigation">
+                            <div class="container-fluid">
+                                <ul class="nav navbar-nav navbar-right" id="top-menu-item">
+                                    <li class="pull-right"><a href="<?php echo base_url();?>login/logout"><i class="fa fa-power-off"></i> Logout</a></li>
+                                    <li class="pull-right"><p class="navbar-text divider">|</p></li>
+                                    <li class="pull-right"><p class="navbar-text">Selamat datang, <a href="#" class="navbar-link"><?php echo $this->session->userdata('nama');?></a></p></li>
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
+                    <!-- /Top Bar -->
+
+                    <!-- Main Content -->
+                    <div id="main-content">
+                        <!-- breadcrumb -->
+                        <div class="row" >
+                            <ol class="breadcrumb">
+                                <li><a href="<?php echo base_url();?>HomeAdmin">Dashboard</a></li>
+                                <li class="active">Portal Absensi Karyawan</li>
+                            </ol>
+                        </div>
+                        <!-- breadcrumb -->
+
+                        <div class="row">
+                            <div class="main-title clearfix">
+                                <h1>Absen Karyawan</h1>
+                                <h2><p id="txt" class="red-text"></p></h2>
+                                <p><?php echo date("d F Y")?></p>
+                            </div>
+
+                            <hr/>
+
+                            <form role="form" method="POST" action="<?php echo base_url('AdminAbsensi/Absen');?>">
+                                <div class="row element">
+                                    <div class="form-group col-md-5">
+                                        <label for="username">Username Karyawan</label>
+                                        <input type="text" class="form-control input-normal" name="username" id="username" placeholder="Masukan Username"/>
+                                    </div>
+                                </div>
+                                <div class="row element">
+                                    <div class="form-group col-md-4">
+                                        <label for="jabatan">Jabatan</label>
+                                        <select class="form-control" placeholder="Pilih Jabatan" name="jabatan" id="jabatan">
+                                            <option>Administrator</option>
+                                            <option>Manager</option>
+                                            <option>Admin</option>
+                                            <option>Finance</option>
+                                            <option>Instruktur Tetap</option>
+                                            <option>Instruktur Freelance</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn custom btn-md btn-success">Submit</button>
+                            </form>
+
+                            <hr>
+
+                            <!-- Datatable -->
+                            <div class="col-md-12 element">
+                                <table id="absen" class="datatable table table-bordered" >
+                                    <thead>
+                                        <tr>
+                                            <th width="5%">No</th>
+                                            <th>Nama Karyawan</th>
+                                            <th>Jam Masuk</th>
+                                            <th>Jam Pulang</th>
+                                    </thead>
+                                    <tbody>
+                                        <?php $n = 0;?>
+                                        <?php foreach ($karyawan as $result ):?>
+                                        <tr>
+                                            <td><?php echo ++$n;?></td>
+                                            <td><?php echo $result->nama;?></td>
+                                            <td><?php echo date('H:i', strtotime($result->jammasuk))?></td>
+                                            <td><?php echo date('H:i', strtotime($result->jampulang))?></td>
+                                        </tr>
+                                        <?php endforeach;?>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- Datatable -->
+                        </div>
+                    </div>
+                    <!-- Main Content -->
+                </div>
+            </div>
+            <!-- /#page-content-wrapper -->
+        </div>
+        <!-- /#wrapper -->
+
+        <!-- Scripts -->
+        <script src="asset/plugins/jquery/jquery.min.js"></script>
+        <script src="asset/plugins/bootstrap/bootstrap.min.js"></script>
+        <script src="asset/plugins/datatable/js/jquery.dataTables.min.js"></script>
+
+        <!-- Menu Toggle Script -->
+        <script>
+        $("#menu-toggle").click(function (e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+
+        // DATATABLE
+        $(document).ready(function () {
+
+            $('#absen').DataTable({
+                "dom": '<"toolbar">frtip',
+                "pageLength": 10
+            });
+        });
+
+        function startTime()
+        {
+            var today = new Date();
+            var h = today.getHours();
+            var m = today.getMinutes();
+            var s = today.getSeconds();
+            // add a zero in front of numbers<10<br>
+            m = checkTime(m);
+            s = checkTime(s);
+            document.getElementById('txt').innerHTML = h + ":" + m + ":" + s;
+            t = setTimeout(function () {
+                startTime()
+            }, 500);
+        }
+
+        function checkTime(i)
+        {
+            if (i < 10)
+            {
+                i = "0" + i;
+            }
+            return i;
+        }
+        </script>
+
+    </body>
+</html>

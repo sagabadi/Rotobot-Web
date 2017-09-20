@@ -1,0 +1,37 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <p class="modal-title" id="myModalLabel">Data Honor</p>
+    <?php foreach($honor->result() as $result):?>
+    <p class="text-muted m-b-0"><?php echo $result->nama?> - <?php echo $result->jabatan?></p>
+    <?php endforeach;?>
+</div>
+<?php $total = 0;?>
+<div class="modal-body">
+    <table id="tabel_jadwal" class="table table-bordered" data-paging="true" data-filtering="true" data-sorting="true">
+        <thead>
+            <tr role="row">
+                <th>Tanggak Masuk</th>
+                <th>Level</th>
+                <th>Honor</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach($absen->result() as $result):?>
+            <tr>
+                <td><?php echo date('d F Y', strtotime($result->tanggalmasuk))?></td>
+                <td><?php echo $result->level?></td>
+                <td>Rp <?php echo $result->gaji?></td>
+            </tr> 
+            <?php endforeach;?>
+        </tbody>
+    </table>
+    <?php foreach($honor->result() as $result):?>
+    <p class="text-muted m-b-0">Total Honor : Rp <?php echo $result->gaji?></p>
+    <?php endforeach;?>
+</div>
+<div class="modal-footer">
+    <?php foreach($honor->result() as $result):?>
+    <a href="<?php echo base_url('CetakHonorPerInstruktur/cetak/'.$result->id_absen);?>" type="button" class="btn custom2 table-button btn-success btn-xs pull-right">Cetak</a>
+    <button type="button" class="btn custom2 table-button btn-grey btn-xs" data-dismiss="modal">Close</button>
+    <?php endforeach;?>
+</div>

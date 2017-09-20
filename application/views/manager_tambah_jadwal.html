@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="shortcut icon" href="<?php echo base_url();?>asset/images/favicon.png">
+        <title>Rotobot - Sistem Manajemen Course</title>
+        <link href="<?php echo base_url();?>asset/plugins/datatable/css/jquery.dataTables.min.css" rel="stylesheet">
+        <link href="<?php echo base_url();?>asset/plugins/bootstrap/bootstrap.min.css" rel="stylesheet">
+        <link href="<?php echo base_url();?>asset/plugins/animate.css/animate.min.css" rel="stylesheet">
+        <link href="<?php echo base_url();?>asset/plugins/datepicker/datetimepicker.css" rel="stylesheet">
+        <link rel="stylesheet" href="<?php echo base_url();?>asset/css/main.css">
+    </head>
+    <body>
+        <!-- wrapper -->
+        <div id="wrapper">
+            <!-- Sidebar -->
+            <div id="sidebar-wrapper" class="animated">
+                <ul class="sidebar-nav sidebar-group">
+                    <li class="sidebar-brand">
+                        <a href="#">
+                            Rotobot - Sistem Manajemen Course
+                        </a>
+                    </li>
+                    <li class="sidebar-item sidebar-text"><p>navigasi</p></li>
+                    <li class="sidebar-item">
+                        <a href="<?php echo base_url();?>HomeManager" class="sidebar-link">Dashboard</a>
+                    </li> 
+                    <li class="sidebar-item">
+                        <a href="<?php echo base_url();?>ProfilManager" class="sidebar-link">Profil</a>
+                    </li> 
+                    <li class="sidebar-item">
+                        <a class="sidebar-link has-sub collapsed active" data-toggle="collapse" data-parent=".sidebar-item" href="#masterData">Master Data</a>
+                        <ul id="masterData" class="collapse sublinks">
+                            <li><a href="<?php echo base_url();?>ManagerDataInstruktur">Data Instruktur <span class="blue-text">(9)</span></a></li>
+                            <li><a href="<?php echo base_url();?>ManagerDataKaryawan">Data Karyawan <span class="blue-text">(15)</span></a></li>
+                            <li><a href="<?php echo base_url();?>ManagerDataSiswa" class="sidebar-link active">Data Siswa <span class="blue-text">(20)</span></a></li>
+                        </ul>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link has-sub collapsed" data-toggle="collapse" data-parent=".sidebar-item" href="#dataAbsensi">Data Absensi</a>
+                        <ul id="dataAbsensi" class="collapse sublinks">
+                            <li><a href="<?php echo base_url();?>ManagerDataAbsensiInstruktur">Data Absensi Instruktur</a></li>
+                            <li><a href="<?php echo base_url();?>ManagerDataAbsensiKaryawan">Data Absensi Karyawan</a></li>
+                            <li><a href="<?php echo base_url();?>ManagerDataAbsensiSiswa">Data Absensi Siswa</a></li>
+                        </ul>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link has-sub collapsed" data-toggle="collapse" data-parent=".sidebar-item" href="#dataHonor">Data Honor</a>
+                        <ul id="dataHonor" class="collapse sublinks">
+                            <li><a href="<?php echo base_url();?>ManagerDataHonor">Data Honor</a></li>
+                            <li><a href="<?php echo base_url();?>ManagerDataHonorInstruktur">Data Instruktur</a></li>
+                            <li><a href="<?php echo base_url();?>ManagerDataHonorKaryawan">Data Karyawan</a></li>
+                        </ul>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link has-sub collapsed" data-toggle="collapse" data-parent=".sidebar-item" href="#berkas">Berkas</a>
+                        <ul id="berkas" class="collapse sublinks">
+                            <li><a href="<?php echo base_url();?>ManagerMateriPembelajaran">Materi Pembelajaran</a></li>
+                            <li><a href="<?php echo base_url();?>ManagerRencanaPembelajaran">Rencana Pelaksanaan Pembelajaran</a>
+                        </ul>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link has-sub collapsed" data-toggle="collapse" data-parent=".sidebar-item" href="#dataTransaksi">Data Transaksi</a>
+                        <ul id="dataTransaksi" class="collapse sublinks">
+                            <li><a href="<?php echo base_url();?>ManagerTransaksiPengeluaran">Transaksi Pengeluaran</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <!-- /#sidebar-wrapper -->
+
+            <!-- Toggle Button -->
+            <a href="#menu-toggle" class="btn btn-default" id="menu-toggle"><i class="fa fa-bars"></i></a>
+            <!-- /Toggle Button -->
+
+            <!-- Page Content -->
+            <div id="page-content-wrapper">
+                <div class="container-fluid">
+                    <!-- Top Bar -->
+                    <div class="row">
+                        <nav id="top-menu-bar" class="navbar navbar-default navbar-fixed-top" role="navigation">
+                            <div class="container-fluid">
+                                <ul class="nav navbar-nav navbar-right" id="top-menu-item">
+                                    <li class="pull-right"><a href="<?php echo base_url();?>login/logout"><i class="fa fa-power-off"></i> Logout</a></li>
+                                    <li class="pull-right"><p class="navbar-text divider">|</p></li>
+                                    <li class="pull-right"><p class="navbar-text">Selamat datang, <a href="#" class="navbar-link"><?php echo $this->session->userdata('nama');?></a></p></li>
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
+                    <!-- /Top Bar -->
+
+                    <!-- Main Content -->
+                    <div id="main-content">
+                        <!-- breadcrumb -->
+                        <div class="row" >
+                            <ol class="breadcrumb">
+                                <li><a href="<?php echo base_url();?>HomeManager">Dashboard</a></li>
+                                <li><a href="#">Master Data</a></li>
+                                <li><a href="#">Data Siswa</a></li>
+                                <li class="active">Tambah Jadwal Kursus</li>
+                            </ol>
+                        </div>
+                        <!-- breadcrumb -->
+
+                        <div class="row">
+                            <div class="main-title clearfix">
+                                <h1>Jadwal Kursus</h1>
+                            </div>
+
+                            <div class="row">
+                                <div class="toolbar form-inline pull-right">
+                                    <a href="#" type="button" data-toggle="modal" data-target="#modal_tambah" class="btn custom2 table-button btn-grey btn-xs form-control">Tambah Jadwal</a>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table class="table table-bordered" id="editableTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Hari</th>
+                                                <th>Waktu</th>
+                                                <th>Aksi</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php foreach($jadwal->result() as $result):?>
+                                            <tr>
+                                                <td><?php echo $result->hari?></td>
+                                                <td><?php echo date('H:i',strtotime($result->jam))?></td>
+                                                <td class="button-col">
+                                                    <ul class="list-inline m-b-0">
+                                                        <li>
+                                                            <a href="#" data-toggle="modal" data-target="#modal_ubah"><img src="<?php echo base_url();?>asset/images/icons/icon-pencil.png" data-toggle="tooltip" data-placement="bottom" title="Edit"/></a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" data-toggle="modal" data-target="#modal_hapus"><img src="<?php echo base_url();?>asset/images/icons/icon-trash.png" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Hapus"/></a>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            <?php endforeach;?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Main Content -->
+                </div>
+            </div>
+            <!-- /#page-content-wrapper -->
+        </div>
+        <div class="modal fade modal-custom" tabindex="-1" role="dialog" id="modal_tambah" aria-labelledby="modal_tambah" aria-hidden="true">
+            <div class="modal-dialog modal-custom" role="document">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <p class="modal-title">Tambah Jadwal</p>
+                    </div>
+                    <?php foreach($siswa->result() as $result):?>
+                    <?php echo form_open_multipart('ManagerTambahJadwalBaru/add/'.$result->id_siswa); ?>
+                    <div class="modal-body p-t-15 row">
+                        <div class="form-group col-md-4">
+                            <label for="tambah_jabatan">Hari</label>
+                            <select id="tambah_jabatan" name="hari" class="form-control selectpicker show-menu-arrow">
+                                <option selected>Senin</option>
+                                <option>Selasa</option>
+                                <option>Rabu</option>
+                                <option>Kamis</option>
+                                <option>Jumat</option>
+                                <option>Sabtu</option>
+                                <option>Minggu</option>
+                            </select>
+                        </div>       
+                        <div class="form-group col-md-6">
+                            <label for="tambah_merk">Jam</label>
+                            <input id="tambah_merk" type="time" name="jam" class="form-control">
+                        </div>                                     
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" id="tambah_submit" class="btn btn-primary btn-lg btn-bold pull-left">Simpan</button>
+                    </div>
+                    <?php echo form_close(); ?>
+                    <?php endforeach;?>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.MODAL -->
+        <!-- /#wrapper -->
+
+        <!-- Scripts -->
+        <script src="<?php echo base_url();?>asset/plugins/jquery/jquery.min.js"></script>
+        <script src="<?php echo base_url();?>asset/plugins/bootstrap/bootstrap.min.js"></script>
+        <script src="<?php echo base_url();?>asset/plugins/datatable/js/jquery.dataTables.min.js"></script>
+        <script src="<?php echo base_url();?>asset/plugins/datepicker/moment.min.js"></script>
+        <script src="<?php echo base_url();?>asset/plugins/datepicker/datetimepicker.min.js"></script>
+
+        <!-- Menu Toggle Script -->
+        <script type="text/javascript">
+            $("#menu-toggle").click(function (e) {
+                e.preventDefault();
+                $("#wrapper").toggleClass("toggled");
+            });
+
+            (function ($, window, document, undefined) {
+                var pluginName = "editable",
+                        defaults = {
+                            keyboard: true,
+                            dblclick: true,
+                            button: true,
+                            buttonSelector: ".edit",
+                            maintainWidth: true,
+                            dropdowns: {},
+                            edit: function () {},
+                            save: function () {},
+                            cancel: function () {}
+                        };
+
+                function editable(element, options) {
+                    this.element = element;
+                    this.options = $.extend({}, defaults, options);
+
+                    this._defaults = defaults;
+                    this._name = pluginName;
+
+                    this.init();
+                }
+
+                editable.prototype = {
+                    init: function () {
+                        this.editing = false;
+
+                        if (this.options.dblclick) {
+                            $(this.element)
+                                    .css('cursor', 'pointer')
+                                    .bind('dblclick', this.toggle.bind(this));
+                        }
+
+                        if (this.options.button) {
+                            $(this.options.buttonSelector, this.element)
+                                    .bind('click', this.toggle.bind(this));
+                        }
+                    },
+
+                    toggle: function (e) {
+                        e.preventDefault();
+
+                        this.editing = !this.editing;
+
+                        if (this.editing) {
+                            this.edit();
+                        } else {
+                            this.save();
+                        }
+                    },
+
+                    edit: function () {
+                        var instance = this,
+                                values = {};
+
+                        $('td[data-field]', this.element).each(function () {
+                            var input,
+                                    field = $(this).data('field'),
+                                    value = $(this).text(),
+                                    width = $(this).width();
+
+                            values[field] = value;
+
+                            $(this).empty();
+
+                            if (instance.options.maintainWidth) {
+                                $(this).width(width);
+                            }
+
+                            if (field in instance.options.dropdowns) {
+                                input = $('<select></select>');
+
+                                for (var i = 0; i < instance.options.dropdowns[field].length; i++) {
+                                    $('<option></option>')
+                                            .text(instance.options.dropdowns[field][i])
+                                            .appendTo(input);
+                                }
+                                ;
+
+                                input.val(value)
+                                        .data('old-value', value)
+                                        .dblclick(instance._captureEvent);
+                            } else {
+                                input = $('<input type="time" />')
+                                        .val(value)
+                                        .data('old-value', value)
+                                        .dblclick(instance._captureEvent);
+                            }
+
+                            input.appendTo(this);
+
+                            if (instance.options.keyboard) {
+                                input.keydown(instance._captureKey.bind(instance));
+                            }
+                        });
+
+                        this.options.edit.bind(this.element)(values);
+                    },
+
+                    save: function () {
+                        var instance = this,
+                                values = {};
+
+                        $('td[data-field]', this.element).each(function () {
+                            var value = $(':input', this).val();
+
+                            values[$(this).data('field')] = value;
+
+                            $(this).empty()
+                                    .text(value);
+                        });
+
+                        this.options.save.bind(this.element)(values);
+                    },
+
+                    cancel: function () {
+                        var instance = this,
+                                values = {};
+
+                        $('td[data-field]', this.element).each(function () {
+                            var value = $(':input', this).data('old-value');
+
+                            values[$(this).data('field')] = value;
+
+                            $(this).empty()
+                                    .text(value);
+                        });
+
+                        this.options.cancel.bind(this.element)(values);
+                    },
+
+                    _captureEvent: function (e) {
+                        e.stopPropagation();
+                    },
+
+                    _captureKey: function (e) {
+                        if (e.which === 13) {
+                            this.editing = false;
+                            this.save();
+                        } else if (e.which === 27) {
+                            this.editing = false;
+                            this.cancel();
+                        }
+                    }
+                };
+
+                $.fn[pluginName] = function (options) {
+                    return this.each(function () {
+                        if (!$.data(this, "plugin_" + pluginName)) {
+                            $.data(this, "plugin_" + pluginName,
+                                    new editable(this, options));
+                        }
+                    });
+                };
+
+            })(jQuery, window, document);
+
+            editTable();
+
+            //custome editable starts
+            function editTable() {
+
+                $(function () {
+                    var pickers = {};
+
+                    $('table tr').editable({
+                        dropdowns: {
+                            hari: ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu']
+                        },
+                        edit: function (values) {
+                            $(".edit i", this)
+                                    .removeClass('fa-pencil')
+                                    .addClass('fa-save')
+                                    .attr('title', 'Save');
+
+                            pickers[this] = new Pikaday({
+                                field: $("td[data-field=birthday] input", this)[0],
+                                format: 'MMM D, YYYY'
+                            });
+                        },
+                        save: function (values) {
+                            $(".edit i", this)
+                                    .removeClass('fa-save')
+                                    .addClass('fa-pencil')
+                                    .attr('title', 'Edit');
+
+                            if (this in pickers) {
+                                pickers[this].destroy();
+                                delete pickers[this];
+                            }
+                        },
+                        cancel: function (values) {
+                            $(".edit i", this)
+                                    .removeClass('fa-save')
+                                    .addClass('fa-pencil')
+                                    .attr('title', 'Edit');
+
+                            if (this in pickers) {
+                                pickers[this].destroy();
+                                delete pickers[this];
+                            }
+                        }
+                    });
+                });
+
+            }
+
+            $(".add-row").click(function () {
+                $("#editableTable").find("tbody tr:first").before("<tr><td data-field='hari'></td><td data-field='name'></td><td><a class='button button-small edit' title='Edit'><i class='fa fa-pencil'></i></a> <a class='button button-small' title='Delete'><i class='fa fa-trash'></i></a></td></tr>");
+                editTable();
+                setTimeout(function () {
+                    $("#editableTable").find("tbody tr:first td:last a[title='Edit']").click();
+                }, 200);
+
+                setTimeout(function () {
+                    $("#editableTable").find("tbody tr:first td:first input[type='text']").focus();
+                }, 300);
+
+                $("#editableTable").find("a[title='Delete']").unbind('click').click(function (e) {
+                    $(this).closest("tr").remove();
+                });
+
+            });
+
+            function myFunction() {
+
+            }
+
+            $("#editableTable").find("a[title='Delete']").click(function (e) {
+                var x;
+                if (confirm("Are you sure you want to delete entire row?") == true) {
+                    $(this).closest("tr").remove();
+                } else {
+
+                }
+            });
+
+
+        </script>
+
+    </body>
+</html>

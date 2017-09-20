@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="images/favicon.png">
+    <title>Rotobot - Sistem Manajemen Course</title>
+    <link href="plugins/datatable/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="plugins/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="plugins/animate.css/animate.min.css" rel="stylesheet">
+    <link href="plugins/bootstrap/plugins.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+  </head>
+<body>
+<!-- wrapper -->
+<div id="wrapper">
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper" class="animated">
+        <ul class="sidebar-nav sidebar-group">
+            <li class="sidebar-brand">
+                <a href="#">
+                    Rotobot - Sistem Manajemen Course
+                </a>
+            </li>
+            <li class="sidebar-item sidebar-text"><p>navigasi</p></li>
+            <li class="sidebar-item">
+              <a href="manager_dashboard.html" class="sidebar-link">Dashboard</a>
+            </li> 
+            <li class="sidebar-item">
+              <a href="manager_profil.html" class="sidebar-link">Profil</a>
+            </li> 
+            <li class="sidebar-item">
+                <a class="sidebar-link has-sub collapsed" data-toggle="collapse" data-parent=".sidebar-item" href="#masterData">Master Data</a>
+                <ul id="masterData" class="collapse sublinks">
+                    <li><a href="manager_data_instruktur.html">Data Instruktur <span class="blue-text">(9)</span></a></li>
+                    <li><a href="manager_data_karyawan.html">Data Karyawan <span class="blue-text">(15)</span></a></li>
+                    <li><a href="manager_data_siswa.html">Data Siswa <span class="blue-text">(20)</span></a></li>
+                </ul>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link has-sub collapsed" data-toggle="collapse" data-parent=".sidebar-item" href="#dataAbsensi">Data Absensi</a>
+                <ul id="dataAbsensi" class="collapse sublinks">
+                    <li><a href="manager_data_kehadiran_instruktur.html">Data Absensi Instruktur</a></li>
+                    <li><a href="manager_data_kehadiran_karyawan.html">Data Absensi Karyawan</a></li>
+                    <li><a href="manager_data_kehadiran_siswa.html">Data Absensi Siswa</a></li>
+                </ul>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link has-sub collapsed active" data-toggle="collapse" data-parent=".sidebar-item" href="#dataHonor">Data Honor</a>
+                <ul id="dataHonor" class="collapse sublinks">
+                    <li><a href="manager_data_honor_instruktur_f.html" class="sidebar-link active">Data Instruktur Freelance</a></li>
+                    <li><a href="manager_data_honor_instruktur_t.html">Data Instruktur Tetap</a></li>
+                    <li><a href="manager_data_honor_karyawan.html">Data Karyan</a></li>
+                </ul>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link has-sub collapsed" data-toggle="collapse" data-parent=".sidebar-item" href="#berkas">Berkas</a>
+                <ul id="berkas" class="collapse sublinks">
+                    <li><a href="manager_materi_pembelajaran.html">Materi Pembelajaran</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Toggle Button -->
+    <a href="#menu-toggle" class="btn btn-default" id="menu-toggle"><i class="fa fa-bars"></i></a>
+    <!-- /Toggle Button -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+          <!-- Top Bar -->
+            <div class="row">
+              <nav id="top-menu-bar" class="navbar navbar-default navbar-fixed-top" role="navigation">
+                <div class="container-fluid">
+                  <ul class="nav navbar-nav navbar-right" id="top-menu-item">
+                    <li class="pull-right"><a href="#"><i class="fa fa-power-off"></i> Logout</a></li>
+                    <li class="pull-right"><p class="navbar-text divider">|</p></li>
+                    <li class="pull-right"><p class="navbar-text">Selamat datang, <a href="#" class="navbar-link">Diah Ajeng</a></p></li>
+                  </ul>
+                </div>
+              </nav>
+            </div>
+          <!-- /Top Bar -->
+          
+          <!-- Main Content -->
+            <div id="main-content">
+                <!-- breadcrumb -->
+                <div class="row" >
+                    <ol class="breadcrumb">
+                      <li><a href="manager_dashboard.html">Dashboard</a></li>
+                      <li><a href="#">Data Honor</a></li>
+                      <li class="active">Data Honor Instruktur Freelance</li>
+                    </ol>
+                </div>
+                <!-- breadcrumb -->
+
+                <div class="row">
+                    <div class="main-title clearfix">
+                        <h1>Data Honor Instruktur Freelance</h1>
+                        <div class="toolbar form-inline pull-right">
+                            <div class="form-group search">
+                                <input type="text" class="form-control" id="cari_instruktur" placeholder='Cari Instruktur...'/>
+                                <i class="fa fa-search icon"></i>
+                            </div>
+                            <a href="#" type="button" data-toggle="modal" data-target="#modal_tambah" class="btn custom2 table-button btn-grey btn-xs form-control">Tambah Data Honor</a>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 element">
+                        <table id="tabel_data_honor_freelancer" class="datatable table table-bordered" >
+                            <thead>
+                                <tr>
+                                    <th>Level</th>
+                                    <th>Honor</th>
+                                    <th>Keterangan</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>001</td>
+                                    <td>Rp 20.000</td>
+                                    <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusm conseqlipsum.</td>
+                                    <td class="button-col">
+                                        <ul class="list-inline m-b-0">
+                                            <li>
+                                                <a href="#" data-toggle="modal" data-target="#modal_detail" class="text-muted2"><img src="images/icons/icon-eye.png" class="" data-toggle="tooltip" data-placement="bottom" title="Detail"/></a>
+                                            </li>
+                                            <li>
+                                                 <a href="#" data-toggle="modal" data-target="#modal_ubah"><img src="images/icons/icon-pencil.png" data-toggle="tooltip" data-placement="bottom" title="Edit"/></a>
+                                            </li>
+                                            <li>
+                                               <a href="#" data-toggle="modal" data-target="#modal_hapus"><img src="images/icons/icon-trash.png" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Hapus"/></a>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                    
+                                </tr>
+                                <tr>
+                                    <td>001</td>
+                                    <td>Rp 20.000</td>
+                                    <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusm conseqlipsum.</td>
+                                    <td class="button-col">
+                                        <ul class="list-inline m-b-0">
+                                            <li>
+                                                <a href="#" data-toggle="modal" data-target="#modal_detail" class="text-muted2"><img src="images/icons/icon-eye.png" class="" data-toggle="tooltip" data-placement="bottom" title="Detail"/></a>
+                                            </li>
+                                            <li>
+                                                 <a href="#" data-toggle="modal" data-target="#modal_ubah"><img src="images/icons/icon-pencil.png" data-toggle="tooltip" data-placement="bottom" title="Edit"/></a>
+                                            </li>
+                                            <li>
+                                               <a href="#" data-toggle="modal" data-target="#modal_hapus"><img src="images/icons/icon-trash.png" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Hapus"/></a>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                    
+                                </tr>
+                                <tr>
+                                    <td>001</td>
+                                    <td>Rp 20.000</td>
+                                    <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusm conseqlipsum.</td>
+                                    <td class="button-col">
+                                        <ul class="list-inline m-b-0">
+                                            <li>
+                                                <a href="#" data-toggle="modal" data-target="#modal_detail" class="text-muted2"><img src="images/icons/icon-eye.png" class="" data-toggle="tooltip" data-placement="bottom" title="Detail"/></a>
+                                            </li>
+                                            <li>
+                                                 <a href="#" data-toggle="modal" data-target="#modal_ubah"><img src="images/icons/icon-pencil.png" data-toggle="tooltip" data-placement="bottom" title="Edit"/></a>
+                                            </li>
+                                            <li>
+                                               <a href="#" data-toggle="modal" data-target="#modal_hapus"><img src="images/icons/icon-trash.png" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Hapus"/></a>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>001</td>
+                                    <td>Rp 20.000</td>
+                                    <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusm conseqlipsum.</td>
+                                    <td class="button-col">
+                                        <ul class="list-inline m-b-0">
+                                            <li>
+                                                <a href="#" data-toggle="modal" data-target="#modal_detail" class="text-muted2"><img src="images/icons/icon-eye.png" class="" data-toggle="tooltip" data-placement="bottom" title="Detail"/></a>
+                                            </li>
+                                            <li>
+                                                 <a href="#" data-toggle="modal" data-target="#modal_ubah"><img src="images/icons/icon-pencil.png" data-toggle="tooltip" data-placement="bottom" title="Edit"/></a>
+                                            </li>
+                                            <li>
+                                               <a href="#" data-toggle="modal" data-target="#modal_hapus"><img src="images/icons/icon-trash.png" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Hapus"/></a>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>001</td>
+                                    <td>Rp 20.000</td>
+                                    <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusm conseqlipsum.</td>
+                                    <td class="button-col">
+                                        <ul class="list-inline m-b-0">
+                                            <li>
+                                                <a href="#" data-toggle="modal" data-target="#modal_detail" class="text-muted2"><img src="images/icons/icon-eye.png" class="" data-toggle="tooltip" data-placement="bottom" title="Detail"/></a>
+                                            </li>
+                                            <li>
+                                                 <a href="#" data-toggle="modal" data-target="#modal_ubah"><img src="images/icons/icon-pencil.png" data-toggle="tooltip" data-placement="bottom" title="Edit"/></a>
+                                            </li>
+                                            <li>
+                                               <a href="#" data-toggle="modal" data-target="#modal_hapus"><img src="images/icons/icon-trash.png" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Hapus"/></a>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>001</td>
+                                    <td>Rp 20.000</td>
+                                    <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusm conseqlipsum.</td>
+                                    <td class="button-col">
+                                        <ul class="list-inline m-b-0">
+                                            <li>
+                                                <a href="#" data-toggle="modal" data-target="#modal_detail" class="text-muted2"><img src="images/icons/icon-eye.png" class="" data-toggle="tooltip" data-placement="bottom" title="Detail"/></a>
+                                            </li>
+                                            <li>
+                                                 <a href="#" data-toggle="modal" data-target="#modal_ubah"><img src="images/icons/icon-pencil.png" data-toggle="tooltip" data-placement="bottom" title="Edit"/></a>
+                                            </li>
+                                            <li>
+                                               <a href="#" data-toggle="modal" data-target="#modal_hapus"><img src="images/icons/icon-trash.png" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Hapus"/></a>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>001</td>
+                                    <td>Rp 20.000</td>
+                                    <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusm conseqlipsum.</td>
+                                    <td class="button-col">
+                                        <ul class="list-inline m-b-0">
+                                            <li>
+                                                <a href="#" data-toggle="modal" data-target="#modal_detail" class="text-muted2"><img src="images/icons/icon-eye.png" class="" data-toggle="tooltip" data-placement="bottom" title="Detail"/></a>
+                                            </li>
+                                            <li>
+                                                 <a href="#" data-toggle="modal" data-target="#modal_ubah"><img src="images/icons/icon-pencil.png" data-toggle="tooltip" data-placement="bottom" title="Edit"/></a>
+                                            </li>
+                                            <li>
+                                               <a href="#" data-toggle="modal" data-target="#modal_hapus"><img src="images/icons/icon-trash.png" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Hapus"/></a>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>001</td>
+                                    <td>Rp 20.000</td>
+                                    <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusm conseqlipsum.</td>
+                                    <td class="button-col">
+                                        <ul class="list-inline m-b-0">
+                                            <li>
+                                                <a href="#" data-toggle="modal" data-target="#modal_detail" class="text-muted2"><img src="images/icons/icon-eye.png" class="" data-toggle="tooltip" data-placement="bottom" title="Detail"/></a>
+                                            </li>
+                                            <li>
+                                                 <a href="#" data-toggle="modal" data-target="#modal_ubah"><img src="images/icons/icon-pencil.png" data-toggle="tooltip" data-placement="bottom" title="Edit"/></a>
+                                            </li>
+                                            <li>
+                                               <a href="#" data-toggle="modal" data-target="#modal_hapus"><img src="images/icons/icon-trash.png" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Hapus"/></a>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>001</td>
+                                    <td>Rp 20.000</td>
+                                    <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusm conseqlipsum.</td>
+                                    <td class="button-col">
+                                        <ul class="list-inline m-b-0">
+                                            <li>
+                                                <a href="#" data-toggle="modal" data-target="#modal_detail" class="text-muted2"><img src="images/icons/icon-eye.png" class="" data-toggle="tooltip" data-placement="bottom" title="Detail"/></a>
+                                            </li>
+                                            <li>
+                                                 <a href="#" data-toggle="modal" data-target="#modal_ubah"><img src="images/icons/icon-pencil.png" data-toggle="tooltip" data-placement="bottom" title="Edit"/></a>
+                                            </li>
+                                            <li>
+                                               <a href="#" data-toggle="modal" data-target="#modal_hapus"><img src="images/icons/icon-trash.png" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Hapus"/></a>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>001</td>
+                                    <td>Rp 20.000</td>
+                                    <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusm conseqlipsum.</td>
+                                    <td class="button-col">
+                                        <ul class="list-inline m-b-0">
+                                            <li>
+                                                <a href="#" data-toggle="modal" data-target="#modal_detail" class="text-muted2"><img src="images/icons/icon-eye.png" class="" data-toggle="tooltip" data-placement="bottom" title="Detail"/></a>
+                                            </li>
+                                            <li>
+                                                 <a href="#" data-toggle="modal" data-target="#modal_ubah"><img src="images/icons/icon-pencil.png" data-toggle="tooltip" data-placement="bottom" title="Edit"/></a>
+                                            </li>
+                                            <li>
+                                               <a href="#" data-toggle="modal" data-target="#modal_hapus"><img src="images/icons/icon-trash.png" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Hapus"/></a>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>001</td>
+                                    <td>Rp 20.000</td>
+                                    <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusm conseqlipsum.</td>
+                                    <td class="button-col">
+                                        <ul class="list-inline m-b-0">
+                                            <li>
+                                                <a href="#" data-toggle="modal" data-target="#modal_detail" class="text-muted2"><img src="images/icons/icon-eye.png" class="" data-toggle="tooltip" data-placement="bottom" title="Detail"/></a>
+                                            </li>
+                                            <li>
+                                                 <a href="#" data-toggle="modal" data-target="#modal_ubah"><img src="images/icons/icon-pencil.png" data-toggle="tooltip" data-placement="bottom" title="Edit"/></a>
+                                            </li>
+                                            <li>
+                                               <a href="#" data-toggle="modal" data-target="#modal_hapus"><img src="images/icons/icon-trash.png" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Hapus"/></a>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>001</td>
+                                    <td>Rp 20.000</td>
+                                    <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusm conseqlipsum.</td>
+                                    <td class="button-col">
+                                        <ul class="list-inline m-b-0">
+                                            <li>
+                                                <a href="#" data-toggle="modal" data-target="#modal_detail" class="text-muted2"><img src="images/icons/icon-eye.png" class="" data-toggle="tooltip" data-placement="bottom" title="Detail"/></a>
+                                            </li>
+                                            <li>
+                                                 <a href="#" data-toggle="modal" data-target="#modal_ubah"><img src="images/icons/icon-pencil.png" data-toggle="tooltip" data-placement="bottom" title="Edit"/></a>
+                                            </li>
+                                            <li>
+                                               <a href="#" data-toggle="modal" data-target="#modal_hapus"><img src="images/icons/icon-trash.png" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Hapus"/></a>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>001</td>
+                                    <td>Rp 20.000</td>
+                                    <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusm conseqlipsum.</td>
+                                    <td class="button-col">
+                                        <ul class="list-inline m-b-0">
+                                            <li>
+                                                <a href="#" data-toggle="modal" data-target="#modal_detail" class="text-muted2"><img src="images/icons/icon-eye.png" class="" data-toggle="tooltip" data-placement="bottom" title="Detail"/></a>
+                                            </li>
+                                            <li>
+                                                 <a href="#" data-toggle="modal" data-target="#modal_ubah"><img src="images/icons/icon-pencil.png" data-toggle="tooltip" data-placement="bottom" title="Edit"/></a>
+                                            </li>
+                                            <li>
+                                               <a href="#" data-toggle="modal" data-target="#modal_hapus"><img src="images/icons/icon-trash.png" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Hapus"/></a>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>001</td>
+                                    <td>Rp 20.000</td>
+                                    <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusm conseqlipsum.</td>
+                                    <td class="button-col">
+                                        <ul class="list-inline m-b-0">
+                                            <li>
+                                                <a href="#" data-toggle="modal" data-target="#modal_detail" class="text-muted2"><img src="images/icons/icon-eye.png" class="" data-toggle="tooltip" data-placement="bottom" title="Detail"/></a>
+                                            </li>
+                                            <li>
+                                                 <a href="#" data-toggle="modal" data-target="#modal_ubah"><img src="images/icons/icon-pencil.png" data-toggle="tooltip" data-placement="bottom" title="Edit"/></a>
+                                            </li>
+                                            <li>
+                                               <a href="#" data-toggle="modal" data-target="#modal_hapus"><img src="images/icons/icon-trash.png" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Hapus"/></a>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>001</td>
+                                    <td>Rp 20.000</td>
+                                    <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusm conseqlipsum.</td>
+                                    <td class="button-col">
+                                        <ul class="list-inline m-b-0">
+                                            <li>
+                                                <a href="#" data-toggle="modal" data-target="#modal_detail" class="text-muted2"><img src="images/icons/icon-eye.png" class="" data-toggle="tooltip" data-placement="bottom" title="Detail"/></a>
+                                            </li>
+                                            <li>
+                                                 <a href="#" data-toggle="modal" data-target="#modal_ubah"><img src="images/icons/icon-pencil.png" data-toggle="tooltip" data-placement="bottom" title="Edit"/></a>
+                                            </li>
+                                            <li>
+                                               <a href="#" data-toggle="modal" data-target="#modal_hapus"><img src="images/icons/icon-trash.png" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Hapus"/></a>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>001</td>
+                                    <td>Rp 20.000</td>
+                                    <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusm conseqlipsum.</td>
+                                    <td class="button-col">
+                                        <ul class="list-inline m-b-0">
+                                            <li>
+                                                <a href="#" data-toggle="modal" data-target="#modal_detail" class="text-muted2"><img src="images/icons/icon-eye.png" class="" data-toggle="tooltip" data-placement="bottom" title="Detail"/></a>
+                                            </li>
+                                            <li>
+                                                 <a href="#" data-toggle="modal" data-target="#modal_ubah"><img src="images/icons/icon-pencil.png" data-toggle="tooltip" data-placement="bottom" title="Edit"/></a>
+                                            </li>
+                                            <li>
+                                               <a href="#" data-toggle="modal" data-target="#modal_hapus"><img src="images/icons/icon-trash.png" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Hapus"/></a>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>001</td>
+                                    <td>Rp 20.000</td>
+                                    <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusm conseqlipsum.</td>
+                                    <td class="button-col">
+                                        <ul class="list-inline m-b-0">
+                                            <li>
+                                                <a href="#" data-toggle="modal" data-target="#modal_detail" class="text-muted2"><img src="images/icons/icon-eye.png" class="" data-toggle="tooltip" data-placement="bottom" title="Detail"/></a>
+                                            </li>
+                                            <li>
+                                                 <a href="#" data-toggle="modal" data-target="#modal_ubah"><img src="images/icons/icon-pencil.png" data-toggle="tooltip" data-placement="bottom" title="Edit"/></a>
+                                            </li>
+                                            <li>
+                                               <a href="#" data-toggle="modal" data-target="#modal_hapus"><img src="images/icons/icon-trash.png" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Hapus"/></a>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>001</td>
+                                    <td>Rp 20.000</td>
+                                    <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusm conseqlipsum.</td>
+                                    <td class="button-col">
+                                        <ul class="list-inline m-b-0">
+                                            <li>
+                                                <a href="#" data-toggle="modal" data-target="#modal_detail" class="text-muted2"><img src="images/icons/icon-eye.png" class="" data-toggle="tooltip" data-placement="bottom" title="Detail"/></a>
+                                            </li>
+                                            <li>
+                                                 <a href="#" data-toggle="modal" data-target="#modal_ubah"><img src="images/icons/icon-pencil.png" data-toggle="tooltip" data-placement="bottom" title="Edit"/></a>
+                                            </li>
+                                            <li>
+                                               <a href="#" data-toggle="modal" data-target="#modal_hapus"><img src="images/icons/icon-trash.png" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Hapus"/></a>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>001</td>
+                                    <td>Rp 20.000</td>
+                                    <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusm conseqlipsum.</td>
+                                    <td class="button-col">
+                                        <ul class="list-inline m-b-0">
+                                            <li>
+                                                <a href="#" data-toggle="modal" data-target="#modal_detail" class="text-muted2"><img src="images/icons/icon-eye.png" class="" data-toggle="tooltip" data-placement="bottom" title="Detail"/></a>
+                                            </li>
+                                            <li>
+                                                 <a href="#" data-toggle="modal" data-target="#modal_ubah"><img src="images/icons/icon-pencil.png" data-toggle="tooltip" data-placement="bottom" title="Edit"/></a>
+                                            </li>
+                                            <li>
+                                               <a href="#" data-toggle="modal" data-target="#modal_hapus"><img src="images/icons/icon-trash.png" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Hapus"/></a>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>001</td>
+                                    <td>Rp 20.000</td>
+                                    <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusm conseqlipsum.</td>
+                                    <td class="button-col">
+                                        <ul class="list-inline m-b-0">
+                                            <li>
+                                                <a href="#" data-toggle="modal" data-target="#modal_detail" class="text-muted2"><img src="images/icons/icon-eye.png" class="" data-toggle="tooltip" data-placement="bottom" title="Detail"/></a>
+                                            </li>
+                                            <li>
+                                                 <a href="#" data-toggle="modal" data-target="#modal_ubah"><img src="images/icons/icon-pencil.png" data-toggle="tooltip" data-placement="bottom" title="Edit"/></a>
+                                            </li>
+                                            <li>
+                                               <a href="#" data-toggle="modal" data-target="#modal_hapus"><img src="images/icons/icon-trash.png" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Hapus"/></a>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>001</td>
+                                    <td>Rp 20.000</td>
+                                    <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusm conseqlipsum.</td>
+                                    <td class="button-col">
+                                        <ul class="list-inline m-b-0">
+                                            <li>
+                                                <a href="#" data-toggle="modal" data-target="#modal_detail" class="text-muted2"><img src="images/icons/icon-eye.png" class="" data-toggle="tooltip" data-placement="bottom" title="Detail"/></a>
+                                            </li>
+                                            <li>
+                                                 <a href="#" data-toggle="modal" data-target="#modal_ubah"><img src="images/icons/icon-pencil.png" data-toggle="tooltip" data-placement="bottom" title="Edit"/></a>
+                                            </li>
+                                            <li>
+                                               <a href="#" data-toggle="modal" data-target="#modal_hapus"><img src="images/icons/icon-trash.png" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Hapus"/></a>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>001</td>
+                                    <td>Rp 20.000</td>
+                                    <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusm conseqlipsum.</td>
+                                    <td class="button-col">
+                                        <ul class="list-inline m-b-0">
+                                            <li>
+                                                <a href="#" data-toggle="modal" data-target="#modal_detail" class="text-muted2"><img src="images/icons/icon-eye.png" class="" data-toggle="tooltip" data-placement="bottom" title="Detail"/></a>
+                                            </li>
+                                            <li>
+                                                 <a href="#" data-toggle="modal" data-target="#modal_ubah"><img src="images/icons/icon-pencil.png" data-toggle="tooltip" data-placement="bottom" title="Edit"/></a>
+                                            </li>
+                                            <li>
+                                               <a href="#" data-toggle="modal" data-target="#modal_hapus"><img src="images/icons/icon-trash.png" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Hapus"/></a>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>001</td>
+                                    <td>Rp 20.000</td>
+                                    <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusm conseqlipsum.</td>
+                                    <td class="button-col">
+                                        <ul class="list-inline m-b-0">
+                                            <li>
+                                                <a href="#" data-toggle="modal" data-target="#modal_detail" class="text-muted2"><img src="images/icons/icon-eye.png" class="" data-toggle="tooltip" data-placement="bottom" title="Detail"/></a>
+                                            </li>
+                                            <li>
+                                                 <a href="#" data-toggle="modal" data-target="#modal_ubah"><img src="images/icons/icon-pencil.png" data-toggle="tooltip" data-placement="bottom" title="Edit"/></a>
+                                            </li>
+                                            <li>
+                                               <a href="#" data-toggle="modal" data-target="#modal_hapus"><img src="images/icons/icon-trash.png" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Hapus"/></a>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                 </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+            </div>
+          <!-- Main Content -->
+        </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+</div>
+<!-- /#wrapper -->
+
+<!-- MODAL: tambah honor -->
+<div class="modal fade modal-custom" tabindex="-1" role="dialog" id="modal_tambah" aria-labelledby="modal_tambah" aria-hidden="true">
+    <div class="modal-dialog modal-custom" role="document">
+        <div class="modal-content">
+            <form class="form form-custom clearfix">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <p class="modal-title">Tambah Honor Baru</p>
+                </div>
+                <div class="modal-body p-t-15 row">
+                    <div class="form-group col-md-4">
+                        <label for="tambah_level">Level</label>
+                        <input id="tambah_level" type="text" name="" class="form-control">
+                    </div>                   
+                    <div class="form-group col-md-4">
+                        <label for="tambah_honor">Honor</label>
+                        <input id="tambah_honor" type="text" name="" class="form-control">
+                    </div>    
+                    <div class="form-group col-md-12">
+                        <label for="tambah_keterangan">Keterangan</label>
+                        <input id="tambah_keterangan" type="text" name="" class="form-control">
+                    </div>       
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="tambah_submit" class="btn btn-primary btn-lg btn-bold pull-left">Simpan</button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.MODAL -->
+
+<!-- MODAL: detail honor -->
+<div class="modal fade modal-custom" tabindex="-1" role="dialog" id="modal_detail" aria-labelledby="modal_detail" aria-hidden="true">
+    <div class="modal-dialog modal-custom modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <p class="modal-title pull-left">Detail Data Honor</p>
+            </div>
+            <div class="modal-body p-t-15 row">
+                <dl class="col-md-6">
+                    <dt>Level</dt>
+                    <dd>001</dd>
+                </dl>
+                <dl class="col-md-6">
+                    <dt>Honor</dt>
+                    <dd>Rp 20.000</dd>
+                </dl>
+                <dl class="col-md-12">
+                    <dt>Keterangan</dt>
+                    <dd>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusm conseqlipsum.</dd>
+                </dl>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.MODAL -->
+
+<!-- MODAL: ubah honor -->
+<div class="modal fade modal-custom" tabindex="-1" role="dialog" id="modal_ubah" aria-labelledby="modal_ubah" aria-hidden="true">
+    <div class="modal-dialog modal-custom" role="document">
+        <div class="modal-content">
+            <form class="form form-custom clearfix">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <p class="modal-title">Ubah Data Honor</p>
+                </div>
+                <div class="modal-body p-t-15 row">
+                    <div class="form-group col-md-4">
+                        <label for="ubah_level">Level</label>
+                        <input id="ubah_level" type="text" name="" class="form-control" value="001" disabled>
+                    </div>          
+                    <div class="form-group col-md-4">
+                        <label for="ubah_honor">Honor</label>
+                        <input id="ubah_honor" type="text" name="" class="form-control" value="Rp 20.000">
+                        <span class="help-block">Disini tulisan error</span> 
+                    </div>    
+                    <div class="form-group col-md-12">
+                        <label for="ubah_keterangan">Keteragan</label>
+                        <input id="ubah_keterangan" type="text" name="" class="form-control" value="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusm conseqlipsum">
+                    </div>           
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="ubah_submit" class="btn btn-primary btn-lg btn-bold pull-left">Simpan</button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.MODAL -->
+
+<!-- Scripts -->
+<script src="plugins/jquery/jquery.min.js"></script>
+<script src="plugins/bootstrap/bootstrap.min.js"></script>
+<script src="plugins/datatable/js/jquery.dataTables.min.js"></script>
+<script src="plugins/bootstrap/plugins.js"></script>
+
+<!-- Menu Toggle Script -->
+<script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+
+    // DATATABLE
+    $(document).ready(function() {
+        oTable = $('#tabel_data_honor_freelancer').DataTable( {
+            "dom": '<"toolbar">frtip',
+             "bFilter": true
+        } );
+
+        $('#cari_karyawan').keyup(function(){
+            oTable.search($(this).val()).draw() ;
+        });
+    });
+
+    $(":file").jfilestyle({input: false});
+
+</script>
+
+</body>
+</html>

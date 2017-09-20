@@ -1,0 +1,48 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <p class="modal-title pull-left">Detail Data Siswa</p>
+</div>
+<div class="modal-body p-t-15 row">
+    <?php foreach($siswa->result() as $ko):?>
+        <dl class="col-md-6">                
+            <dt>Id Siswa</dt>
+            <dd class="text-bold"><?php echo $ko->id_siswa?></dd>
+        </dl>            
+        <dl class="col-md-6">
+            <dt>Nama Siswa</dt>
+            <dd><?php echo $ko->nama?></dd>
+        </dl>
+    <?php endforeach;?>
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-12">
+            <table class="table table-bordered" id="tabel_nilai">
+                <thead>
+                  <tr>
+                    <th>Pertemuan Ke</th>
+                    <th>Level</th>
+                    <th>Nilai</th>
+                    <th>Keterangan</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php $i=0;?>
+                <?php foreach($nilai->result() as $key):?>
+                  <tr>
+                      <td><?php echo ++$i;?></td>
+                      <td><?php echo $key->kelas?></td>
+                      <td><?php echo $key->nilai?></td>
+                      <td><?php echo $key->naik?></td>
+                  </tr>
+              <?php endforeach;?>
+          </tbody>
+      </table>
+  </div>
+</div>
+</div>
+</div>
+<div class="modal-footer">
+    <?php foreach($siswa->result() as $kay):?>
+        <a href="<?php echo base_url('CetakNilaiSiswa/cetak/'.$kay->id_siswa);?>" class="btn btn-primary btn-lg btn-bold  pull-right m-r-1">Cetak</a>
+    <?php endforeach;?>
+</div>

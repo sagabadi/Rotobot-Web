@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="asset/images/favicon.png">
+    <title>Rotobot - Sistem Manajemen Course</title>
+    <link href="asset/plugins/datatable/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="asset/plugins/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="asset/plugins/animate.css/animate.min.css" rel="stylesheet">
+    <link href="asset/plugins/bootstrap/plugins.css" rel="stylesheet">
+    <link rel="stylesheet" href="asset/css/main.css">
+  </head>
+<body>
+<!-- wrapper -->
+<div id="wrapper">
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper" class="animated">
+        <ul class="sidebar-nav sidebar-group">
+            <li class="sidebar-brand">
+                <a href="#">
+                    Rotobot - Sistem Manajemen Course
+                </a>
+            </li>
+            <li class="sidebar-item sidebar-text"><p>navigasi</p></li>
+            <li class="sidebar-item">
+                <a href="<?php echo base_url();?>HomeAdmin" class="sidebar-link">Dashboard</a>
+            </li> 
+            <li class="sidebar-item">
+                <a href="<?php echo base_url();?>ProfilAdmin" class="sidebar-link">Profil</a>
+            </li> 
+            <li class="sidebar-item">
+                <a class="sidebar-link has-sub collapsed" data-toggle="collapse" data-parent=".sidebar-item" href="#masterData">Master Data</a>
+                <ul id="masterData" class="collapse sublinks">
+                    <li><a href="<?php echo base_url();?>AdminDataInstruktur">Data Instruktur <span class="blue-text">(<?php echo $this->db->query("Select * from karyawan where jabatan = 'Instruktur Tetap' or jabatan = 'Instruktur Freelance'")->num_rows();?>)</span></a></li>
+                    <li><a href="<?php echo base_url();?>AdminDataKaryawan">Data Karyawan <span class="blue-text">(<?php echo $this->db->query("Select * from karyawan where not jabatan like 'Instruktur%'")->num_rows();?>)</span></a></li>
+                    <li><a href="<?php echo base_url();?>AdminDataSiswa">Data Siswa <span class="blue-text">(<?php echo $this->db->query("Select * from siswa ")->num_rows();?>)</span></a></li>
+                </ul>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link has-sub collapsed active" data-toggle="collapse" data-parent=".sidebar-item" href="#dataTransaksi">Data Transaksi</a>
+                <ul id="dataTransaksi" class="collapse sublinks">
+                    <li><a href="<?php echo base_url();?>AdminTransaksiSiswa" class="sidebar-link active">Transaksi Siswa</a></li>
+                    <li><a href="<?php echo base_url();?>AdminTransaksiDataPengeluaran">Transaksi Pengeluaran</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Toggle Button -->
+    <a href="#menu-toggle" class="btn btn-default" id="menu-toggle"><i class="fa fa-bars"></i></a>
+    <!-- /Toggle Button -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+          <!-- Top Bar -->
+            <div class="row">
+              <nav id="top-menu-bar" class="navbar navbar-default navbar-fixed-top" role="navigation">
+                <div class="container-fluid">
+                  <ul class="nav navbar-nav navbar-right" id="top-menu-item">
+                      <li class="pull-right"><a href="<?php echo base_url();?>login/logout"><i class="fa fa-power-off"></i> Logout</a></li>
+                    <li class="pull-right"><p class="navbar-text divider">|</p></li>
+                    <li class="pull-right"><p class="navbar-text">Selamat datang, <a href="#" class="navbar-link"><?php echo $this->session->userdata('nama');?></a></p></li>
+                  </ul>
+                </div>
+              </nav>
+            </div>
+          <!-- /Top Bar -->
+          
+          <!-- Main Content -->
+            <div id="main-content">
+                <!-- breadcrumb -->
+                <div class="row" >
+                    <ol class="breadcrumb">
+                        <li><a href="<?php echo base_url();?>HomeAdmin">Dashboard</a></li>
+                      <li><a href="#">Data Transaksi</a></li>
+                      <li class="active">Transaksi Siswa</li>
+                    </ol>
+                </div>
+                <!-- breadcrumb -->
+                
+                <div class="row" >
+                    <div class="main-title clearfix">
+                        <h1>Pembayaran Baru</h1>
+                    </div>
+
+                    <div class="col-md-12 element wizard">
+                        <div class="row">
+                            <form action="" method="POST" id="form-wizard"> <!-- LINK TO cetak_struk_pembayaran.html -->
+
+                                <!-- Wizard Nav -->
+                                <div class="col-md-3">
+                                    <ul class="nav wizard-nav" id="wizard-nav">
+                                        <li><a href="#kelas" data-toggle="tab"><p class="number">1</p>Kelas</a></li>
+                                        <li><a href="#detail" data-toggle="tab"><p class="number">2</p>Input Detail Pembayaran</a></li>
+                                    </ul>
+                                </div>
+                                <!-- /Wizard Nav -->
+
+                                <!-- Wizard Content -->
+                                <div class="col-md-9">
+                                    <div class="tab-content wizard-content">
+                                        <!-- STEP-1: Form Kelas -->
+                                        <div class="tab-pane fade in active" id="kelas">
+                                            <div class="row element">
+                                                <div class="form-group col-md-12">
+                                                    <label class="control-label" for="kelas1">Pilih Kelas</label>
+                                                    <select class="form-control" name="" title="Pilih Kategori Produk" id="kelas1">
+                                                        <option value="1">Kelas Kompetisi </option>
+                                                        <option value="2">Kelas Creation </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- /STEP-1: Form Kelas -->
+
+                                        <!-- STEP-2: Form Input Detail -->
+                                        <div class="tab-pane fade" id="detail">
+                                            <div class="row element">
+                                                <div class="form-group col-md-6">
+                                                    <label class="control-label" for="username2">Username Siswa</label>
+                                                    <input type="text" name="username2" class="form-control input-normal col-md-5" id="username2" placeholder="Masukan Username Siswa"/>
+                                                </div>
+                                            </div>
+                                            <div class="row element">
+                                                <div class="form-group col-md-6">
+                                                    <label class="control-label" for="namasiswa2">Nama Siswa</label>
+                                                    <input type="text" name="namasiswa2" class="form-control input-normal col-md-5" id="namasiswa2" placeholder="Nama Lengkap Siswa" disabled/>
+                                                </div>
+                                            </div>
+                                            <div class="row element">
+                                                <div class="form-group col-md-3">
+                                                    <label class="control-label" for="pembayaran2">Pembayaran ke</label>
+                                                    <input type="number" name="pembayaran2" class="form-control input-normal col-md-5" id="pembayaran2"/>
+                                                </div>
+                                            </div>
+                                            <div class="row element">
+                                                <div class="form-group col-md-2">
+                                                    <label class="control-label" for="level2">Level</label>
+                                                    <select class="form-control" name="" title="Pilih Level" id="level2">
+                                                        <option value="1">Logic 1</option>
+                                                        <option value="2">Logic 2</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="row element">
+                                                <div class="form-group col-md-3">
+                                                    <label class="control-label" for="total_bayar2">Total Bayar</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon" id="basic-addon2">Rp</span>
+                                                        <input type="number" name="total_bayar2" id="total_bayar2" class="form-control" placeholder="" aria-describedby="basic-addon2">
+                                                     </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- /STEP-2: Form Input Detail -->
+                                    </div>
+
+                                    <div class="clearfix"></div>
+                                    
+                                    <div class="wizard-footer ">
+                                        <div class="pull-right">
+                                            <input type='button' class='btn btn-previous custom btn-grey btn-md' name='previous' value='Previous' />
+                                            <input type='button' class='btn btn-next custom1 btn-primary btn-md' name='next' value='Next' />
+                                            <input type='submit' class='btn btn-submit custom btn-primary btn-md' name='submit' value='Submit Pembayaran' />
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>  
+                                </div>
+                                <!-- /Wizard Content -->
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+
+            </div>
+          <!-- Main Content -->
+        </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+</div>
+<!-- /#wrapper -->
+
+<!-- Scripts -->
+<script src="asset/plugins/jquery/jquery.min.js"></script>
+<script src="asset/plugins/bootstrap/bootstrap.min.js"></script>
+<script src="asset/plugins/datatable/js/jquery.dataTables.min.js"></script>
+<script src="asset/plugins/jquery.wizard/jquery.bootstrap.wizard.js"></script>
+<script src="asset/plugins/icheck/icheck.min.js"></script>
+<script src="asset/plugins/jquery.validation/jquery.validate.min.js"></script>
+<!-- <script src="js/validation.init.js"></script> -->
+<script src="asset/js/wizard.init.js"></script>
+<!-- Menu Toggle Script -->
+
+<script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+
+    // DATATABLE
+    $(document).ready(function() {
+        $('#form_wizard').find('.btn-next').click();
+         $('#example').DataTable( {
+            "dom": '<"toolbar">frtip',
+             "pageLength": 1
+        } );
+    });
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="shortcut icon" href="<?php echo base_url(); ?>asset/images/favicon.png">
+        <title>Rotobot - Sistem Manajemen Course</title>
+        <link href="<?php echo base_url(); ?>asset/plugins/datatable/css/jquery.dataTables.min.css" rel="stylesheet">
+        <link href="<?php echo base_url(); ?>asset/plugins/bootstrap/bootstrap.min.css" rel="stylesheet">
+        <link href="<?php echo base_url(); ?>asset/plugins/animate.css/animate.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="<?php echo base_url(); ?>asset/css/main.css">
+    </head>
+    <body>
+        <!-- wrapper -->
+        <div id="wrapper">
+            <!-- Sidebar -->
+            <div id="sidebar-wrapper" class="animated">
+                <ul class="sidebar-nav sidebar-group">
+                    <li class="sidebar-brand">
+                        <a href="#">
+                            Rotobot - Sistem Manajemen Course
+                        </a>
+                    </li>
+                    <li class="sidebar-item sidebar-text"><p>navigasi</p></li>
+                    <li class="sidebar-item">
+                        <a href="<?php echo base_url();?>HomeAdmin" class="sidebar-link">Dashboard</a>
+                    </li> 
+                    <li class="sidebar-item">
+                        <a href="<?php echo base_url();?>ProfilAdmin" class="sidebar-link">Profil</a>
+                    </li> 
+                    <li class="sidebar-item">
+                        <a class="sidebar-link has-sub collapsed active" data-toggle="collapse" data-parent=".sidebar-item" href="#masterData">Master Data</a>
+                        <ul id="masterData" class="collapse sublinks">
+                            <li><a href="<?php echo base_url();?>AdminDataInstruktur">Data Instruktur <span class="blue-text">(<?php echo $this->db->query("Select * from karyawan where jabatan = 'Instruktur Tetap' or jabatan = 'Instruktur Freelance'")->num_rows();?>)</span></a></li>
+                            <li><a href="<?php echo base_url();?>AdminDataKaryawan">Data Karyawan <span class="blue-text">(<?php echo $this->db->query("Select * from karyawan where not jabatan like 'Instruktur%'")->num_rows();?>)</span></a></li>
+                            <li><a href="<?php echo base_url();?>AdminDataSiswa">Data Siswa <span class="blue-text">(<?php echo $this->db->query("Select * from siswa")->num_rows();?>)</span></a></li>
+                        </ul>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link has-sub collapsed" data-toggle="collapse" data-parent=".sidebar-item" href="#dataTransaksi">Data Transaksi</a>
+                        <ul id="dataTransaksi" class="collapse sublinks">
+                            <li><a href="<?php echo base_url();?>AdminTransaksiSiswa">Transaksi Siswa</a></li>
+                            <li><a href="<?php echo base_url();?>AdminTransaksiDataPengeluaran">Transaksi Pengeluaran</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <!-- /#sidebar-wrapper -->
+
+            <!-- Toggle Button -->
+            <a href="#menu-toggle" class="btn btn-default" id="menu-toggle"><i class="fa fa-bars"></i></a>
+            <!-- /Toggle Button -->
+
+            <!-- Page Content -->
+            <div id="page-content-wrapper">
+                <div class="container-fluid">
+                    <!-- Top Bar -->
+                    <div class="row">
+                        <nav id="top-menu-bar" class="navbar navbar-default navbar-fixed-top" role="navigation">
+                            <div class="container-fluid">
+                                <ul class="nav navbar-nav navbar-right" id="top-menu-item">
+                                    <li class="pull-right"><a href="<?php echo base_url();?>login/logout"><i class="fa fa-power-off"></i> Logout</a></li>
+                                    <li class="pull-right"><p class="navbar-text divider">|</p></li>
+                                    <li class="pull-right"><p class="navbar-text">Selamat datang, <a href="#" class="navbar-link"><?php echo $this->session->userdata('nama');?></a></p></li>
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
+                    <!-- /Top Bar -->
+
+                    <!-- Main Content -->
+                    <div id="main-content">
+                        <!-- breadcrumb -->
+                        <div class="row" >
+                            <ol class="breadcrumb">
+                                <li><a href="<?php echo base_url();?>HomeAdmin">Dashboard</a></li>
+                                <li><a href="#">Master Data</a></li>
+                                <li class="active">Data Siswa</li>
+                            </ol>
+                        </div>
+                        <!-- breadcrumb -->
+
+                        <div class="row">
+                            <form action="">
+                                <?php foreach ($siswa->result() as $result) : ?>
+                                <div class="main-title clearfix">
+                                    <h1>Detail Data Siswa</h1>
+                                </div>
+
+                                <div class="col-xs-12">
+                                <?php
+                                    if ($result->foto == ''){
+                                    echo '<img src="asset/images/icons/icon-profile-placeholder.png" style="width: 10rem;">';
+                                    } else {
+                                    echo '<img  src="'.base_url('asset/images/Siswa/'.$result->foto).'" style="width: 13rem;">';
+                                    }
+                                    ?>
+                                </div>  
+
+                                <div class="col-md-12 element">
+                                    <p><strong>Nama Siswa</strong></p>
+                                    <p><?php echo $result->nama?></p>
+                                </div>
+                                
+                                <div class="col-md-12 element">
+                                    <p><strong>No Identitas</strong></p>
+                                    <p><?php echo $result->noidentitas?></p>
+                                </div>
+
+                                <div class="col-md-12 element">
+                                    <p><strong>TTL</strong></p>
+                                    <p><?php echo $result->tempatlahir?>, <?php echo date('d F Y', strtotime($result->tanggallahir))?></p>
+                                </div>
+
+                                <div class="col-md-12 element">
+                                    <p><strong>Jenis Kelamin</strong></p>
+                                    <p><?php echo $result->jeniskelamin?></p>
+                                </div>
+
+                                <hr>
+
+                                <div class="col-md-12 element">
+                                    <p><strong>Umur</strong></p>
+                                    <p><?php echo $this->session->userdata('email');?></p>
+                                </div>
+
+                                <div class="col-md-12 element">
+                                    <p><strong>Username</strong></p>
+                                    <p><?php echo $result->username?></p>
+                                </div>
+
+                                <div class="col-md-12 element">
+                                    <p><strong>No Hp</strong></p>
+                                    <p><?php echo $result->hp?></p>
+                                </div>
+
+                                <div class="col-md-12 element">
+                                    <p><strong>Email</strong></p>
+                                    <p><?php echo $result->email?></p>
+                                </div>
+                                <div class="col-md-12 element">
+                                    <p><strong>Alamat</strong></p>
+                                    <p><?php echo $result->alamat?></p>
+                                </div>
+
+                                <hr>
+
+                                <div class="row element">
+                                    <div class="col-md-12">
+                                        <a href="admin_ubah_profil.html" class="btn custom table-button btn-success btn-md pull-right">Ubah</a>
+                                    </div>
+                                </div>
+                                <?php endforeach; ?>
+                            </form>
+                        </div>
+                        <!-- /.row -->
+
+                    </div>
+                    <!-- Main Content -->
+                </div>
+            </div>
+            <!-- /#page-content-wrapper -->
+        </div>
+        <!-- /#wrapper -->
+
+        <!-- Scripts -->
+        <script src="<?php echo base_url(); ?>asset/plugins/jquery/jquery.min.js"></script>
+        <script src="<?php echo base_url(); ?>asset/plugins/bootstrap/bootstrap.min.js"></script>
+        <script src="<?php echo base_url(); ?>asset/plugins/datatable/js/jquery.dataTables.min.js"></script>
+
+        <!-- Menu Toggle Script -->
+        <script>
+            $("#menu-toggle").click(function (e) {
+                e.preventDefault();
+                $("#wrapper").toggleClass("toggled");
+            });
+
+            /* Datatable Absensi*/
+            var tabel_absensi = $('#tabel_absensi').DataTable({
+                'info': true,
+                'language': {
+                    'info': 'Menampilkan _START_-_END_ dari _TOTAL_ data absensi'
+                },
+            })
+        </script>
+
+    </body>
+</html>
