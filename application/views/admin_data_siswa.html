@@ -36,7 +36,7 @@
                         <a class="sidebar-link has-sub collapsed active" data-toggle="collapse" data-parent=".sidebar-item" href="#masterData">Master Data</a>
                         <ul id="masterData" class="collapse sublinks">
                             <li><a href="<?php echo base_url();?>AdminDataInstruktur">Data Instruktur <span class="blue-text">(<?php echo $this->db->query("Select * from karyawan where jabatan = 'Instruktur Tetap' or jabatan = 'Instruktur Freelance'")->num_rows();?>)</span></a></li>
-                            <li><a href="<?php echo base_url();?>AdminDataKaryawan">Data Karyawan <span class="blue-text">(<?php echo $this->db->query("Select * from karyawan where not jabatan like 'Instruktur%'")->num_rows();?>)</span></a></li>
+                            <li><a href="<?php echo base_url();?>AdminDataKaryawan">Data Karyawan <span class="blue-text">(<?php echo $this->db->query("Select * from karyawan where not jabatan like'Instruktur%' and not nama='Admin' and not nama = 'Administrator'")->num_rows();?>)</span></a></li>
                             <li><a href="<?php echo base_url();?>AdminDataSiswa" class="sidebar-link active">Data Siswa <span class="blue-text">(<?php echo $this->db->query("Select * from siswa")->num_rows();?>)</span></a></li>
                         </ul>
                     </li>

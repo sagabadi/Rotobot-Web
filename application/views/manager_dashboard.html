@@ -45,7 +45,7 @@
                     <a class="sidebar-link has-sub collapsed" data-toggle="collapse" data-parent=".sidebar-item" href="#masterData">Master Data</a>
                     <ul id="masterData" class="collapse sublinks">
                         <li><a href="<?php echo base_url();?>ManagerDataInstruktur">Data Instruktur <span class="blue-text">(<?php echo $this->db->query("Select * from karyawan where jabatan like 'Instruktur%'")->num_rows();?>)</span></a></li>
-                        <li><a href="<?php echo base_url();?>ManagerDataKaryawan">Data Karyawan <span class="blue-text">(<?php echo $this->db->query("Select * from karyawan where not jabatan like 'Instruktur%'")->num_rows();?>)</span></a></li>
+                        <li><a href="<?php echo base_url();?>ManagerDataKaryawan">Data Karyawan <span class="blue-text">(<?php echo $this->db->query("Select * from karyawan where not jabatan like 'Instruktur%' and not nama='Admin' and not nama = 'Administrator'")->num_rows();?>)</span></a></li>
                         <li><a href="<?php echo base_url();?>ManagerDataSiswa">Data Siswa <span class="blue-text">(<?php echo $this->db->query("Select * from siswa")->num_rows();?>)</span></a></li>
                     </ul>
                 </li>
@@ -117,178 +117,193 @@
                                 <?php $ins = $this->db->query("Select * from karyawan where jabatan like'Instruktur%'")->num_rows();?>
                                 <?php $sis = $this->db->query("Select * from siswa")->num_rows();?>
                                 <?php $abkar = $this->db->query("Select * from absenkaryawan join karyawan using(id_karyawan) where not jabatan like'Instruktur%' and tanggalmasuk = '$date'")->num_rows();?>
-                                <?php $kar = $this->db->query("Select * from karyawan where not jabatan like'Instruktur%'")->num_rows();?>
-                                <?php $preins = ($abins / $ins)*100;?>
-                                <?php $prekar = ($abkar / $kar)*100;?>
-                                <?php $presis = ($absis / $sis)*100;?>
-                                <p>Kehadiran Siswa</p>
-                                <div class="box-line"></div>
-                                <div class="box-number">
-                                    <p><?php echo number_format($presis,2)?>%</p>
-                                    <span>Persentase Kehadiran</span>
-                                </div>
-                                <div class="box-line"></div>
-                                <p class="box-text">Ada total <span class="blue-text"><?php echo $absis?></span> siswa yang hadir dari <span class="blue-text"><?php echo $sis?></span> siswa hari ini.</p>
-                                <a href="#" data-toggle="modal" data-target="#modal_siswa" class="btn custom btn-success btn-lg btn-block">Lihat Kehadiran</a>
-                            </div>
-                            <div class="col-lg-3 box animated fadeInDown">
-                                <p class="box-title">Kehadiran Instruktur</p>
-                                <div class="box-line"></div>
-                                <div class="box-number">
+                                <?php $kar = $this->db->query("Select * from karyawan where not jabatan like'Instruktur%' and not nama='Admin'")->num_rows();?>
+                                <?php
+                                if ($ins > 0) {
+                                $preins = ($abins / $ins)*100;
+                            } else {
+                            $preins = 0;
+                        }
+                        if ($kar > 0) {
+                        $prekar = ($abkar / $kar)*100;
+                    } else {
+                    $prekar = 0;
+                }
+                if ($sis > 0) {
+                $presis = ($absis / $sis)*100;
+            } else {
+            $presis = 0;
+        }
 
-
-                                    <p><?php echo number_format($preins,2);?>%</p>
-                                    <span>Persentase Kehadiran</span>
-                                </div>
-                                <div class="box-line"></div>
-                                <p class="box-text">Ada total <span class="blue-text"><?php echo $abins;?></span> instruktur yang hadir dari <span class="blue-text"><?php echo $ins?></span> instruktur hari ini.</p>
-                                <a href="#" data-toggle="modal" data-target="#modal_instruktur" class="btn custom btn-success btn-lg btn-block">Lihat Kehadiran</a>
-                            </div>
-                            <div class="col-lg-3 box animated fadeInDown">
-                                <p>Kehadiran Karyawan</p>
-                                <div class="box-line"></div>
-                                <div class="box-number">
-                                    <p><?php echo number_format($prekar,2)?>%</p>
-                                    <span>Persentase Kehadiran</span>
-                                </div>
-                                <div class="box-line"></div>
-                                <p class="box-text">Ada total <span class="blue-text"><?php echo $abkar?></span> karyawan yang hadir dari <span class="blue-text"><?php echo $kar?></span> karyawan hari ini.</p>
-                                <a href="#" data-toggle="modal" data-target="#modal_karyawan" class="btn custom btn-success btn-lg btn-block">Lihat Kehadiran</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Main Content -->
-                </div>
-            </div>
-            <!-- /#page-content-wrapper -->
+        ?>
+        <p>Kehadiran Siswa</p>
+        <div class="box-line"></div>
+        <div class="box-number">
+            <p><?php echo number_format($presis,2)?>%</p>
+            <span>Persentase Kehadiran</span>
         </div>
-        <div class="modal fade" id="modal_siswa" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <p class="modal-title" id="myModalLabel">Data Kehadiran Siswa Hari Ini</p>
-                    </div>
-                    <div class="modal-body">
-                        <table id="tabel_siswa" class="table table-bordered" data-paging="true" data-filtering="true" data-sorting="true">
-                            <thead>
-                                <tr role="row">
-                                    <th>Nama Lengkap</th>
-                                    <th>Tanggal Masuk</th>
-                                    <th>Jam Masuk</th>
-                                    <th>Jam Pulang</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <?php foreach($siswa->result() as $result):?>
-                                        <td><?php echo $result->nama?></td>
-                                        <td><?php echo date('d M Y', strtotime($result->tanggalmasuk))?></td>
-                                        <td><?php echo date('H:i', strtotime($result->jammasuk))?></td>
-                                        <td><?php echo date('H:i', strtotime($result->jampulang))?></td>
-                                    </tr>     
-                                <?php endforeach;?>   
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.MODAL -->
+        <div class="box-line"></div>
+        <p class="box-text">Ada total <span class="blue-text"><?php echo $absis?></span> siswa yang hadir dari <span class="blue-text"><?php echo $sis?></span> siswa hari ini.</p>
+        <a href="#" data-toggle="modal" data-target="#modal_siswa" class="btn custom btn-success btn-lg btn-block">Lihat Kehadiran</a>
+    </div>
+    <div class="col-lg-3 box animated fadeInDown">
+        <p class="box-title">Kehadiran Instruktur</p>
+        <div class="box-line"></div>
+        <div class="box-number">
 
-        <!-- MODAL: kehadiran karyawan -->
-        <div class="modal fade" id="modal_karyawan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <p class="modal-title" id="myModalLabel">Data Kehadiran Karyawan Hari Ini</p>
-                    </div>
-                    <div class="modal-body">
-                        <table id="tabel_karyawan" class="table table-bordered" data-paging="true" data-filtering="true" data-sorting="true">
-                            <thead>
-                                <tr role="row">
-                                    <th>Id Karyawan</th>
-                                    <th>Nama Lengkap</th>
-                                    <th>Tanggal Masuk</th>
-                                    <th>Jam Masuk</th>
-                                    <th>Jam Pulang</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach($karyawan->result() as $result):?>
-                                    <tr>
-                                        <td><?php echo $result->id_karyawan?></td>
-                                        <td><?php echo $result->nama?></td>
-                                        <td><?php echo date('d M Y', strtotime($result->tanggalmasuk))?></td>
-                                        <td><?php echo date('H:i', strtotime($result->jammasuk))?></td>
-                                        <td><?php echo date('H:i', strtotime($result->jampulang))?></td>
-                                    </tr>        
-                                <?php endforeach;?>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.MODAL -->
 
-        <!-- MODAL: kehadiran instruktur -->
-        <div class="modal fade" id="modal_instruktur" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <p class="modal-title" id="myModalLabel">Data Kehadiran Instruktur Hari Ini</p>
-                    </div>
-                    <div class="modal-body">
-                        <table id="tabel_instruktur" class="table table-bordered" data-paging="true" data-filtering="true" data-sorting="true">
-                            <thead>
-                                <tr role="row">
-                                    <th>Id Instruktur</th>
-                                    <th>Nama Lengkap</th>
-                                    <th>Tanggal Masuk</th>
-                                    <th>Jam Masuk</th>
-                                    <th>Jam Pulang</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach($instruktur->result() as $result):?>
-                                    <tr>
-                                        <td><?php echo $result->id_karyawan?></td>
-                                        <td><?php echo $result->nama?></td>
-                                        <td><?php echo date('d M Y', strtotime($result->tanggalmasuk))?></td>
-                                        <td><?php echo date('H:i', strtotime($result->jammasuk))?></td>
-                                        <td><?php echo date('H:i', strtotime($result->jampulang))?></td>
-                                    </tr>
-                                <?php endforeach;?>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.MODAL -->
-        <!-- /#wrapper -->
+            <p><?php echo number_format($preins,2);?>%</p>
+            <span>Persentase Kehadiran</span>
+        </div>
+        <div class="box-line"></div>
+        <p class="box-text">Ada total <span class="blue-text"><?php echo $abins;?></span> instruktur yang hadir dari <span class="blue-text"><?php echo $ins?></span> instruktur hari ini.</p>
+        <a href="#" data-toggle="modal" data-target="#modal_instruktur" class="btn custom btn-success btn-lg btn-block">Lihat Kehadiran</a>
+    </div>
+    <div class="col-lg-3 box animated fadeInDown">
+        <p>Kehadiran Karyawan</p>
+        <div class="box-line"></div>
+        <div class="box-number">
+            <p><?php echo number_format($prekar,2)?>%</p>
+            <span>Persentase Kehadiran</span>
+        </div>
+        <div class="box-line"></div>
+        <p class="box-text">Ada total <span class="blue-text"><?php echo $abkar?></span> karyawan yang hadir dari <span class="blue-text"><?php echo $kar?></span> karyawan hari ini.</p>
+        <a href="#" data-toggle="modal" data-target="#modal_karyawan" class="btn custom btn-success btn-lg btn-block">Lihat Kehadiran</a>
+    </div>
+</div>
+</div>
+<!-- Main Content -->
+</div>
+</div>
+<!-- /#page-content-wrapper -->
+</div>
+<div class="modal fade" id="modal_siswa" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <p class="modal-title" id="myModalLabel">Data Kehadiran Siswa Hari Ini</p>
+            </div>
+            <div class="modal-body">
+                <table id="tabel_siswa" class="table table-bordered" data-paging="true" data-filtering="true" data-sorting="true">
+                    <thead>
+                        <tr role="row">
+                            <th>Nama Lengkap</th>
+                            <th>Tanggal Masuk</th>
+                            <th>Jam Masuk</th>
+                            <th>Jam Pulang</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <?php foreach($siswa->result() as $result):?>
+                                <td><?php echo $result->nama?></td>
+                                <td><?php echo date('d M Y', strtotime($result->tanggalmasuk))?></td>
+                                <td><?php echo date('H:i', strtotime($result->jammasuk))?></td>
+                                <td><?php echo date('H:i', strtotime($result->jampulang))?></td>
+                            </tr>     
+                        <?php endforeach;?>   
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.MODAL -->
 
-        <!-- Scripts -->
-        <script src="asset/plugins/jquery/jquery.min.js"></script>
-        <script src="asset/plugins/bootstrap/bootstrap.min.js"></script>
-        <script src="asset/plugins/datatable/js/jquery.dataTables.min.js"></script>
+<!-- MODAL: kehadiran karyawan -->
+<div class="modal fade" id="modal_karyawan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <p class="modal-title" id="myModalLabel">Data Kehadiran Karyawan Hari Ini</p>
+            </div>
+            <div class="modal-body">
+                <table id="tabel_karyawan" class="table table-bordered" data-paging="true" data-filtering="true" data-sorting="true">
+                    <thead>
+                        <tr role="row">
+                            <th>Id Karyawan</th>
+                            <th>Nama Lengkap</th>
+                            <th>Tanggal Masuk</th>
+                            <th>Jam Masuk</th>
+                            <th>Jam Pulang</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach($karyawan->result() as $result):?>
+                            <tr>
+                                <td><?php echo $result->id_karyawan?></td>
+                                <td><?php echo $result->nama?></td>
+                                <td><?php echo date('d M Y', strtotime($result->tanggalmasuk))?></td>
+                                <td><?php echo date('H:i', strtotime($result->jammasuk))?></td>
+                                <td><?php echo date('H:i', strtotime($result->jampulang))?></td>
+                            </tr>        
+                        <?php endforeach;?>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.MODAL -->
 
-        <!-- Menu Toggle Script -->
-        <script>
-            $("#menu-toggle").click(function (e) {
-                e.preventDefault();
-                $("#wrapper").toggleClass("toggled");
-            });
-        </script>
+<!-- MODAL: kehadiran instruktur -->
+<div class="modal fade" id="modal_instruktur" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <p class="modal-title" id="myModalLabel">Data Kehadiran Instruktur Hari Ini</p>
+            </div>
+            <div class="modal-body">
+                <table id="tabel_instruktur" class="table table-bordered" data-paging="true" data-filtering="true" data-sorting="true">
+                    <thead>
+                        <tr role="row">
+                            <th>Id Instruktur</th>
+                            <th>Nama Lengkap</th>
+                            <th>Tanggal Masuk</th>
+                            <th>Jam Masuk</th>
+                            <th>Jam Pulang</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach($instruktur->result() as $result):?>
+                            <tr>
+                                <td><?php echo $result->id_karyawan?></td>
+                                <td><?php echo $result->nama?></td>
+                                <td><?php echo date('d M Y', strtotime($result->tanggalmasuk))?></td>
+                                <td><?php echo date('H:i', strtotime($result->jammasuk))?></td>
+                                <td><?php echo date('H:i', strtotime($result->jampulang))?></td>
+                            </tr>
+                        <?php endforeach;?>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.MODAL -->
+<!-- /#wrapper -->
 
-    </body>
-    </html>
+<!-- Scripts -->
+<script src="asset/plugins/jquery/jquery.min.js"></script>
+<script src="asset/plugins/bootstrap/bootstrap.min.js"></script>
+<script src="asset/plugins/datatable/js/jquery.dataTables.min.js"></script>
+
+<!-- Menu Toggle Script -->
+<script>
+    $("#menu-toggle").click(function (e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+</script>
+
+</body>
+</html>

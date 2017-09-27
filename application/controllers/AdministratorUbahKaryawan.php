@@ -55,4 +55,8 @@ class AdministratorUbahKaryawan extends CI_Controller {
         }
     }
 
+    public function UpdateEmail($id) {
+
+    }
+
 }

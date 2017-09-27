@@ -56,5 +56,17 @@ class AdminUbahKaryawan extends CI_Controller {
             redirect('AdminDataKaryawan','refresh');
         }
     }
+    
+    public function UpdateEmail($id) {
+        $email = $this->input->post('email');
+        if ($email != '') {
+            $this->db->query("Update email set email = '$email' where id_email = $id");
+            echo '<script>alert("Data Berhasil Diubah");</script>';
+            redirect("AdminEmail",'refresh');
+        } else {
+            echo '<script>alert("Isi Data Dengan Benar !!");</script>';
+            redirect("AdminEmail",'refresh');
+        }
+    }
 
 }

@@ -2,13 +2,12 @@
 <link href="<?php echo base_url(); ?>asset/plugins/animate.css/animate.min.css" rel="stylesheet">
 <link href="<?php echo base_url(); ?>asset/plugins/datepicker/datetimepicker.css" rel="stylesheet">
 <link rel="stylesheet" href="<?php echo base_url(); ?>asset/css/main.css">
-
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <p class="modal-title">Ubah Data Karyawan</p>
+</div>
 <?php foreach ($barang->result() as $result) : ?>
-<form class="form form-custom clearfix" method="post" action="<?php echo base_url('ManagerUbahPengeluaran/Update/'.$result->id_pengeluaran);?>">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <p class="modal-title">Ubah Data Barang</p>
-    </div>
+    <?php echo form_open_multipart('ManagerUbahPengeluaran/Update/'.$result->id_pengeluaran); ?>
     <div class="modal-body p-t-15 row">
         <div class="form-group col-md-12 ">
             <label for="tambah_nama">Nama Barang</label>
@@ -26,7 +25,7 @@
             <label class="control-label" for="total_bayar2">Harga</label>
             <div class="input-group">
                 <span class="input-group-addon" id="basic-addon2">Rp</span>
-                <input type="number" name="harga" required value="<?php echo $result->harga?>" id="harga" class="form-control" aria-describedby="basic-addon2">
+                <input type="number" required name="harga" value="<?php echo $result->harga?>" id="harga" class="form-control" aria-describedby="basic-addon2">
             </div>
         </div>          
         <div class="form-group col-md-3">
@@ -41,20 +40,26 @@
 
             <div class="input-group tanggal col-md-8" id="datetimepicker1">
                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                <input name="tanggal" type="text" value="<?php echo date('m/d/Y', strtotime($result->tanggal))?>" class="form-control" id="tambah_tanggal">
+                <input name="tanggal" type="text" value="<?php echo date('m/d/Y', strtotime($result->tanggal))?>" class="form-control" id="ubah_tanggal">
             </div>
         </div>
         <div class="form-group col-md-12">
             <label for="tambah_keterangan">Keterangan</label>
-            <textarea id="tambah_keterangan" required name="keterangan" class="form-control"><?php echo $result->keterangan?></textarea>
+            <textarea id="tambah_keterangan" name="keterangan" required class="form-control"><?php echo $result->keterangan?></textarea>
         </div>  
+        <div class="form-group col-md-4">
+            <input id="uploadBtn" type="hidden" name="foto" class="upload" accept=".jpg,.gif,.png,.jpeg" multiple/>
+        </div>  
+        <div class="col-md-12 clearfix">
+            <hr>
+        </div> 
+
     </div>
     <div class="modal-footer">
-        <button type="submit" id="ubah_submit" class="btn btn-primary btn-lg btn-bold pull-left">Simpan</button>
+    <button type="submit" id="ubah_submit" class="btn btn-primary btn-lg btn-bold pull-left">Simpan</button>
     </div>
-</form>
+    <?php echo form_close(); ?>
 <?php endforeach; ?>
-
 <script src="<?php echo base_url();?>asset/plugins/jquery/jquery.min.js"></script>
 <script src="<?php echo base_url();?>asset/plugins/bootstrap/bootstrap.min.js"></script>
 <script src="<?php echo base_url();?>asset/plugins/datepicker/moment.min.js"></script>

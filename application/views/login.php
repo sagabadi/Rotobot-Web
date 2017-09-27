@@ -77,11 +77,7 @@
                             <div class="form-group col-md-8">
                                 <label for="tambah_username">Username</label>
                                 <input id="tambah_username" type="search" id="autocomplete1" name="username" class="form-control">
-                            </div>    
-                            <div class="form-group col-md-8">
-                                <label for="tambah_nama">Nama Siswa</label>
-                                <input id="tambah_nama" type="text" id="v_jurusan" name="" class="form-control" disabled>
-                            </div>         
+                            </div>            
                             <div class="form-group col-md-8">
                                 <label for="tambah_norek">No Rekening Pengirim</label>
                                 <input id="tambah_norek" type="text" name="norek" class="form-control">

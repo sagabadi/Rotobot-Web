@@ -17,7 +17,7 @@ class AdminDataKaryawan extends CI_Controller {
         $nama1 = $this->session->userdata('nama');
         $id = $this->session->userdata('ids');
         $name = $this->db->query("Select username from karyawan where nama = '$nama1'")->num_rows();
-        $karyawan = $this->db->query("Select *from karyawan where not jabatan like 'Instruktur%'");
+        $karyawan = $this->db->query("Select *from karyawan where not jabatan like 'Instruktur%' and not nama = 'Admin' and not nama = 'Administrator'");
         $data['karyawan'] = $karyawan;
         
         if ($name > 0) {

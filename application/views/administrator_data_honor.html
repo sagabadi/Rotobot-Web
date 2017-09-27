@@ -45,7 +45,7 @@
                     <a class="sidebar-link has-sub collapsed" data-toggle="collapse" data-parent=".sidebar-item" href="#masterData">Master Data</a>
                     <ul id="masterData" class="collapse sublinks">
                         <li><a href="<?php echo base_url();?>AdministratorDataInstruktur">Data Instruktur <span class="blue-text">(<?php echo $this->db->query("Select * from karyawan where jabatan like 'Instruktur%'")->num_rows();?>)</span></a></li>
-                        <li><a href="<?php echo base_url();?>AdministratorDataKaryawan">Data Karyawan <span class="blue-text">(<?php echo $this->db->query("Select * from karyawan where not jabatan like 'Instruktur%'")->num_rows();?>)</span></a></li>
+                        <li><a href="<?php echo base_url();?>AdministratorDataKaryawan">Data Karyawan <span class="blue-text">(<?php echo $this->db->query("Select * from karyawan where not jabatan like 'Instruktur%' and not nama='Admin' and not nama = 'Administrator'")->num_rows();?>)</span></a></li>
                         <li><a href="<?php echo base_url();?>AdministratorDataSiswa">Data Siswa <span class="blue-text">(<?php echo $this->db->query("Select * from siswa")->num_rows();?>)</span></a></li>
                         <li><a href="<?php echo base_url();?>AdministratorDataOwner">Data Owner <span class="blue-text">(<?php echo $this->db->query("Select * from owner")->num_rows();?>)</span></a></li>
                     </ul>

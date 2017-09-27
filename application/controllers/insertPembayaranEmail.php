@@ -67,19 +67,21 @@ class insertPembayaranEmail extends CI_Controller {
    $config['wordwrap'] = TRUE;
 
  //memanggil library email dan set konfigurasi untuk pengiriman email
-
+   $emil = $this->db->query("Select * from email");
    $this->email->initialize($config);
    
  //konfigurasi pengiriman kotak di view ke pengiriman email di gmail
    $this->email->from('bagasunknown@gmail.com');
-   $this->email->to('diahajengdwi@gmail.com');
-   $this->email->subject('Rotobot');
-   $this->email->message('Diterima pada tanggal : '.$date.' dari username : '.$username.' dengan nomor rekening : '.$norek.'. Nominal yang dibayar adalah : Rp.'.$bayar);
-   $this->email->attach('./asset/images/Pembayaran/'.$file.'.jpg');
-   $this->email->attach('./asset/images/Pembayaran/'.$file.'.png');
-   $this->email->attach('./asset/images/Pembayaran/'.$file.'.jpeg');
-   if($this->email->send())
-   {
+   foreach($emil->result() as $key) {
+    $this->email->to($key->email);
+    }
+$this->email->subject('Rotobot');
+$this->email->message('Diterima pada tanggal : '.$date.' dari username : '.$username.' dengan nomor rekening : '.$norek.'. Nominal yang dibayar adalah : Rp.'.$bayar);
+$this->email->attach('./asset/images/Pembayaran/'.$file.'.jpg');
+$this->email->attach('./asset/images/Pembayaran/'.$file.'.png');
+$this->email->attach('./asset/images/Pembayaran/'.$file.'.jpeg');
+if($this->email->send())
+{
     echo '<script>alert("Data Telah Dikirimkan Ke Admin Rotobot. Akun Anda Akan Aktif Setelah Mendapat Konfirmasi Dari Admin Rotobot");</script>';
     redirect('login','refresh');
 }else{

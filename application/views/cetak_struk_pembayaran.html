@@ -1,61 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="">
-        <meta name="author" content="">
-        <link rel="shortcut icon" href="<?php echo base_url();?>asset/images/favicon.png">
-        <title>Rotobot - Sistem Manajemen Course</title>
-    	<style>
-    		.header{
-			    font-size: 1rem;
-			    background: #f32626;
-			    height: 2rem;
-			    padding-top: .2rem;
-			    padding-bottom: 0;
-			    overflow: hidden;
-			    -webkit-transition: all 0.3s ease;
-			    transition: all 0.3s ease;
-    		}
-			.wrapper {
-				width: 800px;
-				position: relative;
-				margin: 0 auto;
-				font-family: 'Tahoma', sans-serif;
-			}
-			.center {
-				text-align: center;
-			}
-			h1, h2, h3, h4, h5, ol {
-				margin: 0;
-			}
-			ol {
-				padding-left: 15px;
-			}
-			.v {
-				vertical-align: top;
-			}
-			.date {
-				float: right;
-				position: relative;
-				top: 5px;
-			}
-			.terbilang{
-				position: relative;
-			    border-radius: .25rem;
-			    border: 1px solid rgba(0,0,0,.125);
-			    padding: 1rem;
-			    border-collapse: collapse;
-    	</style>
-    </head>
-    <body>
-    	<div class="header">
-    		
-    	</div>
-    	<?php foreach($bayar->result() as $key):?>
-    	<div class="wrapper">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<link rel="shortcut icon" href="<?php echo base_url();?>asset/images/favicon.png">
+	<title>Rotobot - Sistem Manajemen Course</title>
+	<style>
+		.header{
+			font-size: 1rem;
+			background: #f32626;
+			height: 2rem;
+			padding-top: .2rem;
+			padding-bottom: 0;
+			overflow: hidden;
+			-webkit-transition: all 0.3s ease;
+			transition: all 0.3s ease;
+		}
+		.wrapper {
+			width: 800px;
+			position: relative;
+			margin: 0 auto;
+			font-family: 'Tahoma', sans-serif;
+		}
+		.center {
+			text-align: center;
+		}
+		h1, h2, h3, h4, h5, ol {
+			margin: 0;
+		}
+		ol {
+			padding-left: 15px;
+		}
+		.v {
+			vertical-align: top;
+		}
+		.date {
+			float: right;
+			position: relative;
+			top: 5px;
+		}
+		.terbilang{
+			position: relative;
+			border-radius: .25rem;
+			border: 1px solid rgba(0,0,0,.125);
+			padding: 1rem;
+			border-collapse: collapse;
+		</style>
+	</head>
+	<body>
+		<div class="header">
+
+		</div>
+		<?php 
+		function terbilang($i) {
+		$huruf = array("","Satu","Dua","Tiga","Empat","Lima","Enam","Tujuh","Delapan","Sembilan","Sepuluh","Sebelas");
+		if ($i < 12) return "".$huruf[$i];
+		elseif ($i < 20) return terbilang($i - 10) . " Belas";
+		elseif ($i < 100) return terbilang($i / 10) . " Puluh";
+		elseif ($i < 200) return "Seratus ".terbilang($i-100);
+		elseif ($i < 1000) return terbilang($i/100) . " Ratus " . terbilang($i % 100);
+		elseif ($i < 2000) return "Seribu " . terbilang($i-1000);
+		elseif ($i < 1000000) return terbilang($i / 1000) . " Ribu ". terbilang($i % 1000);
+		elseif ($i < 1000000000) return terbilang($i / 1000000)." Juta ". terbilang($i % 1000000);   
+	}
+	?>
+	<?php foreach($bayar->result() as $key):?>
+		<div class="wrapper">
 			<div class="center">
 				
 				<h1>
@@ -79,65 +92,68 @@
 					<td class="v">:</td>
 					<td class="v">
 						<small>
-						<strong><?php echo $key->nama?>, </strong><i><?php echo $key->rekomendasikelas?></i>
-					</td>
-				</tr>
-				<tr>
-					<td class="v"><strong>UANG SEJUMLAH </strong></td>
-					<td class="v">:</td>
-					<td class="v">
-						Rp <?php echo $key->totalbayar?>
-					</td>
-				</tr>
-				<tr>
-					<td class="terbilang">
-					<small>
-						<p><span>TERBILANG : </span> <br>
-						Tiga Ratus Lima Puluh Ribu Rupiah</p>
-					</small>
-				</td>	
-				</tr>
-				<tr>
-					<td class="v"><strong>UNTUK PEMBAYARAN KE </strong></td>
-					<td class="v">:</td>
-					<td class="v">
-						<strong><?php echo $key->ke?></strong>
-					</td>
-				</tr>
-				<tr>
-					<td class="v"><strong>SISWA PEMBAYARAN SELANJUTNYA </strong></td>
-					<td class="v">:</td>
-					<td class="v">
-						<strong>Rp <?php echo $key->totalbayar?></strong><br>
-					</td>
-				</tr>
-			</table>
-			<div class="date">
-				<small>
-					<table>
+							<strong><?php echo $key->nama?>, </strong><i><?php echo $key->rekomendasikelas?></i>
+						</td>
+					</tr>
+					<tr>
+						<td class="v"><strong>UANG SEJUMLAH </strong></td>
+						<td class="v">:</td>
+						<td class="v">
+							Rp <?php echo $key->totalbayar?>
+						</td>
+					</tr>
+					<tr>
+					<?php 
+					$terbilang = ucwords(terbilang($key->totalbayar));
+					?>
+						<td class="terbilang">
+							<small>
+								<p><span>TERBILANG : </span> <br>
+									<?php echo $terbilang?> Rupiah</p>
+								</small>
+							</td>	
+						</tr>
 						<tr>
+							<td class="v"><strong>UNTUK PEMBAYARAN KE </strong></td>
+							<td class="v">:</td>
 							<td class="v">
-								<strong>KLATEN, <?php echo date('d F Y')?></strong><br>
+								<strong><?php echo $key->ke?></strong>
 							</td>
 						</tr>
 						<tr>
+							<td class="v"><strong>SISWA PEMBAYARAN SELANJUTNYA </strong></td>
+							<td class="v">:</td>
 							<td class="v">
-								<br><br><br>
+								<strong>Rp <?php echo $key->totalbayar?></strong><br>
 							</td>
-						</tr>
-						<tr>
-							<td align="center"><strong><?php echo $this->session->userdata('nama')?></strong></td>
 						</tr>
 					</table>
-				</small>
-			</div>
-		</div>
-	<?php endforeach;?>
-    </body>
-</html>
-<script>
-    window.load = print_d();
-    function print_d(){
-        window.print();
-    }
-</script>
+					<div class="date">
+						<small>
+							<table>
+								<tr>
+									<td class="v">
+										<strong>KLATEN, <?php echo date('d F Y')?></strong><br>
+									</td>
+								</tr>
+								<tr>
+									<td class="v">
+										<br><br><br>
+									</td>
+								</tr>
+								<tr>
+									<td align="center"><strong><?php echo $this->session->userdata('nama')?></strong></td>
+								</tr>
+							</table>
+						</small>
+					</div>
+				</div>
+			<?php endforeach;?>
+		</body>
+		</html>
+		<script>
+			window.load = print_d();
+			function print_d(){
+				window.print();
+			}
+		</script>

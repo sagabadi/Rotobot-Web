@@ -25,7 +25,8 @@ class AdministratorUbahMateri extends CI_Controller {
         $this->load->library('upload', $config);
         if ($level != '' && $pertemuan != 0) {
             $this->db->query("Update materi set pertemuanke= $pertemuan,level = '$level' where id_materi = $id");
-            redirect('AdministratorRencanaPembelajaran');            
+            echo '<script>alert("Data Berhasil Diubah");</script>';
+            redirect('AdministratorRencanaPembelajaran','refresh');            
         } else if ($level != '' && $pertemuan != 0 && $this->upload->do_upload('file')) {
             $this->load->library('upload', $config);
             $name = $this->upload->data();

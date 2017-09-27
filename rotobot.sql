@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 20, 2017 at 04:04 PM
+-- Generation Time: Sep 27, 2017 at 02:04 PM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 5.6.28
 
@@ -45,7 +45,8 @@ INSERT INTO `absenkaryawan` (`id_absen`, `jammasuk`, `jampulang`, `tanggalmasuk`
 (18, '00:49:00', '00:51:00', '2017-09-14', 131, 2),
 (22, '23:48:00', '15:03:00', '2017-09-15', 131, 2),
 (23, '15:03:00', '00:00:00', '2017-09-16', 131, 2),
-(24, '20:50:00', '00:00:00', '2017-09-20', 133, 6);
+(24, '20:50:00', '00:00:00', '2017-09-20', 133, 6),
+(25, '02:55:00', '00:00:00', '2017-09-21', 135, 3);
 
 -- --------------------------------------------------------
 
@@ -120,13 +121,6 @@ CREATE TABLE `detailsiswa` (
   `id_siswa` int(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `detailsiswa`
---
-
-INSERT INTO `detailsiswa` (`id_detail`, `hubungipretest`, `tanggalpretest`, `balaspretest`, `materi`, `datangpretest`, `nilaipretest`, `alasan1`, `rekomendasikelas`, `lunas1`, `formulir`, `kartusiswa`, `buku`, `presensi`, `lunas2`, `alasan2`, `lunas3`, `alasan3`, `kaos`, `tas`, `kit`, `sertifikat`, `id_siswa`) VALUES
-(1, 'Membalas', '2017-09-20', 'Tidak', 'asdasd', 'Tidak', 90, '', 'Logic 1', 'Ya', 'Ya', 'Ya', 'Ya', 'Ya', 'Ya', '', 'Ya', '', 'Ya', 'Ya', 'Ya', 'Sudah', 101);
-
 -- --------------------------------------------------------
 
 --
@@ -137,6 +131,14 @@ CREATE TABLE `email` (
   `id_email` int(6) NOT NULL,
   `email` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `email`
+--
+
+INSERT INTO `email` (`id_email`, `email`) VALUES
+(1, 'diahajengdwi@gmail.com'),
+(2, 'serliiratmalacrusita@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -236,7 +238,7 @@ CREATE TABLE `jadwal` (
 CREATE TABLE `karyawan` (
   `id_karyawan` int(11) NOT NULL,
   `nama` varchar(100) NOT NULL,
-  `username` varchar(12) NOT NULL,
+  `username` varchar(100) NOT NULL,
   `password` varchar(30) NOT NULL,
   `tempatlahir` varchar(100) NOT NULL,
   `tanggallahir` date NOT NULL,
@@ -253,10 +255,13 @@ CREATE TABLE `karyawan` (
 --
 
 INSERT INTO `karyawan` (`id_karyawan`, `nama`, `username`, `password`, `tempatlahir`, `tanggallahir`, `jeniskelamin`, `alamat`, `hp`, `foto`, `email`, `jabatan`) VALUES
+(129, 'Administrator', 'administrator', 'rotobot123', 'Klaten', '1995-09-01', 'Laki-laki', 'Klaten', '', '', '', 'Administrator'),
+(130, 'Admin', 'admin', 'adminrotobot', 'Klaten', '1995-08-05', 'Laki-laki', 'Klaten', '', '', '', 'Admin'),
 (131, 'Pevita Keenan', 'pev', '123', 'Banyuwangi', '1995-07-31', 'Perempuan', 'Jalan Sukabirus', '089987872233', '1505549088.JPG', 'pev@gmail.com', 'Admin'),
 (132, 'ASDAsd', 'adas', '123', 'asadad', '2017-08-30', 'Laki-laki', 'asdasd', 'asdasd', '', 'sadasd', 'Instruktur Tetap'),
 (133, 'Kurniawan Dwi Yulianto', 'kur', '123', 'Banyuwangi', '1995-09-21', 'Laki-laki', 'asdaskj', '082212312321', '', 'aksjhf', 'Finance'),
-(134, 'Zulham Zamrun', 'zul', '123', 'Malang', '1997-08-29', 'Laki-laki', 'asdasd', '089987872233', '', 'sadasd', 'Manager');
+(134, 'Zulham Zamrun', 'zul', '123', 'Malang', '1997-08-29', 'Laki-laki', 'asdasd', '089987872233', '', 'sadasd', 'Manager'),
+(135, 'Bambang Pamungkas', 'bambang', '123', 'Solo', '1996-09-09', 'Laki-laki', 'sadasd', '082212312321', '', 'haskjhf', 'Administrator');
 
 -- --------------------------------------------------------
 
@@ -338,7 +343,7 @@ CREATE TABLE `materi` (
 --
 
 INSERT INTO `materi` (`id_materi`, `file`, `pertemuanke`, `level`) VALUES
-(1, '1504099360.pdf', 1, 'Logic 1'),
+(1, '1504099360.pdf', 2, 'Logic 1'),
 (2, '1505333384.pdf', 1, 'Logic 2');
 
 -- --------------------------------------------------------
@@ -359,7 +364,7 @@ CREATE TABLE `owner` (
 --
 
 INSERT INTO `owner` (`id_owner`, `nama`, `username`, `password`) VALUES
-(1, 'Budi', 'bud', '123');
+(1, 'Ajeng', 'jeng', '123');
 
 -- --------------------------------------------------------
 
@@ -374,13 +379,6 @@ CREATE TABLE `pembayaran` (
   `tglbayar` date NOT NULL,
   `bayar` int(16) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `pembayaran`
---
-
-INSERT INTO `pembayaran` (`id_pembayaran`, `id_siswa`, `ke`, `tglbayar`, `bayar`) VALUES
-(1, 101, 1, '2017-09-20', 350000);
 
 -- --------------------------------------------------------
 
@@ -404,7 +402,9 @@ CREATE TABLE `pembayaranemail` (
 --
 
 INSERT INTO `pembayaranemail` (`id_bayar`, `id_siswa`, `namapengirim`, `norek`, `keterangan`, `tglbayar`, `totalbayar`, `buktipembayaran`) VALUES
-(1, 101, 'Kop', '21312412', 'Pemabayran ke 1', '2017-09-20', 350000, '1505914774');
+(1, 101, 'Sam', '12412124', 'sfasf', '2017-09-23', 350000, '1506145786'),
+(2, 101, 'KJHJKH', '1234124', 'ASKFJHJKH', '2017-09-23', 350000, '1506145967'),
+(3, 101, 'Adi', '12764871264', 'kjahfkjafhkj', '2017-09-23', 350000, '1506146006');
 
 -- --------------------------------------------------------
 
@@ -429,7 +429,7 @@ CREATE TABLE `pengeluaran` (
 --
 
 INSERT INTO `pengeluaran` (`id_pengeluaran`, `nama`, `merk`, `type`, `harga`, `jumlah`, `total`, `tanggal`, `keterangan`) VALUES
-(1, 'laptop', 'asus', 'A4SSL', 10000000, 1, 10000000, '2017-09-16', 'Beli');
+(1, 'laptop', 'ASUS', 'A4SSL', 7500000, 3, 22500000, '2017-09-15', 'Beli');
 
 -- --------------------------------------------------------
 
@@ -440,7 +440,7 @@ INSERT INTO `pengeluaran` (`id_pengeluaran`, `nama`, `merk`, `type`, `harga`, `j
 CREATE TABLE `siswa` (
   `id_siswa` int(11) NOT NULL,
   `email` varchar(100) NOT NULL,
-  `username` varchar(12) NOT NULL,
+  `username` varchar(100) NOT NULL,
   `password` varchar(12) NOT NULL,
   `nama` varchar(30) NOT NULL,
   `tanggallahir` date NOT NULL,
@@ -459,7 +459,7 @@ CREATE TABLE `siswa` (
 --
 
 INSERT INTO `siswa` (`id_siswa`, `email`, `username`, `password`, `nama`, `tanggallahir`, `alamat`, `foto`, `jeniskelamin`, `hp`, `tempatlahir`, `sekolah`, `kelas`, `tanggaldaftar`) VALUES
-(101, 'asdasd', 'budi', 'loremipsum', 'Budi Doremi', '2017-08-30', 'asdas', '', 'Laki-laki', '082212312321', 'Kepanjen', 'asdas', 2, '2017-09-20');
+(101, 'asd', 'budi', '123', 'Budi Doremi', '2001-09-01', 'asdasd', '', 'Laki-laki', '082212312321', 'Solo', 'asdasd', 2, '2017-09-23');
 
 -- --------------------------------------------------------
 
@@ -508,6 +508,12 @@ ALTER TABLE `absensiswa`
 ALTER TABLE `detailsiswa`
   ADD PRIMARY KEY (`id_detail`),
   ADD KEY `id_siswa` (`id_siswa`);
+
+--
+-- Indexes for table `email`
+--
+ALTER TABLE `email`
+  ADD PRIMARY KEY (`id_email`);
 
 --
 -- Indexes for table `finance`

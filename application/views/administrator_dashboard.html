@@ -45,7 +45,7 @@
                     <a class="sidebar-link has-sub collapsed" data-toggle="collapse" data-parent=".sidebar-item" href="#masterData">Master Data</a>
                     <ul id="masterData" class="collapse sublinks">
                         <li><a href="<?php echo base_url();?>AdministratorDataInstruktur">Data Instruktur <span class="blue-text">(<?php echo $this->db->query("Select * from karyawan where jabatan like 'Instruktur%'")->num_rows();?>)</span></a></li>
-                        <li><a href="<?php echo base_url();?>AdministratorDataKaryawan">Data Karyawan <span class="blue-text">(<?php echo $this->db->query("Select * from karyawan where not jabatan like 'Instruktur%'")->num_rows();?>)</span></a></li>
+                        <li><a href="<?php echo base_url();?>AdministratorDataKaryawan">Data Karyawan <span class="blue-text">(<?php echo $this->db->query("Select * from karyawan where not jabatan like 'Instruktur%' and not nama='Admin' and not nama = 'Administrator'")->num_rows();?>)</span></a></li>
                         <li><a href="<?php echo base_url();?>AdministratorDataSiswa">Data Siswa <span class="blue-text">(<?php echo $this->db->query("Select * from siswa")->num_rows();?>)</span></a></li>
                         <li><a href="<?php echo base_url();?>AdministratorDataOwner">Data Owner <span class="blue-text">(<?php echo $this->db->query("Select * from owner")->num_rows();?>)</span></a></li>
                     </ul>
@@ -111,10 +111,24 @@
                                 <?php $ins = $this->db->query("Select * from karyawan where jabatan like'Instruktur%'")->num_rows();?>
                                 <?php $sis = $this->db->query("Select * from siswa")->num_rows();?>
                                 <?php $abkar = $this->db->query("Select * from absenkaryawan join karyawan using(id_karyawan) where not jabatan like'Instruktur%' and tanggalmasuk = '$date'")->num_rows();?>
-                                <?php $kar = $this->db->query("Select * from karyawan where not jabatan like'Instruktur%'")->num_rows();?>
-                                <?php $preins = ($abins / $ins)*100;?>
-                                <?php $prekar = ($abkar / $kar)*100;?>
-                                <?php $presis = ($absis / $sis)*100;?>
+                                <?php $kar = $this->db->query("Select * from karyawan where not jabatan like'Instruktur%' and not nama='Admin'")->num_rows();?>
+                                <?php
+                                if ($ins > 0) {
+                                $preins = ($abins / $ins)*100;
+                                } else {
+                                $preins = 0;
+                                }
+                                if ($kar > 0) {
+                                $prekar = ($abkar / $kar)*100;
+                                } else {
+                                $prekar = 0;
+                                }
+                                if ($sis > 0) {
+                                $presis = ($absis / $sis)*100;
+                                } else {
+                                $presis = 0;
+                                }                                
+                                ?>
                                 <p>Kehadiran Siswa</p>
                                 <div class="box-line"></div>
                                 <div class="box-number">

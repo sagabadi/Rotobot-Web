@@ -16,7 +16,7 @@ class ManagerDataKaryawan extends CI_Controller {
         $nama = $this->session->userdata('username');
         $nama1 = $this->session->userdata('nama');
         $name = $this->db->query("Select username from karyawan where username= '$nama' and not jabatan like'Instruktur%'")->num_rows();
-        $karyawan = $this->db->query("Select *from karyawan where not jabatan like 'Instruktur%'");
+        $karyawan = $this->db->query("Select *from karyawan where not jabatan like 'Instruktur%' and not nama='Admin' and not nama = 'Administrators'");
         $data['karyawan'] = $karyawan;
         if ($name > 0) {
             $this->load->view('manager_data_karyawan.html', $data);
